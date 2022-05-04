@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EchoServerProtocolTest {
+public class EchoProtocolTest {
     @Test
     void messageGivenBack() {
         Message fromClient = new Message("Sample user message");
-        EchoServerProtocol echoServerProtocol = new EchoServerProtocol();
-        Message response = echoServerProtocol.serve(fromClient);
+        EchoProtocol echoProtocol = new EchoProtocol();
+        Message response = echoProtocol.serve(fromClient);
         assertEquals(response, fromClient);
     }
 }
