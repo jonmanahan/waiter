@@ -8,9 +8,9 @@ public class MessengerTest {
     @Test
     void echosMessage() {
         ClientConnectionMock clientConnectionMock = new ClientConnectionMock("Sample user message");
-        EchoProtocol echoProtocol = new EchoProtocol();
-        Messenger messenger = new Messenger(echoProtocol);
+        EchoProtocolMock echoProtocolMock = new EchoProtocolMock();
+        Messenger messenger = new Messenger(echoProtocolMock);
         messenger.transport(clientConnectionMock);
-        assertEquals(clientConnectionMock.toClient, "Sample user message");
+        assertEquals("Sample user message", clientConnectionMock.toClient);
     }
 }

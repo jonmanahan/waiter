@@ -1,6 +1,6 @@
 package waiter;
 
-public class ClientConnectionMock implements Connection{
+public class ClientConnectionMock implements Connection {
     private final String userInput;
     String toClient;
 

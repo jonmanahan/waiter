@@ -1,6 +1,6 @@
 package waiter;
 
-public class Messenger {
+public class Messenger implements Transporter {
 
     Protocol server;
 
