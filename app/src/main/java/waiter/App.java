@@ -3,12 +3,16 @@
  */
 package waiter;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import java.io.IOException;
+import java.net.ServerSocket;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+public class App {
+
+    public static void main(String[] args) throws IOException {
+        int port = 4424;
+        Listener listener = new Listener(new ServerSocket(port));
+        Messenger messenger = new Messenger(new EchoProtocol());
+        Communicator communicator = new Communicator();
+        communicator.communicate(listener, messenger);
     }
 }

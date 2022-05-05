@@ -1,5 +1,7 @@
 package waiter;
 
+import java.io.IOException;
+
 public interface Awaiter {
-    Connection awaitClient();
+    Connection awaitClient() throws IOException;
 }
