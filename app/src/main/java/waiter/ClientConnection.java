@@ -8,20 +8,20 @@ import java.net.Socket;
 
 public class ClientConnection implements Connection {
 
-    private final Socket clientSocket;
+    private final Socket socket;
 
-    ClientConnection(Socket clientSocket) {
-        this.clientSocket = clientSocket;
+    ClientConnection(Socket socket) {
+        this.socket = socket;
     }
 
     public Message read() throws IOException {
-        BufferedReader input = new BufferedReader( new InputStreamReader( this.clientSocket.getInputStream() ) );
+        BufferedReader input = new BufferedReader( new InputStreamReader( this.socket.getInputStream() ) );
         String message = input.readLine();
         return new Message(message);
     }
 
     public void write(Message toClient) throws IOException {
-        PrintStream output = new PrintStream( clientSocket.getOutputStream() );
+        PrintStream output = new PrintStream( socket.getOutputStream() );
         output.println(toClient.open());
     }
 }

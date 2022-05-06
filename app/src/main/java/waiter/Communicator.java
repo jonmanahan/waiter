@@ -13,8 +13,8 @@ public class Communicator {
     }
     
     void communicate() throws IOException {
-        Connection client = this.awaiter.awaitClient();
+        Connection connection = this.awaiter.awaitClient();
 
-        this.transporter.transport(client);
+        this.transporter.transport(connection);
     }
 }
