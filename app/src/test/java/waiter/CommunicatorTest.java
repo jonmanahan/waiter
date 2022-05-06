@@ -15,7 +15,7 @@ public class CommunicatorTest {
         MessengerMock messengerMock = new MessengerMock();
         Communicator communicator = new Communicator(listenerMock, messengerMock);
         communicator.communicate();
-        Connection calledWithConnection = messengerMock.calledWith;
-        assertEquals(userInput, calledWithConnection.read().open());
+        Connection clientConnectionMock = messengerMock.calledWith;
+        assertEquals(userInput, clientConnectionMock.read().open());
     }
 }

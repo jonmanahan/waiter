@@ -4,17 +4,17 @@ import java.io.IOException;
 
 public class Communicator {
 
-    private final Awaiter server;
-    private final Transporter messenger;
+    private final Awaiter awaiter;
+    private final Transporter transporter;
 
-    Communicator (Awaiter server, Transporter messenger) {
-        this.server = server;
-        this.messenger = messenger;
+    Communicator (Awaiter awaiter, Transporter transporter) {
+        this.awaiter = awaiter;
+        this.transporter = transporter;
     }
     
     void communicate() throws IOException {
-        Connection client = this.server.awaitClient();
+        Connection client = this.awaiter.awaitClient();
 
-        this.messenger.transport(client);
+        this.transporter.transport(client);
     }
 }

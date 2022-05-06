@@ -4,15 +4,15 @@ import java.io.IOException;
 
 public class Messenger implements Transporter {
 
-    Protocol server;
+    Protocol protocol;
 
-    Messenger(Protocol server) {
-        this.server = server;
+    Messenger(Protocol protocol) {
+        this.protocol = protocol;
     }
 
     public void transport(Connection client) throws IOException {
         Message fromClient = client.read();
-        Message toClient = this.server.serve(fromClient);
+        Message toClient = this.protocol.serve(fromClient);
         client.write(toClient);
     }
 }

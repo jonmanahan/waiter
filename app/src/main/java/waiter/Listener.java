@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Listener implements Awaiter {
-    ServerSocket server;
+    ServerSocket serverSocket;
 
-    Listener(ServerSocket server) {
-        this.server = server;
+    Listener(ServerSocket serverSocket) {
+        this.serverSocket = serverSocket;
     }
 
     public Connection awaitClient() throws IOException {
-        return new ClientConnection(this.server.accept());
+        return new ClientConnection(this.serverSocket.accept());
     }
 }
