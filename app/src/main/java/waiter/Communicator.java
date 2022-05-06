@@ -3,9 +3,18 @@ package waiter;
 import java.io.IOException;
 
 public class Communicator {
-    void communicate(Awaiter server, Transporter messenger) throws IOException {
-        Connection client = server.awaitClient();
 
-        messenger.transport(client);
+    private final Awaiter server;
+    private final Transporter messenger;
+
+    Communicator (Awaiter server, Transporter messenger) {
+        this.server = server;
+        this.messenger = messenger;
+    }
+    
+    void communicate() throws IOException {
+        Connection client = this.server.awaitClient();
+
+        this.messenger.transport(client);
     }
 }

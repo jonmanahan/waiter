@@ -13,6 +13,7 @@ public class ClientConnection implements Connection {
     ClientConnection(Socket client) {
         this.client = client;
     }
+
     public Message read() throws IOException {
         BufferedReader input = new BufferedReader( new InputStreamReader( this.client.getInputStream() ) );
         String message = input.readLine();

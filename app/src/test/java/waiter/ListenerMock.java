@@ -7,6 +7,7 @@ public class ListenerMock implements Awaiter {
     ListenerMock(String userInput) {
         this.userInput = userInput;
     }
+
     public Connection awaitClient() {
         return new ClientConnectionMock(this.userInput);
     }

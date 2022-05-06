@@ -4,6 +4,10 @@
 A server that establishes a connection with the client, receives their message and echos it back to them
 
 ## Prerequisites
+- Install [Java version 18.0.1.1](https://java.com/en/download/)
+- Install [Gradle](https://gradle.org/install/)
+
+## Commands to build the project
 - gradle build
 
 ## Commands to start echo server

@@ -9,6 +9,7 @@ public class Listener implements Awaiter {
     Listener(ServerSocket server) {
         this.server = server;
     }
+
     public Connection awaitClient() throws IOException {
         return new ClientConnection(this.server.accept());
     }

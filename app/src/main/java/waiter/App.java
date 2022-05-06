@@ -12,7 +12,7 @@ public class App {
         int port = 4424;
         Listener listener = new Listener(new ServerSocket(port));
         Messenger messenger = new Messenger(new EchoProtocol());
-        Communicator communicator = new Communicator();
-        communicator.communicate(listener, messenger);
+        Communicator communicator = new Communicator(listener, messenger);
+        communicator.communicate();
     }
 }

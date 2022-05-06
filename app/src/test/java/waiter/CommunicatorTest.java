@@ -10,11 +10,11 @@ public class CommunicatorTest {
 
     @Test
     void establishesCommunication() throws IOException {
-        String userInput = "Doesn't matter whats here, simulating any user input message";
+        String userInput = "foo";
         ListenerMock listenerMock = new ListenerMock(userInput);
         MessengerMock messengerMock = new MessengerMock();
-        Communicator communicator = new Communicator();
-        communicator.communicate(listenerMock, messengerMock);
+        Communicator communicator = new Communicator(listenerMock, messengerMock);
+        communicator.communicate();
         Connection calledWithConnection = messengerMock.calledWith;
         assertEquals(userInput, calledWithConnection.read().open());
     }
