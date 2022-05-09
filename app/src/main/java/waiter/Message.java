@@ -3,11 +3,11 @@ package waiter;
 public class Message {
     String content;
 
-    Message(String content) {
+    public Message(String content) {
         this.content = content;
     }
 
-    String open() {
+    public String open() {
         return this.content;
     }
 }

@@ -1,6 +1,9 @@
 package waiter;
 
 import org.junit.jupiter.api.Test;
+import waiter.ClientConnection.mock.ClientConnectionMock;
+import waiter.EchoProtocol.mock.EchoProtocolMock;
+import waiter.Messenger.Messenger;
 
 import java.io.IOException;
 

@@ -3,6 +3,10 @@
  */
 package waiter;
 
+import waiter.EchoProtocol.EchoProtocol;
+import waiter.Listener.Listener;
+import waiter.Messenger.Messenger;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 

@@ -1,10 +1,13 @@
-package waiter;
+package waiter.ClientConnection.mock;
+
+import waiter.ClientConnection.Connection;
+import waiter.Message;
 
 public class ClientConnectionMock implements Connection {
     private final String userInput;
-    String toClient;
+    public String toClient;
 
-    ClientConnectionMock(String userInput) {
+    public ClientConnectionMock(String userInput) {
         this.userInput = userInput;
         this.toClient = "";
     }

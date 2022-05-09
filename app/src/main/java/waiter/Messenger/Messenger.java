@@ -1,4 +1,8 @@
-package waiter;
+package waiter.Messenger;
+
+import waiter.ClientConnection.Connection;
+import waiter.EchoProtocol.Protocol;
+import waiter.Message;
 
 import java.io.IOException;
 
@@ -6,7 +10,7 @@ public class Messenger implements Transporter {
 
     Protocol protocol;
 
-    Messenger(Protocol protocol) {
+    public Messenger(Protocol protocol) {
         this.protocol = protocol;
     }
 

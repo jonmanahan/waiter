@@ -1,6 +1,7 @@
 package waiter;
 
 import org.junit.jupiter.api.Test;
+import waiter.EchoProtocol.EchoProtocol;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,4 +1,6 @@
-package waiter;
+package waiter.Listener;
+
+import waiter.ClientConnection.Connection;
 
 import java.io.IOException;
 

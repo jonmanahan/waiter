@@ -1,4 +1,6 @@
-package waiter;
+package waiter.ClientConnection;
+
+import waiter.Message;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +12,7 @@ public class ClientConnection implements Connection {
 
     private final Socket socket;
 
-    ClientConnection(Socket socket) {
+    public ClientConnection(Socket socket) {
         this.socket = socket;
     }
 

@@ -1,5 +1,9 @@
 package waiter;
 
+import waiter.ClientConnection.Connection;
+import waiter.Listener.Awaiter;
+import waiter.Messenger.Transporter;
+
 import java.io.IOException;
 
 public class Communicator {
