@@ -21,7 +21,7 @@ public class ClientConnection implements Connection {
     }
 
     public void write(Message toClient) throws IOException {
-        PrintStream output = new PrintStream( socket.getOutputStream() );
+        PrintStream output = new PrintStream( this.socket.getOutputStream() );
         output.println(toClient.open());
     }
 }
