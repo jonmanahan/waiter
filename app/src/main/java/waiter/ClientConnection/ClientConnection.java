@@ -1,14 +1,10 @@
 package waiter.ClientConnection;
 
+import waiter.InputStreamer.Reader;
 import waiter.Message;
-import waiter.Reader;
-import waiter.Writer;
+import waiter.OutputStreamer.Writer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.net.Socket;
 
 public class ClientConnection implements Connection {
 
@@ -29,4 +25,3 @@ public class ClientConnection implements Connection {
         writer.writeLine(toClient.open());
     }
 }
-

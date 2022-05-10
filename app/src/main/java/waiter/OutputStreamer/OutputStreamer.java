@@ -1,4 +1,4 @@
-package waiter;
+package waiter.OutputStreamer;
 
 import java.io.PrintStream;
 import java.net.Socket;

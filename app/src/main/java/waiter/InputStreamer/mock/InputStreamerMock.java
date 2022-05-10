@@ -1,4 +1,6 @@
-package waiter;
+package waiter.InputStreamer.mock;
+
+import waiter.InputStreamer.Reader;
 
 public class InputStreamerMock implements Reader {
 
