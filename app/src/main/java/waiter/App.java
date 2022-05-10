@@ -3,12 +3,26 @@
  */
 package waiter;
 
+import waiter.EchoProtocol.EchoProtocol;
+import waiter.Listener.Listener;
+import waiter.Messenger.Messenger;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+        try {
+            int port = 4424;
+            Listener listener = new Listener(new ServerSocket(port));
+            Messenger messenger = new Messenger(new EchoProtocol());
+            Communicator communicator = new Communicator(listener, messenger);
+            communicator.communicate();
+        }
+        catch (IOException exception) {
+            System.out.println("There was a problem starting the echo server, please check your command and rerun");
+        }
     }
 }
