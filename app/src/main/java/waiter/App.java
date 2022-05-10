@@ -8,8 +8,10 @@ import waiter.Listener.Listener;
 import waiter.Messenger.Messenger;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.SocketException;
+
+import java.net.ServerSocket;
+
 
 public class App {
 
