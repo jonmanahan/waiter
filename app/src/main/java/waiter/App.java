@@ -9,6 +9,7 @@ import waiter.Messenger.Messenger;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.SocketException;
 
 public class App {
 
@@ -20,9 +21,10 @@ public class App {
             Messenger messenger = new Messenger(new EchoProtocol());
             Communicator communicator = new Communicator(listener, messenger);
             communicator.communicate();
-        }
-        catch (IOException exception) {
-            System.out.println("There was a problem starting the echo server, please check your command and rerun");
+        } catch (SocketException exception) {
+            System.out.println("Sorry, connection could not be establish or has been broken, please try running the server and connecting again");
+        } catch (IOException exception) {
+            System.out.println("Sorry, there was a problem with your input, please try running the server and connecting again");
         }
     }
 }
