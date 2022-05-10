@@ -12,7 +12,7 @@ public class ClientConnectionTest {
     @Test
     void readsMessage() throws IOException {
         String input = "foo";
-        InputStreamerMock inputStreamerMock = new InputStreamerMock();
+        InputStreamerMock inputStreamerMock = new InputStreamerMock(input);
         OutputStreamerMock outputStreamerMock = new OutputStreamerMock();
         ClientConnection clientConnection = new ClientConnection(inputStreamerMock, outputStreamerMock);
         Message readMessage = clientConnection.read();
@@ -21,8 +21,9 @@ public class ClientConnectionTest {
 
     @Test
     void writesMessage() throws IOException {
-        Message outputMessage = new Message("foo");
-        InputStreamerMock inputStreamerMock = new InputStreamerMock();
+        String input = "foo";
+        Message outputMessage = new Message(input);
+        InputStreamerMock inputStreamerMock = new InputStreamerMock(input);
         OutputStreamerMock outputStreamerMock = new OutputStreamerMock();
         ClientConnection clientConnection = new ClientConnection(inputStreamerMock, outputStreamerMock);
         clientConnection.write(outputMessage);

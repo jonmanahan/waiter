@@ -1,6 +1,8 @@
 package waiter.ClientConnection;
 
 import waiter.Message;
+import waiter.Reader;
+import waiter.Writer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,21 +12,21 @@ import java.net.Socket;
 
 public class ClientConnection implements Connection {
 
-    private final Socket socket;
+    private final Reader reader;
+    private final Writer writer;
 
-    public ClientConnection(Socket socket) {
-        this.socket = socket;
+    public ClientConnection(Reader reader, Writer writer) {
+        this.reader = reader;
+        this.writer = writer;
     }
 
     public Message read() throws IOException {
-        BufferedReader input = new BufferedReader( new InputStreamReader( this.socket.getInputStream() ) );
-        String message = input.readLine();
+        String message = this.reader.readLine();
         return new Message(message);
     }
 
     public void write(Message toClient) throws IOException {
-        PrintStream output = new PrintStream( this.socket.getOutputStream() );
-        output.println(toClient.open());
+        writer.writeLine(toClient.open());
     }
 }
 
