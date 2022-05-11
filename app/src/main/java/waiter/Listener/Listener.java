@@ -20,8 +20,6 @@ public class Listener implements Awaiter {
 
     public Connection awaitClient() throws IOException {
         Socket socket = this.serverSocket.accept();
-        InputStreamer inputStreamer = new InputStreamer(socket);
-        OutputStreamer outputStreamer = new OutputStreamer(socket);
-        return new ClientConnection(inputStreamer, outputStreamer);
+        return new ClientConnection(new InputStreamer(socket), new OutputStreamer(socket));
     }
 }

@@ -15,21 +15,15 @@ public class ClientConnectionTest {
     @Test
     void readsMessage() throws IOException {
         String input = "foo";
-        InputStreamerMock inputStreamerMock = new InputStreamerMock(input);
-        OutputStreamerMock outputStreamerMock = new OutputStreamerMock();
-        ClientConnection clientConnection = new ClientConnection(inputStreamerMock, outputStreamerMock);
-        Message readMessage = clientConnection.read();
-        assertEquals(readMessage.open(), input);
+        String message = new ClientConnection(new InputStreamerMock(input), new OutputStreamerMock()).read().open();
+        assertEquals(message, input);
     }
 
     @Test
     void writesMessage() throws IOException {
-        String input = "foo";
-        Message outputMessage = new Message(input);
-        InputStreamerMock inputStreamerMock = new InputStreamerMock(input);
         OutputStreamerMock outputStreamerMock = new OutputStreamerMock();
-        ClientConnection clientConnection = new ClientConnection(inputStreamerMock, outputStreamerMock);
-        clientConnection.write(outputMessage);
-        assertEquals(outputStreamerMock.writtenOutput, outputMessage.open());
+        ClientConnection clientConnection = new ClientConnection(new InputStreamerMock("foo"), outputStreamerMock);
+        clientConnection.write(new Message("foo"));
+        assertEquals(outputStreamerMock.writtenOutput, "foo");
     }
 }

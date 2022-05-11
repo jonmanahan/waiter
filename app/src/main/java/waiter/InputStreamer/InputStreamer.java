@@ -15,7 +15,7 @@ public class InputStreamer implements Reader {
     }
 
     public String readLine() throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( this.socket.getInputStream() ) );
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         return bufferedReader.readLine();
     }
 }

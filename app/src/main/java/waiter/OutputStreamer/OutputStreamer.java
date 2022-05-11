@@ -14,7 +14,7 @@ public class OutputStreamer implements Writer {
     }
 
     public void writeLine(String toClient) throws IOException {
-        PrintStream printStream = new PrintStream( this.socket.getOutputStream() );
+        PrintStream printStream = new PrintStream(this.socket.getOutputStream());
         printStream.println(toClient);
     }
 }
