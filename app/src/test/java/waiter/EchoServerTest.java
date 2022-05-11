@@ -1,27 +1,36 @@
 package waiter;
 
-import waiter.Listener.mock.ListenerMock;
-import waiter.Messenger.mock.MessengerMock;
-
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.net.SocketException;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EchoServerTest {
 
-//    @Test
-//    void throwsIOException() {
-//        EchoServer echoServer = new EchoServer(new CommunicatorMock(new IOException()));
-//        assertThrows(IOException.class, () -> {
-//            echoServer.start();
-//        });
-//    }
+    private final ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUp() {
+        System.setOut(new PrintStream(output));
+    }
 
     @Test
-    void throwsSocketException() {
+    void catchesIOException() {
+        EchoServer echoServer = new EchoServer(new CommunicatorMock(new IOException()));
+        echoServer.start();
+        assertEquals("Sorry, there was a problem with your input, please try running the server and connecting again", output.toString().trim());
+    }
+
+    @Test
+    void catchesSocketException() {
         EchoServer echoServer = new EchoServer(new CommunicatorMock(new SocketException()));
-        assertThrows(SocketException.class, () -> {
-            echoServer.start();
-        });
+        echoServer.start();
+        assertEquals("Sorry, connection could not be established or has been broken, please try running the server and connecting again", output.toString().trim());
     }
 }

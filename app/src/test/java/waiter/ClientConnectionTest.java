@@ -1,11 +1,10 @@
 package waiter;
 
 import waiter.ClientConnection.ClientConnection;
-
-import org.junit.jupiter.api.Test;
 import waiter.InputStreamer.mock.InputStreamerMock;
 import waiter.OutputStreamer.mock.OutputStreamerMock;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;

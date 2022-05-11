@@ -7,13 +7,13 @@ import waiter.Messenger.Transporter;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class Communicator {
+public class Communicator implements Reporter {
 
     private final Awaiter awaiter;
     private final Transporter transporter;
     private final int port;
 
-    Communicator (Awaiter awaiter, Transporter transporter, int port) {
+    public Communicator(Awaiter awaiter, Transporter transporter, int port) {
         this.awaiter = awaiter;
         this.transporter = transporter;
         this.port = port;
