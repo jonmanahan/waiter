@@ -4,13 +4,7 @@ import waiter.Communicator.Reporter;
 
 import java.io.IOException;
 
-public class CommunicatorMock implements Reporter {
-
-    private final IOException exception;
-
-    CommunicatorMock(IOException exception) {
-        this.exception = exception;
-    }
+public record CommunicatorMock(IOException exception) implements Reporter {
 
     public void communicate() throws IOException {
         throw this.exception;

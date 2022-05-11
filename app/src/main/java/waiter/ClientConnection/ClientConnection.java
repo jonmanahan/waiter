@@ -6,15 +6,7 @@ import waiter.OutputStreamer.Writer;
 
 import java.io.IOException;
 
-public class ClientConnection implements Connection {
-
-    private final Reader reader;
-    private final Writer writer;
-
-    public ClientConnection(Reader reader, Writer writer) {
-        this.reader = reader;
-        this.writer = writer;
-    }
+public record ClientConnection(Reader reader, Writer writer) implements Connection {
 
     public Message read() throws IOException {
         String message = this.reader.readLine();

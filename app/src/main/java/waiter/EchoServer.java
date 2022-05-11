@@ -5,13 +5,7 @@ import waiter.Communicator.Reporter;
 import java.io.IOException;
 import java.net.SocketException;
 
-public class EchoServer {
-
-    private final Reporter reporter;
-
-    EchoServer (Reporter reporter) {
-        this.reporter = reporter;
-    }
+public record EchoServer(Reporter reporter) {
 
     public void start() {
 

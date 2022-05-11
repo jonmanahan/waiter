@@ -6,13 +6,7 @@ import java.net.Socket;
 
 import java.io.IOException;
 
-public class InputStreamer implements Reader {
-
-    private final Socket socket;
-
-    public InputStreamer(Socket socket) {
-        this.socket = socket;
-    }
+public record InputStreamer(Socket socket) implements Reader {
 
     public String readLine() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));

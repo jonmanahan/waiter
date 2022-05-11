@@ -5,13 +5,7 @@ import java.net.Socket;
 
 import java.io.IOException;
 
-public class OutputStreamer implements Writer {
-
-    private final Socket socket;
-
-    public OutputStreamer(Socket socket) {
-        this.socket = socket;
-    }
+public record OutputStreamer(Socket socket) implements Writer {
 
     public void writeLine(String toClient) throws IOException {
         PrintStream printStream = new PrintStream(this.socket.getOutputStream());

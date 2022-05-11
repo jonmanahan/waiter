@@ -6,13 +6,7 @@ import waiter.Message;
 
 import java.io.IOException;
 
-public class Messenger implements Transporter {
-
-    Protocol protocol;
-
-    public Messenger(Protocol protocol) {
-        this.protocol = protocol;
-    }
+public record Messenger(Protocol protocol) implements Transporter {
 
     public void transport(Connection client) throws IOException {
         Message fromClient = client.read();
