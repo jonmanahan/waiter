@@ -4,6 +4,7 @@ import waiter.ClientConnection.Connection;
 import waiter.Message;
 
 public class ClientConnectionMock implements Connection {
+
     private final String userInput;
     public String toClient;
 

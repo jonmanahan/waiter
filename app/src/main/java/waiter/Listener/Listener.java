@@ -2,11 +2,16 @@ package waiter.Listener;
 
 import waiter.ClientConnection.ClientConnection;
 import waiter.ClientConnection.Connection;
+import waiter.InputStreamer.InputStreamer;
+import waiter.OutputStreamer.OutputStreamer;
+
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 
 public class Listener implements Awaiter {
+
     ServerSocket serverSocket;
 
     public Listener(ServerSocket serverSocket) {
@@ -14,6 +19,7 @@ public class Listener implements Awaiter {
     }
 
     public Connection awaitClient() throws IOException {
-        return new ClientConnection(this.serverSocket.accept());
+        Socket socket = this.serverSocket.accept();
+        return new ClientConnection(new InputStreamer(socket), new OutputStreamer(socket));
     }
 }

@@ -1,13 +1,13 @@
 package waiter;
 
-import org.junit.jupiter.api.Test;
 import waiter.ClientConnection.Connection;
 import waiter.Listener.mock.ListenerMock;
 import waiter.Messenger.mock.MessengerMock;
 
-import java.io.IOException;
-
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.IOException;
 
 public class CommunicatorTest {
 
