@@ -3,6 +3,7 @@
  */
 package waiter;
 
+import waiter.Communicator.Communicator;
 import waiter.EchoProtocol.EchoProtocol;
 import waiter.Listener.Listener;
 import waiter.Messenger.Messenger;

@@ -1,5 +1,7 @@
 package waiter;
 
+import waiter.Communicator.Reporter;
+
 import java.io.IOException;
 import java.net.SocketException;
 

@@ -1,4 +1,4 @@
-package waiter;
+package waiter.Communicator;
 
 import waiter.ClientConnection.Connection;
 import waiter.Listener.Awaiter;
@@ -18,7 +18,7 @@ public class Communicator implements Reporter {
         this.transporter = transporter;
         this.port = port;
     }
-    
+
     public void communicate() throws IOException {
         Connection connection = this.awaiter.awaitClient(new ServerSocket(this.port));
 

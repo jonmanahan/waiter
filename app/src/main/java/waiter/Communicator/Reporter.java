@@ -1,4 +1,4 @@
-package waiter;
+package waiter.Communicator;
 
 import java.io.IOException;
 

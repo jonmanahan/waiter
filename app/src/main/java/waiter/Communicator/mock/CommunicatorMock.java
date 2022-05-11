@@ -1,4 +1,6 @@
-package waiter;
+package waiter.Communicator.mock;
+
+import waiter.Communicator.Reporter;
 
 import java.io.IOException;
 

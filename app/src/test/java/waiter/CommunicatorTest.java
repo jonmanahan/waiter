@@ -1,6 +1,7 @@
 package waiter;
 
 import waiter.ClientConnection.Connection;
+import waiter.Communicator.Communicator;
 import waiter.Listener.mock.ListenerMock;
 import waiter.Messenger.mock.MessengerMock;
 

@@ -1,8 +1,8 @@
 package waiter;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import waiter.Communicator.mock.CommunicatorMock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
