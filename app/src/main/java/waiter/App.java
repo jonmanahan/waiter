@@ -18,9 +18,9 @@ public class App {
 
         try {
             int port = 4424;
-            Listener listener = new Listener(new ServerSocket(port));
+            Listener listener = new Listener();
             Messenger messenger = new Messenger(new EchoProtocol());
-            Communicator communicator = new Communicator(listener, messenger);
+            Communicator communicator = new Communicator(listener, messenger, port);
             communicator.communicate();
         } catch (SocketException exception) {
             System.out.println("Sorry, connection could not be establish or has been broken, please try running the server and connecting again");

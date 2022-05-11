@@ -13,12 +13,11 @@ public class CommunicatorTest {
 
     @Test
     void establishesCommunication() throws IOException {
-        String userInput = "foo";
-        ListenerMock listenerMock = new ListenerMock(userInput);
+        ListenerMock listenerMock = new ListenerMock("foo");
         MessengerMock messengerMock = new MessengerMock();
-        Communicator communicator = new Communicator(listenerMock, messengerMock);
+        Communicator communicator = new Communicator(listenerMock, messengerMock, 4424);
         communicator.communicate();
         Connection clientConnectionMock = messengerMock.calledWith;
-        assertEquals(userInput, clientConnectionMock.read().open());
+        assertEquals("foo", clientConnectionMock.read().open());
     }
 }

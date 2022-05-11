@@ -12,14 +12,8 @@ import java.io.IOException;
 
 public class Listener implements Awaiter {
 
-    ServerSocket serverSocket;
-
-    public Listener(ServerSocket serverSocket) {
-        this.serverSocket = serverSocket;
-    }
-
-    public Connection awaitClient() throws IOException {
-        Socket socket = this.serverSocket.accept();
+    public Connection awaitClient(ServerSocket serverSocket) throws IOException {
+        Socket socket = serverSocket.accept();
         return new ClientConnection(new InputStreamer(socket), new OutputStreamer(socket));
     }
 }
