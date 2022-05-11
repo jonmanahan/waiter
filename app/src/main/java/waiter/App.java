@@ -12,7 +12,6 @@ import java.net.SocketException;
 
 import java.net.ServerSocket;
 
-
 public class App {
 
     public static void main(String[] args) {
