@@ -13,12 +13,14 @@ import java.io.IOException;
 class CommunicatorTest {
 
     @Test
-    void establishesCommunication() throws IOException {
+    void communicatesProvidedInput() throws IOException {
         ListenerMock listenerMock = new ListenerMock("foo");
         MessengerMock messengerMock = new MessengerMock();
-        Communicator communicator = new Communicator(listenerMock, messengerMock, 4424);
-        communicator.communicate();
+        Communicator communicator = new Communicator(listenerMock, messengerMock);
+        ReactorMock reactor = new ReactorMock(5);
+        communicator.communicate(reactor);
         Connectable clientConnectionMock = messengerMock.calledWith;
         assertEquals("foo", clientConnectionMock.read().open());
+        assertEquals(reactor.currentNumberOfEchos, 5);
     }
 }

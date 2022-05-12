@@ -3,7 +3,7 @@ package waiter;
 public class ReactorMock implements Reactive {
 
     private final int desiredNumberOfEchos;
-    private int currentNumberOfEchos;
+    public int currentNumberOfEchos;
 
     ReactorMock(int desiredNumberOfEchos) {
         this.desiredNumberOfEchos = desiredNumberOfEchos;
