@@ -1,9 +1,9 @@
 package waiter.ClientConnection.mock;
 
-import waiter.ClientConnection.Connection;
+import waiter.ClientConnection.Connectable;
 import waiter.Message;
 
-public class ClientConnectionMock implements Connection {
+public class ClientConnectionMock implements Connectable {
 
     private final String userInput;
     public String toClient;

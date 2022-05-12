@@ -1,27 +1,19 @@
 package waiter.ClientConnection;
 
-import waiter.InputStreamer.Reader;
+import waiter.InputStreamer.Readable;
 import waiter.Message;
-import waiter.OutputStreamer.Writer;
+import waiter.OutputStreamer.Writable;
 
 import java.io.IOException;
 
-public class ClientConnection implements Connection {
-
-    private final Reader reader;
-    private final Writer writer;
-
-    public ClientConnection(Reader reader, Writer writer) {
-        this.reader = reader;
-        this.writer = writer;
-    }
+public record ClientConnection(Readable readable, Writable writable) implements Connectable {
 
     public Message read() throws IOException {
-        String message = this.reader.readLine();
+        String message = this.readable.readLine();
         return new Message(message);
     }
 
     public void write(Message toClient) throws IOException {
-        writer.writeLine(toClient.open());
+        writable.writeLine(toClient.open());
     }
 }

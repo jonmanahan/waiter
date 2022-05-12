@@ -1,0 +1,20 @@
+package waiter;
+
+import waiter.Communicator.Reportable;
+
+import java.io.IOException;
+import java.net.SocketException;
+
+record EchoServer(Reportable reportable) {
+
+    public void start() {
+
+        try {
+            reportable.communicate();
+        } catch (SocketException exception) {
+            System.out.println("Sorry, connection could not be established or has been broken, please try running the server and connecting again");
+        } catch (IOException exception) {
+            System.out.println("Sorry, an error occurred when sending/receiving a message, please try running the server and connecting again");
+        }
+    }
+}

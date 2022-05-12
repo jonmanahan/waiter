@@ -1,25 +1,25 @@
 package waiter.Listener;
 
 import waiter.ClientConnection.ClientConnection;
-import waiter.ClientConnection.Connection;
+import waiter.ClientConnection.Connectable;
 import waiter.InputStreamer.InputStreamer;
 import waiter.OutputStreamer.OutputStreamer;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import java.io.IOException;
 
-public class Listener implements Awaiter {
+public class Listener implements Awaitable {
 
-    ServerSocket serverSocket;
-
-    public Listener(ServerSocket serverSocket) {
-        this.serverSocket = serverSocket;
-    }
-
-    public Connection awaitClient() throws IOException {
-        Socket socket = this.serverSocket.accept();
-        return new ClientConnection(new InputStreamer(socket), new OutputStreamer(socket));
+    public Connectable awaitClient(ServerSocket serverSocket) throws IOException {
+        Socket socket = serverSocket.accept();
+        return new ClientConnection(
+                new InputStreamer(new BufferedReader(new InputStreamReader(socket.getInputStream()))),
+                new OutputStreamer(new PrintStream(socket.getOutputStream()))
+        );
     }
 }

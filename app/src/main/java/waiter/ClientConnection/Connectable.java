@@ -4,7 +4,7 @@ import waiter.Message;
 
 import java.io.IOException;
 
-public interface Connection {
+public interface Connectable {
 
     Message read() throws IOException;
 

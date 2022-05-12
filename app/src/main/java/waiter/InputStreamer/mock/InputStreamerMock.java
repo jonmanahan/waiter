@@ -1,14 +1,8 @@
 package waiter.InputStreamer.mock;
 
-import waiter.InputStreamer.Reader;
+import waiter.InputStreamer.Readable;
 
-public class InputStreamerMock implements Reader {
-
-    private final String userInput;
-
-    public InputStreamerMock(String userInput) {
-        this.userInput = userInput;
-    }
+public record InputStreamerMock(String userInput) implements Readable {
 
     public String readLine() {
         return this.userInput;

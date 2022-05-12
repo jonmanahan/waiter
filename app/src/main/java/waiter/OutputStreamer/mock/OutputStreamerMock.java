@@ -1,8 +1,8 @@
 package waiter.OutputStreamer.mock;
 
-import waiter.OutputStreamer.Writer;
+import waiter.OutputStreamer.Writable;
 
-public class OutputStreamerMock implements Writer {
+public class OutputStreamerMock implements Writable {
 
     public String writtenOutput;
 

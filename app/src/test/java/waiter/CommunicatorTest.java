@@ -1,6 +1,7 @@
 package waiter;
 
-import waiter.ClientConnection.Connection;
+import waiter.ClientConnection.Connectable;
+import waiter.Communicator.Communicator;
 import waiter.Listener.mock.ListenerMock;
 import waiter.Messenger.mock.MessengerMock;
 
@@ -9,16 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
-public class CommunicatorTest {
+class CommunicatorTest {
 
     @Test
     void establishesCommunication() throws IOException {
-        String userInput = "foo";
-        ListenerMock listenerMock = new ListenerMock(userInput);
+        ListenerMock listenerMock = new ListenerMock("foo");
         MessengerMock messengerMock = new MessengerMock();
-        Communicator communicator = new Communicator(listenerMock, messengerMock);
+        Communicator communicator = new Communicator(listenerMock, messengerMock, 4424);
         communicator.communicate();
-        Connection clientConnectionMock = messengerMock.calledWith;
-        assertEquals(userInput, clientConnectionMock.read().open());
+        Connectable clientConnectionMock = messengerMock.calledWith;
+        assertEquals("foo", clientConnectionMock.read().open());
     }
 }

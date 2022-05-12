@@ -1,10 +1,12 @@
 package waiter.Listener.mock;
 
-import waiter.Listener.Awaiter;
-import waiter.ClientConnection.Connection;
+import waiter.Listener.Awaitable;
+import waiter.ClientConnection.Connectable;
 import waiter.ClientConnection.mock.ClientConnectionMock;
 
-public class ListenerMock implements Awaiter {
+import java.net.ServerSocket;
+
+public class ListenerMock implements Awaitable {
 
     String userInput;
 
@@ -12,7 +14,7 @@ public class ListenerMock implements Awaiter {
         this.userInput = userInput;
     }
 
-    public Connection awaitClient() {
+    public Connectable awaitClient(ServerSocket serverSocket) {
         return new ClientConnectionMock(this.userInput);
     }
 }
