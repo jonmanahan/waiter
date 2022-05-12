@@ -1,16 +1,16 @@
 package waiter;
 
-import waiter.Communicator.Reporter;
+import waiter.Communicator.Reportable;
 
 import java.io.IOException;
 import java.net.SocketException;
 
-record EchoServer(Reporter reporter) {
+record EchoServer(Reportable reportable) {
 
     public void start() {
 
         try {
-            reporter.communicate();
+            reportable.communicate();
         } catch (SocketException exception) {
             System.out.println("Sorry, connection could not be established or has been broken, please try running the server and connecting again");
         } catch (IOException exception) {

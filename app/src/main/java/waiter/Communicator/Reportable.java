@@ -2,7 +2,7 @@ package waiter.Communicator;
 
 import java.io.IOException;
 
-public interface Reporter {
+public interface Reportable {
 
     void communicate() throws IOException;
 }

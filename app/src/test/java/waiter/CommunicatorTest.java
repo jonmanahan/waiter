@@ -1,6 +1,6 @@
 package waiter;
 
-import waiter.ClientConnection.Connection;
+import waiter.ClientConnection.Connectable;
 import waiter.Communicator.Communicator;
 import waiter.Listener.mock.ListenerMock;
 import waiter.Messenger.mock.MessengerMock;
@@ -18,7 +18,7 @@ class CommunicatorTest {
         MessengerMock messengerMock = new MessengerMock();
         Communicator communicator = new Communicator(listenerMock, messengerMock, 4424);
         communicator.communicate();
-        Connection clientConnectionMock = messengerMock.calledWith;
+        Connectable clientConnectionMock = messengerMock.calledWith;
         assertEquals("foo", clientConnectionMock.read().open());
     }
 }
