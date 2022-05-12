@@ -17,6 +17,7 @@ public class Listener implements Awaitable {
 
     public Connectable awaitClient(ServerSocket serverSocket) throws IOException {
         Socket socket = serverSocket.accept();
+
         return new ClientConnection(
                 new InputStreamer(new BufferedReader(new InputStreamReader(socket.getInputStream()))),
                 new OutputStreamer(new PrintStream(socket.getOutputStream()))
