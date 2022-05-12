@@ -5,6 +5,9 @@ import waiter.ClientConnection.Connection;
 import waiter.InputStreamer.InputStreamer;
 import waiter.OutputStreamer.OutputStreamer;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,6 +17,9 @@ public class Listener implements Awaiter {
 
     public Connection awaitClient(ServerSocket serverSocket) throws IOException {
         Socket socket = serverSocket.accept();
-        return new ClientConnection(new InputStreamer(socket), new OutputStreamer(socket));
+        return new ClientConnection(
+                new InputStreamer(new BufferedReader(new InputStreamReader(socket.getInputStream()))),
+                new OutputStreamer(new PrintStream(socket.getOutputStream()))
+        );
     }
 }
