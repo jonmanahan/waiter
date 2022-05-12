@@ -14,7 +14,7 @@ public record EchoServer(Reporter reporter) {
         } catch (SocketException exception) {
             System.out.println("Sorry, connection could not be established or has been broken, please try running the server and connecting again");
         } catch (IOException exception) {
-            System.out.println("Sorry, there was a problem with your input, please try running the server and connecting again");
+            System.out.println("Sorry, an error occurred when sending/receiving a message, please try running the server and connecting again");
         }
     }
 }
