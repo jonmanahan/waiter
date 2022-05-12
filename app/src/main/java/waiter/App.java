@@ -8,7 +8,7 @@ import waiter.EchoProtocol.EchoProtocol;
 import waiter.Listener.Listener;
 import waiter.Messenger.Messenger;
 
-public class App {
+class App {
 
     public static void main(String[] args) {
 

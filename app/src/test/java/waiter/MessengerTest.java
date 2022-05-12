@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
-public class MessengerTest {
+class MessengerTest {
     @Test
     void echosMessage() throws IOException {
         ClientConnectionMock clientConnectionMock = new ClientConnectionMock("Sample user message");

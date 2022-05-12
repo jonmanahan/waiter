@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
-public class ClientConnectionTest {
+class ClientConnectionTest {
 
     @Test
     void readsMessage() throws IOException {

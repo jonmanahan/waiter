@@ -13,18 +13,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.SocketException;
 
-public class EchoServerTest {
+class EchoServerTest {
 
     private final PrintStream originalSystemOut = System.out;
     private final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         System.setOut(new PrintStream(output));
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         System.setOut(originalSystemOut);
     }
 
@@ -32,7 +32,7 @@ public class EchoServerTest {
     void catchesIOException() {
         EchoServer echoServer = new EchoServer(new CommunicatorMock(new IOException()));
         echoServer.start();
-        assertEquals("Sorry, there was a problem with your input, please try running the server and connecting again", output.toString().trim());
+        assertEquals("Sorry, an error occurred when sending/receiving a message, please try running the server and connecting again", output.toString().trim());
     }
 
     @Test
