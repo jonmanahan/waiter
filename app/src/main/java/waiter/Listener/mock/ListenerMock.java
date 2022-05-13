@@ -3,9 +3,7 @@ package waiter.Listener.mock;
 import waiter.Listener.Awaitable;
 import waiter.ClientConnection.Connectable;
 import waiter.ClientConnection.mock.ClientConnectionMock;
-import waiter.Reactive;
-
-import java.net.ServerSocket;
+import waiter.Reactor.Reactive;
 
 public class ListenerMock implements Awaitable {
 

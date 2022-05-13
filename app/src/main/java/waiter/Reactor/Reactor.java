@@ -1,4 +1,7 @@
-package waiter;
+package waiter.Reactor;
+
+import waiter.Interactor.Interactive;
+import waiter.Interactor.Interactor;
 
 import java.io.IOException;
 import java.net.ServerSocket;

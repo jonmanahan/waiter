@@ -1,4 +1,4 @@
-package waiter;
+package waiter.Interactor;
 
 import java.io.IOException;
 import java.io.InputStream;

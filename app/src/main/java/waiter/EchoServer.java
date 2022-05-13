@@ -1,6 +1,7 @@
 package waiter;
 
 import waiter.Communicator.Reportable;
+import waiter.Reactor.Reactor;
 
 import java.io.IOException;
 import java.net.ServerSocket;

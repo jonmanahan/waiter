@@ -1,6 +1,6 @@
 package waiter.Communicator;
 
-import waiter.Reactive;
+import waiter.Reactor.Reactive;
 
 import java.io.IOException;
 

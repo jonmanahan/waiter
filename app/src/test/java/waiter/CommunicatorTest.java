@@ -6,6 +6,8 @@ import waiter.Listener.mock.ListenerMock;
 import waiter.Messenger.mock.MessengerMock;
 
 import org.junit.jupiter.api.Test;
+import waiter.Reactor.mock.ReactorMock;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;

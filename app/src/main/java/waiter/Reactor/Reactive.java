@@ -1,4 +1,6 @@
-package waiter;
+package waiter.Reactor;
+
+import waiter.Interactor.Interactive;
 
 import java.io.IOException;
 

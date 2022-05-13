@@ -1,4 +1,6 @@
-package waiter;
+package waiter.Interactor.mock;
+
+import waiter.Interactor.Interactive;
 
 import java.io.IOException;
 import java.io.InputStream;

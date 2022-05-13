@@ -1,11 +1,15 @@
-package waiter;
+package waiter.Reactor.mock;
+
+import waiter.Interactor.Interactive;
+import waiter.Interactor.mock.InteractorMock;
+import waiter.Reactor.Reactive;
 
 public class ReactorMock implements Reactive {
 
     private final int desiredNumberOfEchos;
     public int currentNumberOfEchos;
 
-    ReactorMock(int desiredNumberOfEchos) {
+    public ReactorMock(int desiredNumberOfEchos) {
         this.desiredNumberOfEchos = desiredNumberOfEchos;
         this.currentNumberOfEchos = 0;
     }

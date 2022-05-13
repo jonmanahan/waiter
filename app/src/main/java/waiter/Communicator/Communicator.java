@@ -3,7 +3,7 @@ package waiter.Communicator;
 import waiter.ClientConnection.Connectable;
 import waiter.Listener.Awaitable;
 import waiter.Messenger.Transportable;
-import waiter.Reactive;
+import waiter.Reactor.Reactive;
 
 import java.io.IOException;
 

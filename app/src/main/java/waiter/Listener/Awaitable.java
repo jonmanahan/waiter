@@ -1,7 +1,7 @@
 package waiter.Listener;
 
 import waiter.ClientConnection.Connectable;
-import waiter.Reactive;
+import waiter.Reactor.Reactive;
 
 import java.io.IOException;
 

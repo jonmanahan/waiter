@@ -1,7 +1,7 @@
 package waiter.Communicator.mock;
 
 import waiter.Communicator.Reportable;
-import waiter.Reactive;
+import waiter.Reactor.Reactive;
 
 
 import java.io.IOException;

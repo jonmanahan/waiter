@@ -3,6 +3,7 @@ package waiter;
 import org.junit.jupiter.api.Test;
 import waiter.ClientConnection.Connectable;
 import waiter.Listener.Listener;
+import waiter.Reactor.mock.ReactorMock;
 
 import java.io.IOException;
 
