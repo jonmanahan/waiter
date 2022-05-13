@@ -31,14 +31,14 @@ class EchoServerTest {
     @Test
     void catchesIOException() {
         EchoServer echoServer = new EchoServer(new CommunicatorMock(new IOException()));
-        echoServer.start();
+        echoServer.start(4424);
         assertEquals("Sorry, an error occurred when sending/receiving a message, please try running the server and connecting again", output.toString().trim());
     }
 
     @Test
     void catchesSocketException() {
         EchoServer echoServer = new EchoServer(new CommunicatorMock(new SocketException()));
-        echoServer.start();
+        echoServer.start(4424);
         assertEquals("Sorry, connection could not be established or has been broken, please try running the server and connecting again", output.toString().trim());
     }
 }

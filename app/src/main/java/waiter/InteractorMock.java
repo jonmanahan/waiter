@@ -12,7 +12,7 @@ public class InteractorMock implements Interactive {
     public InputStream getInputStream() {
         inputStream = new InputStream() {
             public int read() {
-                return 0;
+                return -1;
             }
         };
 
