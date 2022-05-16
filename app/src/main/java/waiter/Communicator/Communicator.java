@@ -3,16 +3,18 @@ package waiter.Communicator;
 import waiter.ClientConnection.Connectable;
 import waiter.Listener.Awaitable;
 import waiter.Messenger.Transportable;
+import waiter.Reactor.Reactive;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 
-public record Communicator(Awaitable awaitable, Transportable transportable, int port) implements Reportable {
+public record Communicator(Awaitable awaitable, Transportable transportable) implements Reportable {
 
-    public void communicate() throws IOException {
+    public void communicate(Reactive reactive) throws IOException {
 
-        Connectable connectable = this.awaitable.awaitClient(new ServerSocket(this.port));
+        Connectable connectable = this.awaitable.awaitClient(reactive);
 
-        this.transportable.transport(connectable);
+        while(!reactive.isClosed()) {
+            this.transportable.transport(connectable);
+        }
     }
 }
