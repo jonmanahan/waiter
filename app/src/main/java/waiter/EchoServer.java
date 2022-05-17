@@ -11,8 +11,8 @@ record EchoServer(Reportable reportable) {
 
     public void start(int port) {
 
-        try {
-            reportable.communicate(new Reactor(new ServerSocket(port)));
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            reportable.communicate(new Reactor(serverSocket));
         } catch (SocketException exception) {
             System.out.println("Sorry, connection could not be established or has been broken, please try running the server and connecting again");
         } catch (IOException exception) {

@@ -52,7 +52,7 @@ class EchoServerTest {
     void callsCommunicate() {
         CommunicatorMock communicatorMock = new CommunicatorMock(false, new IOException());
         EchoServer echoServer = new EchoServer(communicatorMock);
-        echoServer.start(4425);
+        echoServer.start(4424);
         assertTrue(communicatorMock.communicateWasCalled);
     }
 }
