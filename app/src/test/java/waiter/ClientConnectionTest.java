@@ -14,15 +14,15 @@ class ClientConnectionTest {
     @Test
     void readsMessage() throws IOException {
         String input = "foo";
-        String message = new ClientConnection(new InputStreamerMock(input), new OutputStreamerMock()).read().open();
+        String message = new ClientConnection(new InteractorMock(), new InputStreamerMock(input), new OutputStreamerMock()).read();
         assertEquals(message, input);
     }
 
     @Test
     void writesMessage() throws IOException {
         OutputStreamerMock outputStreamerMock = new OutputStreamerMock();
-        ClientConnection clientConnection = new ClientConnection(new InputStreamerMock("foo"), outputStreamerMock);
-        clientConnection.write(new Message("foo"));
+        ClientConnection clientConnection = new ClientConnection(new InteractorMock(), new InputStreamerMock("foo"), outputStreamerMock);
+        clientConnection.write("foo");
         assertEquals(outputStreamerMock.writtenOutput, "foo");
     }
 }
