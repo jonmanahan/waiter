@@ -22,7 +22,7 @@ class CommunicatorTest {
         ReactorMock reactor = new ReactorMock(5);
         communicator.communicate(reactor);
         Connectable clientConnectionMock = messengerMock.calledWith;
-        assertEquals("foo", clientConnectionMock.read().open());
+        assertEquals("foo", clientConnectionMock.read());
         assertEquals(reactor.currentNumberOfEchos, 5);
     }
 }

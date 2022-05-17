@@ -1,11 +1,11 @@
 package waiter.EchoProtocol.mock;
 
-import waiter.Message;
 import waiter.EchoProtocol.Protocol;
 
 public class EchoProtocolMock implements Protocol {
 
-    public Message serve(Message mockMessage) {
+    public String serve(String mockMessage) {
         return mockMessage;
     }
 }
+

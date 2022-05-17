@@ -19,6 +19,7 @@ public class Listener implements Awaitable {
         Interactive interactive = reactive.accept();
 
         return new ClientConnection(
+                interactive,
                 new InputStreamer(new BufferedReader(new InputStreamReader(interactive.getInputStream()))),
                 new OutputStreamer(new PrintStream(interactive.getOutputStream()))
         );

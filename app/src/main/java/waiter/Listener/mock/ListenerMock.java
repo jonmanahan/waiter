@@ -14,6 +14,6 @@ public class ListenerMock implements Awaitable {
     }
 
     public Connectable awaitClient(Reactive reactive) {
-        return new ClientConnectionMock(this.userInput);
+        return new ClientConnectionMock(this.userInput, 1);
     }
 }

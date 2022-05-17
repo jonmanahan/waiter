@@ -1,19 +1,23 @@
 package waiter.ClientConnection;
 
 import waiter.InputStreamer.Readable;
-import waiter.Message;
+import waiter.Interactor.Interactive;
 import waiter.OutputStreamer.Writable;
 
 import java.io.IOException;
 
-public record ClientConnection(Readable readable, Writable writable) implements Connectable {
+public record ClientConnection(Interactive interactive, Readable readable, Writable writable) implements Connectable {
 
-    public Message read() throws IOException {
-        String message = this.readable.readLine();
-        return new Message(message);
+    public String read() throws IOException {
+        return this.readable.readLine();
     }
 
-    public void write(Message toClient) throws IOException {
-        writable.writeLine(toClient.open());
+    public void write(String toClient) throws IOException {
+        writable.writeLine(toClient);
+    }
+
+    public void close() throws IOException {
+        this.interactive.close();
     }
 }
+

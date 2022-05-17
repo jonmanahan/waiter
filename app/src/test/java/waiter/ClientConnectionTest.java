@@ -2,6 +2,7 @@ package waiter;
 
 import waiter.ClientConnection.ClientConnection;
 import waiter.InputStreamer.mock.InputStreamerMock;
+import waiter.Interactor.mock.InteractorMock;
 import waiter.OutputStreamer.mock.OutputStreamerMock;
 
 import org.junit.jupiter.api.Test;
