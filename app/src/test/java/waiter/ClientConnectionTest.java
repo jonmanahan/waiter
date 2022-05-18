@@ -7,6 +7,7 @@ import waiter.OutputStreamer.mock.OutputStreamerMock;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
@@ -25,5 +26,13 @@ class ClientConnectionTest {
         ClientConnection clientConnection = new ClientConnection(new InteractorMock(), new InputStreamerMock("foo"), outputStreamerMock);
         clientConnection.write("foo");
         assertEquals(outputStreamerMock.writtenOutput, "foo");
+    }
+
+    @Test
+    void closesSocket() throws IOException {
+        InteractorMock interactorMock = new InteractorMock();
+        ClientConnection clientConnection = new ClientConnection(interactorMock, new InputStreamerMock("foo"), new OutputStreamerMock());
+        clientConnection.close();
+        assertTrue(interactorMock.connectionClosed);
     }
 }

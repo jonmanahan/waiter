@@ -5,18 +5,40 @@ import waiter.EchoProtocol.mock.EchoProtocolMock;
 import waiter.Messenger.Messenger;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 class MessengerTest {
+
+    String clientHasDisconnected;
+
+    @BeforeEach
+    void setUp() {
+        clientHasDisconnected = null;
+    }
+
     @Test
-    void echosMessage() throws IOException {
-        ClientConnectionMock clientConnectionMock = new ClientConnectionMock("foo", 5);
+    void echosSingleMessage() throws IOException {
+        String[] clientInputs = {"foo", clientHasDisconnected};
+        String[] expected = Arrays.copyOfRange(clientInputs, 0, clientInputs.length - 1);
+        ClientConnectionMock clientConnectionMock = new ClientConnectionMock(clientInputs);
         EchoProtocolMock echoProtocolMock = new EchoProtocolMock();
         Messenger messenger = new Messenger(echoProtocolMock);
         messenger.transport(clientConnectionMock);
-        assertEquals(5, clientConnectionMock.currentNumberOfMessages);
-        assertEquals("foo", clientConnectionMock.toClient);
+        assertArrayEquals(expected, clientConnectionMock.echoedInputs);
+    }
+
+    @Test
+    void echosManyMessages() throws IOException {
+        String[] clientInputs = {"foo", "bar", "baz", clientHasDisconnected};
+        String[] expected = Arrays.copyOfRange(clientInputs, 0, clientInputs.length - 1);
+        ClientConnectionMock clientConnectionMock = new ClientConnectionMock(clientInputs);
+        EchoProtocolMock echoProtocolMock = new EchoProtocolMock();
+        Messenger messenger = new Messenger(echoProtocolMock);
+        messenger.transport(clientConnectionMock);
+        assertArrayEquals(expected, clientConnectionMock.echoedInputs);
     }
 }

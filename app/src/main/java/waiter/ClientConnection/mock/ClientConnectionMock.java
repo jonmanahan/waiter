@@ -4,30 +4,23 @@ import waiter.ClientConnection.Connectable;
 
 public class ClientConnectionMock implements Connectable {
 
-    private final String userInput;
-    public int currentNumberOfMessages;
-    private int desiredNumberOfMessages;
-    public String toClient;
+    private final String[] clientInputs;
+    private int inputIndex;
+    public String[] echoedInputs;
 
-    public ClientConnectionMock(String userInput, int desiredNumberOfMessages) {
-        this.desiredNumberOfMessages = desiredNumberOfMessages;
-        this.currentNumberOfMessages = 0;
-        this.userInput = userInput;
-        this.toClient = "";
+    public ClientConnectionMock(String[] clientInputs) {
+        this.clientInputs = clientInputs;
+        this.echoedInputs = new String[clientInputs.length - 1];
+        this.inputIndex = 0;
     }
 
     public String read() {
-        if(this.currentNumberOfMessages < this.desiredNumberOfMessages) {
-            this.currentNumberOfMessages ++;
-            return this.userInput;
-        }
-        else {
-            return null;
-        }
+        return this.clientInputs[this.inputIndex];
     }
 
     public void write(String toClient) {
-        this.toClient = toClient;
+        this.echoedInputs[this.inputIndex] = this.clientInputs[this.inputIndex];
+        this.inputIndex ++;
     }
 
     public void close() {}

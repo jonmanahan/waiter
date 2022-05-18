@@ -6,23 +6,20 @@ import waiter.Reactor.Reactive;
 
 public class ReactorMock implements Reactive {
 
-    private final int desiredNumberOfEchos;
-    public int currentNumberOfEchos;
+    private final String[] clientRequests;
+    public int numberOfAcceptedClients;
 
-    public ReactorMock(int desiredNumberOfEchos) {
-        this.desiredNumberOfEchos = desiredNumberOfEchos;
-        this.currentNumberOfEchos = 0;
+    public ReactorMock(String[] clientRequests) {
+        this.clientRequests = clientRequests;
+        this.numberOfAcceptedClients = 0;
     }
 
     public Interactive accept() {
+        this.numberOfAcceptedClients += 1;
         return new InteractorMock();
     }
 
     public boolean isClosed() {
-        if(this.currentNumberOfEchos >= this.desiredNumberOfEchos) {
-            return true;
-        }
-        this.currentNumberOfEchos += 1;
-        return false;
+        return this.numberOfAcceptedClients >= this.clientRequests.length;
     }
 }

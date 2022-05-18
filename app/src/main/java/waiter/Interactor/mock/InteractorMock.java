@@ -10,6 +10,12 @@ public class InteractorMock implements Interactive {
 
     private InputStream inputStream = null;
     private OutputStream outputStream = null;
+    public boolean connectionClosed;
+
+    public InteractorMock() {
+        this.connectionClosed = false;
+    }
+
 
     public InputStream getInputStream() {
         inputStream = new InputStream() {
@@ -36,5 +42,6 @@ public class InteractorMock implements Interactive {
             inputStream.close();
             outputStream.close();
         }
+        this.connectionClosed = true;
     }
 }
