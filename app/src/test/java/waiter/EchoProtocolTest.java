@@ -9,9 +9,9 @@ class EchoProtocolTest {
 
     @Test
     void messageGivenBack() {
-        Message fromClient = new Message("Sample user message");
+        String fromClient = "Sample user message";
         EchoProtocol echoProtocol = new EchoProtocol();
-        Message response = echoProtocol.serve(fromClient);
+        String response = echoProtocol.serve(fromClient);
         assertEquals(response, fromClient);
     }
 }

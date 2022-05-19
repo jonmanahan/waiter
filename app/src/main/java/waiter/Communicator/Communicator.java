@@ -11,10 +11,11 @@ public record Communicator(Awaitable awaitable, Transportable transportable) imp
 
     public void communicate(Reactive reactive) throws IOException {
 
-        Connectable connectable = this.awaitable.awaitClient(reactive);
-
         while(!reactive.isClosed()) {
+            Connectable connectable = this.awaitable.awaitClient(reactive);
+
             this.transportable.transport(connectable);
+            connectable.close();
         }
     }
 }

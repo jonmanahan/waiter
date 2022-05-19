@@ -1,23 +1,28 @@
 package waiter.ClientConnection.mock;
 
 import waiter.ClientConnection.Connectable;
-import waiter.Message;
 
 public class ClientConnectionMock implements Connectable {
 
-    private final String userInput;
-    public String toClient;
+    private final String[] clientInputs;
+    private int inputIndex;
+    public String[] echoedInputs;
 
-    public ClientConnectionMock(String userInput) {
-        this.userInput = userInput;
-        this.toClient = "";
+    public ClientConnectionMock(String[] clientInputs) {
+        this.clientInputs = clientInputs;
+        this.echoedInputs = new String[clientInputs.length - 1];
+        this.inputIndex = 0;
     }
 
-    public Message read() {
-        return new Message(this.userInput);
+    public String read() {
+        return this.clientInputs[this.inputIndex];
     }
 
-    public void write(Message toClient) {
-        this.toClient = toClient.open();
+    public void write(String toClient) {
+        this.echoedInputs[this.inputIndex] = this.clientInputs[this.inputIndex];
+        this.inputIndex ++;
     }
+
+    public void close() {}
 }
+

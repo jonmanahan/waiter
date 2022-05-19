@@ -5,15 +5,12 @@ import waiter.ClientConnection.Connectable;
 import waiter.ClientConnection.mock.ClientConnectionMock;
 import waiter.Reactor.Reactive;
 
-public class ListenerMock implements Awaitable {
+import java.io.IOException;
 
-    String userInput;
+public record ListenerMock(String[] userInputs) implements Awaitable {
 
-    public ListenerMock(String userInput) {
-        this.userInput = userInput;
-    }
-
-    public Connectable awaitClient(Reactive reactive) {
-        return new ClientConnectionMock(this.userInput);
+    public Connectable awaitClient(Reactive reactive) throws IOException {
+        reactive.accept();
+        return new ClientConnectionMock(this.userInputs);
     }
 }

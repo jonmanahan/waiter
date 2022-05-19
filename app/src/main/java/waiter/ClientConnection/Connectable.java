@@ -1,12 +1,13 @@
 package waiter.ClientConnection;
 
-import waiter.Message;
-
 import java.io.IOException;
 
 public interface Connectable {
 
-    Message read() throws IOException;
+    String read() throws IOException;
 
-    void write(Message toClient) throws IOException;
+    void write(String toClient) throws IOException;
+
+    void close() throws IOException;
 }
+
