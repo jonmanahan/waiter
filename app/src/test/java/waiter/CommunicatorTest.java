@@ -17,11 +17,12 @@ class CommunicatorTest {
 
     @BeforeEach
     void setUp() {
+        //Needs to be null to be used to exit the client I/O loop
         clientHasDisconnected = null;
     }
 
     @Test
-    void communicatesProvidedInput() throws IOException {
+    void shouldAllowSequentialConnections() throws IOException {
         String[] clientRequests = {"curl foo1", "curl foo2", "curl foo3", "curl foo4"};
         ReactorMock reactor = new ReactorMock(clientRequests);
 

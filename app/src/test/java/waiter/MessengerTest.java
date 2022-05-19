@@ -17,28 +17,27 @@ class MessengerTest {
 
     @BeforeEach
     void setUp() {
+        //Needs to be null to be used to exit the client I/O loop
         clientHasDisconnected = null;
     }
 
     @Test
     void echosSingleMessage() throws IOException {
         String[] clientInputs = {"foo", clientHasDisconnected};
-        String[] expected = Arrays.copyOfRange(clientInputs, 0, clientInputs.length - 1);
         ClientConnectionMock clientConnectionMock = new ClientConnectionMock(clientInputs);
 
         new Messenger(new EchoProtocolMock()).transport(clientConnectionMock);
 
-        assertArrayEquals(expected, clientConnectionMock.echoedInputs);
+        assertArrayEquals(new String[]{"foo"}, clientConnectionMock.echoedInputs);
     }
 
     @Test
     void echosManyMessages() throws IOException {
         String[] clientInputs = {"foo", "bar", "baz", clientHasDisconnected};
-        String[] expected = Arrays.copyOfRange(clientInputs, 0, clientInputs.length - 1);
         ClientConnectionMock clientConnectionMock = new ClientConnectionMock(clientInputs);
 
         new Messenger(new EchoProtocolMock()).transport(clientConnectionMock);
 
-        assertArrayEquals(expected, clientConnectionMock.echoedInputs);
+        assertArrayEquals(new String[]{"foo", "bar", "baz"}, clientConnectionMock.echoedInputs);
     }
 }
