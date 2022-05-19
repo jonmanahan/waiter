@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 class MessengerTest {
 
