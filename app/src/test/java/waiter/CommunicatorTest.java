@@ -23,11 +23,13 @@ class CommunicatorTest {
     @Test
     void communicatesProvidedInput() throws IOException {
         String[] clientRequests = {"curl foo1", "curl foo2", "curl foo3", "curl foo4"};
-        ListenerMock listenerMock = new ListenerMock(new String[]{"foo", clientHasDisconnected});
-        MessengerMock messengerMock = new MessengerMock();
-        Communicator communicator = new Communicator(listenerMock, messengerMock);
         ReactorMock reactor = new ReactorMock(clientRequests);
-        communicator.communicate(reactor);
+
+        new Communicator(
+                new ListenerMock(new String[]{"foo", clientHasDisconnected}),
+                new MessengerMock()
+        ).communicate(reactor);
+
         assertEquals(clientRequests.length, reactor.numberOfAcceptedClients);
     }
 }

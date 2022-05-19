@@ -16,23 +16,39 @@ class ClientConnectionTest {
     @Test
     void readsMessage() throws IOException {
         String input = "foo";
-        String message = new ClientConnection(new InteractorMock(), new InputStreamerMock(input), new OutputStreamerMock()).read();
+
+        String message = new ClientConnection(
+                new InteractorMock(),
+                new InputStreamerMock(input),
+                new OutputStreamerMock()
+        ).read();
+
         assertEquals(message, input);
     }
 
     @Test
     void writesMessage() throws IOException {
         OutputStreamerMock outputStreamerMock = new OutputStreamerMock();
-        ClientConnection clientConnection = new ClientConnection(new InteractorMock(), new InputStreamerMock("foo"), outputStreamerMock);
-        clientConnection.write("foo");
+
+        new ClientConnection(
+                new InteractorMock(),
+                new InputStreamerMock("foo"),
+                outputStreamerMock
+        ).write("foo");
+
         assertEquals(outputStreamerMock.writtenOutput, "foo");
     }
 
     @Test
     void closesSocket() throws IOException {
         InteractorMock interactorMock = new InteractorMock();
-        ClientConnection clientConnection = new ClientConnection(interactorMock, new InputStreamerMock("foo"), new OutputStreamerMock());
-        clientConnection.close();
+
+        new ClientConnection(
+                interactorMock,
+                new InputStreamerMock("foo"),
+                new OutputStreamerMock()
+        ).close();
+
         assertTrue(interactorMock.connectionClosed);
     }
 }

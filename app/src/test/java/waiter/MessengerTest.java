@@ -25,9 +25,9 @@ class MessengerTest {
         String[] clientInputs = {"foo", clientHasDisconnected};
         String[] expected = Arrays.copyOfRange(clientInputs, 0, clientInputs.length - 1);
         ClientConnectionMock clientConnectionMock = new ClientConnectionMock(clientInputs);
-        EchoProtocolMock echoProtocolMock = new EchoProtocolMock();
-        Messenger messenger = new Messenger(echoProtocolMock);
-        messenger.transport(clientConnectionMock);
+
+        new Messenger(new EchoProtocolMock()).transport(clientConnectionMock);
+
         assertArrayEquals(expected, clientConnectionMock.echoedInputs);
     }
 
@@ -36,9 +36,9 @@ class MessengerTest {
         String[] clientInputs = {"foo", "bar", "baz", clientHasDisconnected};
         String[] expected = Arrays.copyOfRange(clientInputs, 0, clientInputs.length - 1);
         ClientConnectionMock clientConnectionMock = new ClientConnectionMock(clientInputs);
-        EchoProtocolMock echoProtocolMock = new EchoProtocolMock();
-        Messenger messenger = new Messenger(echoProtocolMock);
-        messenger.transport(clientConnectionMock);
+
+        new Messenger(new EchoProtocolMock()).transport(clientConnectionMock);
+
         assertArrayEquals(expected, clientConnectionMock.echoedInputs);
     }
 }
