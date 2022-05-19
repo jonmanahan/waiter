@@ -17,7 +17,8 @@ class MessengerTest {
 
     @BeforeEach
     void setUp() {
-        //Needs to be null to be used to exit the client I/O loop
+        // Needs to be null because reading the input stream returns null when the sockets are disconnected
+        // which signals the client is disconnected
         clientHasDisconnected = null;
     }
 
