@@ -5,7 +5,6 @@ import net.jqwik.api.Property;
 import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.NotBlank;
 import net.jqwik.api.constraints.Size;
-import net.jqwik.api.constraints.StringLength;
 import org.junit.jupiter.api.BeforeEach;
 import waiter.ClientConnection.mock.ClientConnectionMock;
 import waiter.EchoProtocol.mock.EchoProtocolMock;
@@ -38,7 +37,7 @@ class MessengerTest {
     }
 
     @Property(tries = 5)
-    void echosManyMessages(@ForAll @Size(3) List<@AlphaChars @StringLength(min = 1, max = 10) String> userInputs) throws IOException {
+    void echosManyMessages(@ForAll @Size(3) List<@AlphaChars @NotBlank String> userInputs) throws IOException {
         String[] expectedInputs = userInputs.toArray(new String[3]);
         userInputs.add(clientHasDisconnected);
         String[] clientInputs = userInputs.toArray(new String[4]);
