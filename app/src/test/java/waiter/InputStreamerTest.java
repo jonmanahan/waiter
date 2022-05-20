@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InputStreamerTest {
 
-    @Property(tries = 5)
+    @Property
     void readsInputUsingProvidedBufferReader(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
         String readInput = new InputStreamer(new BufferedReader(new StringReader(userInput))).readLine();
 

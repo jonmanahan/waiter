@@ -26,7 +26,7 @@ class MessengerTest {
         clientHasDisconnected = null;
     }
 
-    @Property(tries = 5)
+    @Property
     void echosSingleMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
         String[] clientInputs = {userInput, clientHasDisconnected};
         ClientConnectionMock clientConnectionMock = new ClientConnectionMock(clientInputs);
@@ -36,7 +36,7 @@ class MessengerTest {
         assertArrayEquals(new String[]{userInput}, clientConnectionMock.echoedInputs);
     }
 
-    @Property(tries = 5)
+    @Property
     void echosManyMessages(@ForAll @Size(3) List<@AlphaChars @NotBlank String> userInputs) throws IOException {
         String[] expectedInputs = userInputs.toArray(new String[3]);
         userInputs.add(clientHasDisconnected);

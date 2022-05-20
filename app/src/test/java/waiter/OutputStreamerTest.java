@@ -22,7 +22,7 @@ public class OutputStreamerTest {
         System.setOut(originalSystemOut);
     }
 
-    @Property(tries = 5)
+    @Property
     void writesOutputUsingProvidedPrintStream(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(output);

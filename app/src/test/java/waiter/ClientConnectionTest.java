@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ClientConnectionTest {
 
-    @Property(tries = 5)
+    @Property
     void readsMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
         String message = new ClientConnection(
                 new InteractorMock(),
@@ -28,7 +28,7 @@ class ClientConnectionTest {
         assertEquals(message, userInput);
     }
 
-    @Property(tries = 5)
+    @Property
     void writesMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
         OutputStreamerMock outputStreamerMock = new OutputStreamerMock();
 
