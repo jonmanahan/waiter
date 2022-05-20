@@ -1,8 +1,8 @@
 package waiter;
 
-import waiter.ClientConnection.Connectable;
-import waiter.Listener.Listener;
-import waiter.Reactor.mock.ReactorMock;
+import waiter.Connectable.Connectable;
+import waiter.Awaitable.Listener;
+import waiter.Reactive.mock.ReactorMock;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;

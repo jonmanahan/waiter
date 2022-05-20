@@ -6,9 +6,9 @@ import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.NotBlank;
 import net.jqwik.api.constraints.Size;
 import org.junit.jupiter.api.BeforeEach;
-import waiter.ClientConnection.mock.ClientConnectionMock;
-import waiter.EchoProtocol.mock.EchoProtocolMock;
-import waiter.Messenger.Messenger;
+import waiter.Connectable.mock.ClientConnectionMock;
+import waiter.Protocol.mock.EchoProtocolMock;
+import waiter.Transportable.Messenger;
 
 import java.io.IOException;
 import java.util.List;

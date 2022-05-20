@@ -4,7 +4,7 @@ import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.NotBlank;
-import waiter.EchoProtocol.EchoProtocol;
+import waiter.Protocol.EchoProtocol;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

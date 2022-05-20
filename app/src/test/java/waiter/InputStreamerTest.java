@@ -4,7 +4,7 @@ import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.NotBlank;
-import waiter.InputStreamer.InputStreamer;
+import waiter.Readable.InputStreamer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
