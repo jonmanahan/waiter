@@ -1,14 +1,19 @@
 package waiter;
 
+import net.jqwik.api.ForAll;
+import net.jqwik.api.Property;
+import net.jqwik.api.constraints.AlphaChars;
+import net.jqwik.api.constraints.NotBlank;
+import net.jqwik.api.constraints.Size;
+import org.junit.jupiter.api.BeforeEach;
 import waiter.ClientConnection.mock.ClientConnectionMock;
 import waiter.EchoProtocol.mock.EchoProtocolMock;
 import waiter.Messenger.Messenger;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-
 import java.io.IOException;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class MessengerTest {
 
@@ -21,23 +26,25 @@ class MessengerTest {
         clientHasDisconnected = null;
     }
 
-    @Test
-    void echosSingleMessage() throws IOException {
-        String[] clientInputs = {"foo", clientHasDisconnected};
+    @Property
+    void echosSingleMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
+        String[] clientInputs = {userInput, clientHasDisconnected};
         ClientConnectionMock clientConnectionMock = new ClientConnectionMock(clientInputs);
 
         new Messenger(new EchoProtocolMock()).transport(clientConnectionMock);
 
-        assertArrayEquals(new String[]{"foo"}, clientConnectionMock.echoedInputs);
+        assertArrayEquals(new String[]{userInput}, clientConnectionMock.echoedInputs);
     }
 
-    @Test
-    void echosManyMessages() throws IOException {
-        String[] clientInputs = {"foo", "bar", "baz", clientHasDisconnected};
+    @Property
+    void echosManyMessages(@ForAll @Size(3) List<@AlphaChars @NotBlank String> userInputs) throws IOException {
+        String[] expectedInputs = userInputs.toArray(new String[3]);
+        userInputs.add(clientHasDisconnected);
+        String[] clientInputs = userInputs.toArray(new String[4]);
         ClientConnectionMock clientConnectionMock = new ClientConnectionMock(clientInputs);
 
         new Messenger(new EchoProtocolMock()).transport(clientConnectionMock);
 
-        assertArrayEquals(new String[]{"foo", "bar", "baz"}, clientConnectionMock.echoedInputs);
+        assertArrayEquals(expectedInputs, clientConnectionMock.echoedInputs);
     }
 }

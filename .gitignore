@@ -32,3 +32,6 @@ build
 
 # Ignore Idea directory
 .idea/
+
+# Jqwik
+.jqwik-*

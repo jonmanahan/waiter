@@ -1,15 +1,17 @@
 package waiter;
 
+import net.jqwik.api.ForAll;
+import net.jqwik.api.Property;
+import net.jqwik.api.constraints.AlphaChars;
+import net.jqwik.api.constraints.NotBlank;
 import waiter.EchoProtocol.EchoProtocol;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EchoProtocolTest {
 
-    @Test
-    void messageGivenBack() {
-        String fromClient = "Sample user message";
+    @Property
+    void messageGivenBack(@ForAll @AlphaChars @NotBlank String fromClient) {
         EchoProtocol echoProtocol = new EchoProtocol();
         String response = echoProtocol.serve(fromClient);
         assertEquals(response, fromClient);

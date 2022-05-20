@@ -1,20 +1,23 @@
 package waiter;
 
+import net.jqwik.api.ForAll;
+import net.jqwik.api.Property;
+import net.jqwik.api.constraints.AlphaChars;
+import net.jqwik.api.constraints.NotBlank;
 import waiter.InputStreamer.InputStreamer;
 
 import java.io.BufferedReader;
-import java.io.StringReader;
 import java.io.IOException;
+import java.io.StringReader;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InputStreamerTest {
 
-    @Test
-    void readsInputUsingProvidedBufferReader() throws IOException {
-        String userInput = "foo";
+    @Property
+    void readsInputUsingProvidedBufferReader(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
         String readInput = new InputStreamer(new BufferedReader(new StringReader(userInput))).readLine();
+
         assertEquals(userInput, readInput);
     }
 }

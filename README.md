@@ -6,6 +6,7 @@ A server that establishes a connectable with the client, receives their message 
 ## Prerequisites
 - Install [Java version 18.0.1.1](https://java.com/en/download/)
 - Install [Gradle](https://gradle.org/install/)
+- (For Tests) Update your build.gradle with [Jqwik](https://jqwik.net/docs/current/user-guide.html#how-to-use) additions as shown in the link
 
 ## Commands to build the project
 - gradle build
