@@ -1,15 +1,15 @@
 package waiter;
 
-import waiter.Communicator.Communicator;
-import waiter.Listener.mock.ListenerMock;
-import waiter.Messenger.mock.MessengerMock;
-import waiter.Reactor.mock.ReactorMock;
-
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import waiter.Awaitable.mock.ListenerMock;
+import waiter.Transportable.mock.MessengerMock;
+import waiter.Reactive.mock.ReactorMock;
+import waiter.Reportable.Communicator;
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CommunicatorTest {
 

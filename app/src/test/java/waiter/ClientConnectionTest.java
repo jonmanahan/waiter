@@ -5,10 +5,10 @@ import net.jqwik.api.Property;
 import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.NotBlank;
 import org.junit.jupiter.api.Test;
-import waiter.ClientConnection.ClientConnection;
-import waiter.InputStreamer.mock.InputStreamerMock;
-import waiter.Interactor.mock.InteractorMock;
-import waiter.OutputStreamer.mock.OutputStreamerMock;
+import waiter.Connectable.ClientConnection;
+import waiter.Readable.mock.InputStreamerMock;
+import waiter.Interactive.mock.InteractorMock;
+import waiter.Writable.mock.OutputStreamerMock;
 
 import java.io.IOException;
 

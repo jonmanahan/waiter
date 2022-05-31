@@ -3,10 +3,10 @@
  */
 package waiter;
 
-import waiter.Communicator.Communicator;
-import waiter.EchoProtocol.EchoProtocol;
-import waiter.Listener.Listener;
-import waiter.Messenger.Messenger;
+import waiter.Reportable.Communicator;
+import waiter.Protocol.EchoProtocol;
+import waiter.Awaitable.Listener;
+import waiter.Transportable.Messenger;
 
 class App {
 

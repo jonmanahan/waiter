@@ -1,6 +1,6 @@
 package waiter;
 
-import waiter.Communicator.mock.CommunicatorMock;
+import waiter.Reportable.mock.CommunicatorMock;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -5,7 +5,7 @@ import net.jqwik.api.Property;
 import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.NotBlank;
 import org.junit.jupiter.api.AfterEach;
-import waiter.OutputStreamer.OutputStreamer;
+import waiter.Writable.OutputStreamer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
