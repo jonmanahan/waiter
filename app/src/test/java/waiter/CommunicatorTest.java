@@ -24,14 +24,31 @@ class CommunicatorTest {
 
     @Test
     void shouldAllowSequentialConnections() throws IOException {
+        int numberOfThreads = 1;
         String[] clientRequests = {"curl foo1", "curl foo2", "curl foo3", "curl foo4"};
         ReactorMock reactor = new ReactorMock(clientRequests);
 
         new Communicator(
+                new ThreadGeneratorMock(numberOfThreads),
                 new ListenerMock(new String[]{"foo", clientHasDisconnected}),
                 new MessengerMock()
         ).communicate(reactor);
 
         assertEquals(clientRequests.length, reactor.numberOfAcceptedClients);
+    }
+
+    @Test
+    void shouldAllowMultipleConnections() throws IOException {
+        int numberOfThreads = 2;
+        String[] clientRequests = {"curl foo1", "curl foo2", "curl foo3", "curl foo4"};
+        ReactorMock reactor = new ReactorMock(clientRequests);
+
+        new Communicator(
+                new ThreadGeneratorMock(numberOfThreads),
+                new ListenerMock(new String[]{"foo", clientHasDisconnected}),
+                new MessengerMock()
+        ).communicate(reactor);
+
+        assertEquals(clientRequests.length * numberOfThreads, reactor.numberOfAcceptedClients);
     }
 }
