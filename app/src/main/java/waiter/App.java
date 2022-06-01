@@ -6,6 +6,7 @@ package waiter;
 import waiter.Reportable.Communicator;
 import waiter.Protocol.EchoProtocol;
 import waiter.Awaitable.Listener;
+import waiter.Threadable.ThreadGenerator;
 import waiter.Transportable.Messenger;
 
 class App {

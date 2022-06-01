@@ -1,4 +1,4 @@
-package waiter;
+package waiter.Threadable;
 
 public class ThreadGenerator implements Threadable {
 

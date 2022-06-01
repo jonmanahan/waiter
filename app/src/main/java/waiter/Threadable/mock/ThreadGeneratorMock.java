@@ -1,11 +1,13 @@
-package waiter;
+package waiter.Threadable.mock;
 
-public class ThreadGeneratorMock implements Threadable{
+import waiter.Threadable.Threadable;
+
+public class ThreadGeneratorMock implements Threadable {
 
     private final int numberOfThreadsToGenerate;
     public int numberOfThreadsGenerated;
 
-    ThreadGeneratorMock(int numberOfThreadsToGenerate) {
+    public ThreadGeneratorMock(int numberOfThreadsToGenerate) {
         this.numberOfThreadsToGenerate = numberOfThreadsToGenerate;
         this.numberOfThreadsGenerated = 0;
     }

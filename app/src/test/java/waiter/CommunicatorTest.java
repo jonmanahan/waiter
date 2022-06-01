@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import waiter.Awaitable.mock.ListenerMock;
 import waiter.Reactive.mock.ReactorMock;
 import waiter.Reportable.Communicator;
+import waiter.Threadable.mock.ThreadGeneratorMock;
 import waiter.Transportable.mock.MessengerMock;
 
 import java.io.IOException;

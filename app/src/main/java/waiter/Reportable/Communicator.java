@@ -2,7 +2,7 @@ package waiter.Reportable;
 
 import waiter.Connectable.Connectable;
 import waiter.Awaitable.Awaitable;
-import waiter.Threadable;
+import waiter.Threadable.Threadable;
 import waiter.Transportable.Transportable;
 import waiter.Reactive.Reactive;
 
