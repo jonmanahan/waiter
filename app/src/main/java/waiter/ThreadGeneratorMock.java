@@ -3,7 +3,7 @@ package waiter;
 public class ThreadGeneratorMock implements Threadable{
 
     private final int numberOfThreadsToGenerate;
-    private int numberOfThreadsGenerated;
+    public int numberOfThreadsGenerated;
 
     ThreadGeneratorMock(int numberOfThreadsToGenerate) {
         this.numberOfThreadsToGenerate = numberOfThreadsToGenerate;
