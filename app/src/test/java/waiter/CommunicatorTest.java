@@ -1,11 +1,14 @@
 package waiter;
 
+import net.jqwik.api.ForAll;
+import net.jqwik.api.Property;
+import net.jqwik.api.constraints.IntRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import waiter.Awaitable.mock.ListenerMock;
-import waiter.Transportable.mock.MessengerMock;
 import waiter.Reactive.mock.ReactorMock;
 import waiter.Reportable.Communicator;
+import waiter.Transportable.mock.MessengerMock;
 
 import java.io.IOException;
 
@@ -37,9 +40,8 @@ class CommunicatorTest {
         assertEquals(clientRequests.length, reactor.numberOfAcceptedClients);
     }
 
-    @Test
-    void shouldAllowMultipleConnections() throws IOException {
-        int numberOfThreadsToGenerate = 2;
+    @Property
+    void shouldAllowMultipleConnections(@ForAll @IntRange(min = 1, max = 10) Integer numberOfThreadsToGenerate) throws IOException {
         String[] clientRequests = {"curl foo1", "curl foo2", "curl foo3", "curl foo4"};
         ReactorMock reactor = new ReactorMock(clientRequests);
         ThreadGeneratorMock threadGeneratorMock = new ThreadGeneratorMock(numberOfThreadsToGenerate);
