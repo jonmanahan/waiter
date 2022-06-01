@@ -1,6 +1,6 @@
 package waiter;
 
-public class ThreadGeneratorMock {
+public class ThreadGeneratorMock implements Threadable{
 
     private final int numberOfThreadsToGenerate;
     private int numberOfThreadsGenerated;
