@@ -53,6 +53,8 @@ class CommunicatorTest {
                 new MessengerMock()
         ).communicate(reactor);
 
-        assertEquals(clientRequests.length * numberOfThreadsToGenerate, reactor.numberOfAcceptedClients * threadGeneratorMock.numberOfThreadsGenerated);
+        int numberOfRequestedConnections = clientRequests.length * numberOfThreadsToGenerate;
+        int numberOfEstablishedConnections = reactor.numberOfAcceptedClients * threadGeneratorMock.numberOfThreadsGenerated;
+        assertEquals(numberOfRequestedConnections, numberOfEstablishedConnections);
     }
 }
