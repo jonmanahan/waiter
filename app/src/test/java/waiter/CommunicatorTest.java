@@ -1,8 +1,5 @@
 package waiter;
 
-import net.jqwik.api.ForAll;
-import net.jqwik.api.Property;
-import net.jqwik.api.constraints.IntRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import waiter.Awaitable.mock.ListenerMock;
@@ -28,12 +25,11 @@ class CommunicatorTest {
 
     @Test
     void shouldAllowSequentialConnections() throws IOException {
-        int numberOfThreadsToGenerate = 1;
         String[] clientRequests = {"curl foo1", "curl foo2", "curl foo3", "curl foo4"};
         ReactorMock reactor = new ReactorMock(clientRequests);
 
         new Communicator(
-                new ThreadGeneratorMock(numberOfThreadsToGenerate),
+                new ThreadGeneratorMock(),
                 new ListenerMock(new String[]{"foo", clientHasDisconnected}),
                 new MessengerMock()
         ).communicate(reactor);
@@ -41,11 +37,11 @@ class CommunicatorTest {
         assertEquals(clientRequests.length, reactor.numberOfAcceptedClients);
     }
 
-    @Property
-    void shouldAllowMultipleConnections(@ForAll @IntRange(min = 1, max = 10) Integer numberOfThreadsToGenerate) throws IOException {
+    @Test
+    void numberOfThreadsEqualsNumberOfConnections() throws IOException {
         String[] clientRequests = {"curl foo1", "curl foo2", "curl foo3", "curl foo4"};
         ReactorMock reactor = new ReactorMock(clientRequests);
-        ThreadGeneratorMock threadGeneratorMock = new ThreadGeneratorMock(numberOfThreadsToGenerate);
+        ThreadGeneratorMock threadGeneratorMock = new ThreadGeneratorMock();
 
         new Communicator(
                 threadGeneratorMock,
@@ -53,8 +49,6 @@ class CommunicatorTest {
                 new MessengerMock()
         ).communicate(reactor);
 
-        int numberOfRequestedConnections = clientRequests.length * numberOfThreadsToGenerate;
-        int numberOfEstablishedConnections = reactor.numberOfAcceptedClients * threadGeneratorMock.numberOfThreadsGenerated;
-        assertEquals(numberOfRequestedConnections, numberOfEstablishedConnections);
+        assertEquals(clientRequests.length, threadGeneratorMock.numberOfThreadsGenerated);
     }
 }

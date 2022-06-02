@@ -4,18 +4,14 @@ import waiter.Threadable.Threadable;
 
 public class ThreadGeneratorMock implements Threadable {
 
-    private final int numberOfThreadsToGenerate;
     public int numberOfThreadsGenerated;
 
-    public ThreadGeneratorMock(int numberOfThreadsToGenerate) {
-        this.numberOfThreadsToGenerate = numberOfThreadsToGenerate;
+    public ThreadGeneratorMock() {
         this.numberOfThreadsGenerated = 0;
     }
 
     public void generate(Runnable runnable) {
-        while(this.numberOfThreadsGenerated < this.numberOfThreadsToGenerate) {
-            runnable.run();
-            this.numberOfThreadsGenerated += 1;
-        }
+        runnable.run();
+        this.numberOfThreadsGenerated += 1;
     }
 }
