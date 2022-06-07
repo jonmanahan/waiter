@@ -6,11 +6,12 @@ import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.NotBlank;
 import org.junit.jupiter.api.Test;
 import waiter.Connectable.ClientConnection;
-import waiter.Readable.mock.InputStreamerMock;
 import waiter.Interactive.mock.InteractorMock;
-import waiter.Writable.mock.OutputStreamerMock;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,37 +20,25 @@ class ClientConnectionTest {
 
     @Property
     void readsMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
-        String message = new ClientConnection(
-                new InteractorMock(),
-                new InputStreamerMock(userInput),
-                new OutputStreamerMock()
-        ).read();
+        var byteInputStream = new ByteArrayInputStream(userInput.getBytes(StandardCharsets.UTF_8));
+        String message = new ClientConnection(new InteractorMock(byteInputStream)).read();
 
         assertEquals(message, userInput);
     }
 
     @Property
     void writesMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
-        OutputStreamerMock outputStreamerMock = new OutputStreamerMock();
+        var byteOutputStream = new ByteArrayOutputStream();
+        new ClientConnection(new InteractorMock(byteOutputStream)).write(userInput);
 
-        new ClientConnection(
-                new InteractorMock(),
-                new InputStreamerMock("foo"),
-                outputStreamerMock
-        ).write(userInput);
-
-        assertEquals(outputStreamerMock.writtenOutput, userInput);
+        assertEquals(byteOutputStream.toString(), userInput + "\n");
     }
 
     @Test
     void closesSocket() throws IOException {
         InteractorMock interactorMock = new InteractorMock();
 
-        new ClientConnection(
-                interactorMock,
-                new InputStreamerMock("foo"),
-                new OutputStreamerMock()
-        ).close();
+        new ClientConnection(interactorMock).close();
 
         assertTrue(interactorMock.connectionClosed);
     }
