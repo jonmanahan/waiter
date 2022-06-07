@@ -1,6 +1,6 @@
 package waiter.Connectable;
 
-import waiter.Interactive.Interactive;
+import waiter.Socket.Socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,14 +9,14 @@ import java.io.PrintStream;
 
 public class ClientConnection implements Connectable {
 
-    private final Interactive interactive;
+    private final Socket socket;
     private final BufferedReader bufferedReader;
     private final PrintStream printStream;
 
-    public ClientConnection(Interactive interactive) throws IOException {
-        this.interactive = interactive;
-        this.bufferedReader = new BufferedReader(new InputStreamReader(interactive.getInputStream()));
-        this.printStream = new PrintStream(interactive.getOutputStream());
+    public ClientConnection(Socket socket) throws IOException {
+        this.socket = socket;
+        this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.printStream = new PrintStream(socket.getOutputStream());
     }
 
     public String read() throws IOException {
@@ -28,7 +28,7 @@ public class ClientConnection implements Connectable {
     }
 
     public void close() throws IOException {
-        this.interactive.close();
+        this.socket.close();
     }
 }
 

@@ -4,16 +4,16 @@ import waiter.Connectable.Connectable;
 import waiter.Awaitable.Awaitable;
 import waiter.Threadable.Threadable;
 import waiter.Transportable.Transportable;
-import waiter.Reactive.Reactive;
+import waiter.ServerSocket.ServerSocket;
 
 import java.io.IOException;
 
 public record Communicator(Threadable threadable, Awaitable awaitable, Transportable transportable) implements Reportable {
 
-    public void communicate(Reactive reactive) throws IOException {
+    public void communicate(ServerSocket serverSocket) throws IOException {
 
-        while(!reactive.isClosed()) {
-            Connectable connectable = this.awaitable.awaitClient(reactive);
+        while(!serverSocket.isClosed()) {
+            Connectable connectable = this.awaitable.awaitClient(serverSocket);
 
             this.threadable.generate(new RunnableTransport(this.transportable, connectable));
         }

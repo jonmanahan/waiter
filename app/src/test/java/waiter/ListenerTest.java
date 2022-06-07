@@ -2,7 +2,7 @@ package waiter;
 
 import waiter.Connectable.Connectable;
 import waiter.Awaitable.Listener;
-import waiter.Reactive.mock.ReactorMock;
+import waiter.ServerSocket.mock.ServerSocketWrapperMock;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -14,7 +14,7 @@ public class ListenerTest {
     @Test
     void clientConnectionCreated() throws IOException {
         Listener listener = new Listener();
-        ReactorMock reactorMock = new ReactorMock(new String[]{"curl foo1"});
-        assertInstanceOf(Connectable.class, listener.awaitClient(reactorMock));
+        ServerSocketWrapperMock serverSocketWrapperMock = new ServerSocketWrapperMock(new String[]{"curl foo1"});
+        assertInstanceOf(Connectable.class, listener.awaitClient(serverSocketWrapperMock));
     }
 }

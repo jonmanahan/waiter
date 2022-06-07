@@ -1,10 +1,10 @@
 package waiter.Reportable;
 
-import waiter.Reactive.Reactive;
+import waiter.ServerSocket.ServerSocket;
 
 import java.io.IOException;
 
 public interface Reportable {
 
-    void communicate(Reactive reactive) throws IOException;
+    void communicate(ServerSocket serverSocket) throws IOException;
 }

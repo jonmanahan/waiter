@@ -1,28 +1,28 @@
-package waiter.Interactive.mock;
+package waiter.Socket.mock;
 
-import waiter.Interactive.Interactive;
+import waiter.Socket.Socket;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class InteractorMock implements Interactive {
+public class SocketWrapperMock implements Socket {
 
     private final ByteArrayOutputStream byteOutputStream;
     private final ByteArrayInputStream byteInputStream;
     public boolean connectionClosed;
 
-    public InteractorMock() {
+    public SocketWrapperMock() {
         this.byteOutputStream = new ByteArrayOutputStream();
         this.byteInputStream = new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8));
         this.connectionClosed = false;
     }
-    public InteractorMock(ByteArrayOutputStream byteOutputStream) {
+    public SocketWrapperMock(ByteArrayOutputStream byteOutputStream) {
         this.connectionClosed = false;
         this.byteInputStream = new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8));;
         this.byteOutputStream = byteOutputStream;
     }
 
-    public InteractorMock(ByteArrayInputStream byteInputStream) {
+    public SocketWrapperMock(ByteArrayInputStream byteInputStream) {
         this.connectionClosed = false;
         this.byteInputStream = byteInputStream;
         this.byteOutputStream = new ByteArrayOutputStream();

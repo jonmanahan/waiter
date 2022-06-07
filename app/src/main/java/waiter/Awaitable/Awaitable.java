@@ -1,11 +1,11 @@
 package waiter.Awaitable;
 
 import waiter.Connectable.Connectable;
-import waiter.Reactive.Reactive;
+import waiter.ServerSocket.ServerSocket;
 
 import java.io.IOException;
 
 public interface Awaitable {
 
-    Connectable awaitClient(Reactive reactive) throws IOException;
+    Connectable awaitClient(ServerSocket serverSocket) throws IOException;
 }

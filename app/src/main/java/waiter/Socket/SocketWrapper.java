@@ -1,11 +1,10 @@
-package waiter.Interactive;
+package waiter.Socket;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.Socket;
 
-public record Interactor(Socket socket) implements Interactive {
+public record SocketWrapper(java.net.Socket socket) implements Socket {
 
     public InputStream getInputStream() throws IOException {
         return this.socket.getInputStream();
