@@ -5,24 +5,24 @@ import waiter.Socket.Socket;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class SocketWrapperMock implements Socket {
+public class ClientSocketMock implements Socket {
 
     private final ByteArrayOutputStream byteOutputStream;
     private final ByteArrayInputStream byteInputStream;
     public boolean connectionClosed;
 
-    public SocketWrapperMock() {
+    public ClientSocketMock() {
         this.byteOutputStream = new ByteArrayOutputStream();
         this.byteInputStream = new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8));
         this.connectionClosed = false;
     }
-    public SocketWrapperMock(ByteArrayOutputStream byteOutputStream) {
+    public ClientSocketMock(ByteArrayOutputStream byteOutputStream) {
         this.connectionClosed = false;
         this.byteInputStream = new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8));;
         this.byteOutputStream = byteOutputStream;
     }
 
-    public SocketWrapperMock(ByteArrayInputStream byteInputStream) {
+    public ClientSocketMock(ByteArrayInputStream byteInputStream) {
         this.connectionClosed = false;
         this.byteInputStream = byteInputStream;
         this.byteOutputStream = new ByteArrayOutputStream();

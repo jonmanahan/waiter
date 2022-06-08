@@ -13,7 +13,7 @@ class App {
 
     public static void main(String[] args) {
 
-        int port = 4424;
+        int port = 5000;
         Listener listener = new Listener();
         Messenger messenger = new Messenger(new EchoProtocol());
         ThreadGenerator threadGenerator = new ThreadGenerator();

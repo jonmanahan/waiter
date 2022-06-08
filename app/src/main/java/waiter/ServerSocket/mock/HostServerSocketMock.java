@@ -1,22 +1,22 @@
 package waiter.ServerSocket.mock;
 
 import waiter.Socket.Socket;
-import waiter.Socket.mock.SocketWrapperMock;
+import waiter.Socket.mock.ClientSocketMock;
 import waiter.ServerSocket.ServerSocket;
 
-public class ServerSocketWrapperMock implements ServerSocket {
+public class HostServerSocketMock implements ServerSocket {
 
     private final String[] clientRequests;
     public int numberOfAcceptedClients;
 
-    public ServerSocketWrapperMock(String[] clientRequests) {
+    public HostServerSocketMock(String[] clientRequests) {
         this.clientRequests = clientRequests;
         this.numberOfAcceptedClients = 0;
     }
 
     public Socket accept() {
         this.numberOfAcceptedClients += 1;
-        return new SocketWrapperMock();
+        return new ClientSocketMock();
     }
 
     public boolean isClosed() {

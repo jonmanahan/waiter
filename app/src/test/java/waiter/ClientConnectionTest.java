@@ -6,7 +6,7 @@ import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.NotBlank;
 import org.junit.jupiter.api.Test;
 import waiter.Connectable.ClientConnection;
-import waiter.Socket.mock.SocketWrapperMock;
+import waiter.Socket.mock.ClientSocketMock;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,7 +21,7 @@ class ClientConnectionTest {
     @Property
     void readsMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
         var byteInputStream = new ByteArrayInputStream(userInput.getBytes(StandardCharsets.UTF_8));
-        String message = new ClientConnection(new SocketWrapperMock(byteInputStream)).read();
+        String message = new ClientConnection(new ClientSocketMock(byteInputStream)).read();
 
         assertEquals(message, userInput);
     }
@@ -29,17 +29,17 @@ class ClientConnectionTest {
     @Property
     void writesMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
         var byteOutputStream = new ByteArrayOutputStream();
-        new ClientConnection(new SocketWrapperMock(byteOutputStream)).write(userInput);
+        new ClientConnection(new ClientSocketMock(byteOutputStream)).write(userInput);
 
         assertEquals(byteOutputStream.toString(), userInput + "\n");
     }
 
     @Test
     void closesSocket() throws IOException {
-        SocketWrapperMock socketWrapperMock = new SocketWrapperMock();
+        ClientSocketMock clientSocketMock = new ClientSocketMock();
 
-        new ClientConnection(socketWrapperMock).close();
+        new ClientConnection(clientSocketMock).close();
 
-        assertTrue(socketWrapperMock.connectionClosed);
+        assertTrue(clientSocketMock.connectionClosed);
     }
 }

@@ -1,7 +1,7 @@
 package waiter;
 
 import waiter.Reportable.Reportable;
-import waiter.ServerSocket.ServerSocketWrapper;
+import waiter.ServerSocket.HostServerSocket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -12,7 +12,7 @@ record EchoServer(Reportable reportable) {
     public void start(int port) {
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            reportable.communicate(new ServerSocketWrapper(serverSocket));
+            reportable.communicate(new HostServerSocket(serverSocket));
         } catch (SocketException exception) {
             System.out.println("Sorry, connection could not be established or has been broken, please try running the server and connecting again");
         } catch (IOException exception) {

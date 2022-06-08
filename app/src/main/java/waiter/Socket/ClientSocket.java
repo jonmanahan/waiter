@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public record SocketWrapper(java.net.Socket socket) implements Socket {
+public record ClientSocket(java.net.Socket socket) implements Socket {
 
     public InputStream getInputStream() throws IOException {
         return this.socket.getInputStream();

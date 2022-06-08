@@ -1,14 +1,14 @@
 package waiter.ServerSocket;
 
 import waiter.Socket.Socket;
-import waiter.Socket.SocketWrapper;
+import waiter.Socket.ClientSocket;
 
 import java.io.IOException;
 
-public record ServerSocketWrapper(java.net.ServerSocket serverSocket) implements ServerSocket {
+public record HostServerSocket(java.net.ServerSocket serverSocket) implements ServerSocket {
 
     public Socket accept() throws IOException {
-        return new SocketWrapper(this.serverSocket.accept());
+        return new ClientSocket(this.serverSocket.accept());
     }
 
     public boolean isClosed() {
