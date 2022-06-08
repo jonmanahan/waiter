@@ -31,7 +31,7 @@ class ClientConnectionTest {
         var byteOutputStream = new ByteArrayOutputStream();
         new ClientConnection(new ClientSocketMock(byteOutputStream)).write(userInput);
 
-        assertEquals(byteOutputStream.toString(), userInput + "\n");
+        assertEquals(byteOutputStream.toString(), userInput);
     }
 
     @Test

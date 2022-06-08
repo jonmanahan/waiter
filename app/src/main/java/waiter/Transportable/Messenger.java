@@ -9,9 +9,8 @@ public record Messenger(Protocol protocol) implements Transportable {
 
     public void transport(Connectable client) throws IOException {
         String fromClient;
-        while((fromClient = client.read()) != null) {
-            String toClient = this.protocol.serve(fromClient);
-            client.write(toClient);
-        }
+        fromClient = client.read();
+        String toClient = this.protocol.serve(fromClient);
+        client.write(toClient);
     }
 }

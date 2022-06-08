@@ -1,8 +1,9 @@
 package waiter;
 
 import org.junit.jupiter.api.Test;
+import waiter.Protocol.HttProtocol;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HttProtocolTest {
 
@@ -13,7 +14,7 @@ public class HttProtocolTest {
 
         String response = httProtocol.serve(fromClient);
 
-        assertEquals(response, "HTTP/1.1 200 OK");
+        assertTrue(response.contains("HTTP/1.1 200 OK"));
     }
 
     @Test
@@ -23,6 +24,7 @@ public class HttProtocolTest {
 
         String response = httProtocol.serve(fromClient);
 
-        assertEquals(response, "HTTP/1.1 200 OK\n\n Hello world");
+        assertTrue(response.contains("HTTP/1.1 200 OK"));
+        assertTrue(response.contains("\n\nHello world"));
     }
 }

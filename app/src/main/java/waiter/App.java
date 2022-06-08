@@ -3,9 +3,9 @@
  */
 package waiter;
 
-import waiter.Reportable.Communicator;
-import waiter.Protocol.EchoProtocol;
 import waiter.Awaitable.Listener;
+import waiter.Protocol.HttProtocol;
+import waiter.Reportable.Communicator;
 import waiter.Threadable.ThreadGenerator;
 import waiter.Transportable.Messenger;
 
@@ -15,7 +15,7 @@ class App {
 
         int port = 5000;
         Listener listener = new Listener();
-        Messenger messenger = new Messenger(new EchoProtocol());
+        Messenger messenger = new Messenger(new HttProtocol());
         ThreadGenerator threadGenerator = new ThreadGenerator();
         EchoServer echoServer = new EchoServer(new Communicator(threadGenerator, listener, messenger));
         echoServer.start(port);
