@@ -1,23 +1,34 @@
 package waiter.Connectable;
 
-import waiter.Readable.Readable;
-import waiter.Interactive.Interactive;
-import waiter.Writable.Writable;
+import waiter.Socket.Socket;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 
-public record ClientConnection(Interactive interactive, Readable readable, Writable writable) implements Connectable {
+public class ClientConnection implements Connectable {
+
+    private final Socket socket;
+    private final BufferedReader bufferedReader;
+    private final PrintStream printStream;
+
+    public ClientConnection(Socket socket) throws IOException {
+        this.socket = socket;
+        this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.printStream = new PrintStream(socket.getOutputStream());
+    }
 
     public String read() throws IOException {
-        return this.readable.readLine();
+        return this.bufferedReader.readLine();
     }
 
     public void write(String toClient) throws IOException {
-        writable.writeLine(toClient);
+        this.printStream.println(toClient);
     }
 
     public void close() throws IOException {
-        this.interactive.close();
+        this.socket.close();
     }
 }
 

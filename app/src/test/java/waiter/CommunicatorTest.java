@@ -3,7 +3,7 @@ package waiter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import waiter.Awaitable.mock.ListenerMock;
-import waiter.Reactive.mock.ReactorMock;
+import waiter.ServerSocket.mock.HostServerSocketMock;
 import waiter.Reportable.Communicator;
 import waiter.Threadable.mock.ThreadGeneratorMock;
 import waiter.Transportable.mock.MessengerMock;
@@ -26,7 +26,7 @@ class CommunicatorTest {
     @Test
     void shouldAllowSequentialConnections() throws IOException {
         String[] clientRequests = {"curl foo1", "curl foo2", "curl foo3", "curl foo4"};
-        ReactorMock reactor = new ReactorMock(clientRequests);
+        HostServerSocketMock reactor = new HostServerSocketMock(clientRequests);
 
         new Communicator(
                 new ThreadGeneratorMock(),
@@ -40,7 +40,7 @@ class CommunicatorTest {
     @Test
     void numberOfThreadsEqualsNumberOfConnections() throws IOException {
         String[] clientRequests = {"curl foo1", "curl foo2", "curl foo3", "curl foo4"};
-        ReactorMock reactor = new ReactorMock(clientRequests);
+        HostServerSocketMock reactor = new HostServerSocketMock(clientRequests);
         ThreadGeneratorMock threadGeneratorMock = new ThreadGeneratorMock();
 
         new Communicator(

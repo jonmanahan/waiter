@@ -1,7 +1,7 @@
 package waiter.Reportable.mock;
 
 import waiter.Reportable.Reportable;
-import waiter.Reactive.Reactive;
+import waiter.ServerSocket.ServerSocket;
 
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class CommunicatorMock implements Reportable {
         this.exception = exception;
     }
 
-    public void communicate(Reactive reactive) throws IOException {
+    public void communicate(ServerSocket serverSocket) throws IOException {
         if(throwException) {
             throw this.exception;
         }

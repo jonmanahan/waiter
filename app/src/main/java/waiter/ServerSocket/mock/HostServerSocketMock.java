@@ -1,22 +1,22 @@
-package waiter.Reactive.mock;
+package waiter.ServerSocket.mock;
 
-import waiter.Interactive.Interactive;
-import waiter.Interactive.mock.InteractorMock;
-import waiter.Reactive.Reactive;
+import waiter.Socket.Socket;
+import waiter.Socket.mock.ClientSocketMock;
+import waiter.ServerSocket.ServerSocket;
 
-public class ReactorMock implements Reactive {
+public class HostServerSocketMock implements ServerSocket {
 
     private final String[] clientRequests;
     public int numberOfAcceptedClients;
 
-    public ReactorMock(String[] clientRequests) {
+    public HostServerSocketMock(String[] clientRequests) {
         this.clientRequests = clientRequests;
         this.numberOfAcceptedClients = 0;
     }
 
-    public Interactive accept() {
+    public Socket accept() {
         this.numberOfAcceptedClients += 1;
-        return new InteractorMock();
+        return new ClientSocketMock();
     }
 
     public boolean isClosed() {
