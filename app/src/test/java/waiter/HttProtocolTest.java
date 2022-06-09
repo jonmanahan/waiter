@@ -10,7 +10,7 @@ public class HttProtocolTest {
     @Test
     void simpleGetResponse() {
         String fromClient = "GET /simple_get HTTP/1.1";
-        HttProtocol httProtocol = new HttProtocol();
+        HttProtocol httProtocol = new HttProtocol(new RequestParser(), new Router(), new ResponseBuilder());
 
         String response = httProtocol.serve(fromClient);
 
@@ -20,11 +20,11 @@ public class HttProtocolTest {
     @Test
     void simpleGetWithBodyResponse() {
         String fromClient = "GET /simple_get_with_body HTTP/1.1";
-        HttProtocol httProtocol = new HttProtocol();
+        HttProtocol httProtocol = new HttProtocol(new RequestParser(), new Router(), new ResponseBuilder());
 
         String response = httProtocol.serve(fromClient);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
-        assertTrue(response.contains("\n\nHello world"));
+        assertTrue(response.contains("\r\n\r\nHello world"));
     }
 }
