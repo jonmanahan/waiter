@@ -14,7 +14,7 @@ public class RouterTest {
 
         assertEquals("HTTP/1.1", route.getProtocol());
         assertEquals("200 OK", route.getStatus());
-        assertEquals("Accept-Language: en-US\r\nContent-Length: 0", route.getHeaders());
+        assertEquals("Content-Length: 0", route.getHeaders());
         assertEquals("", route.getBody());
     }
 
@@ -26,7 +26,7 @@ public class RouterTest {
 
         assertEquals("HTTP/1.1", route.getProtocol());
         assertEquals("200 OK", route.getStatus());
-        assertEquals("Accept-Language: en-US\r\nContent-Length: 11", route.getHeaders());
+        assertEquals("Content-Length: 11", route.getHeaders());
         assertEquals("Hello world", route.getBody());
     }
 }
