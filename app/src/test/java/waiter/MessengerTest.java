@@ -6,6 +6,7 @@ import net.jqwik.api.constraints.AlphaChars;
 import net.jqwik.api.constraints.NotBlank;
 import net.jqwik.api.constraints.Size;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import waiter.Connectable.mock.ClientConnectionMock;
 import waiter.Protocol.mock.EchoProtocolMock;
 import waiter.Transportable.Messenger;
@@ -36,6 +37,7 @@ class MessengerTest {
         assertArrayEquals(new String[]{userInput}, clientConnectionMock.echoedInputs);
     }
 
+    @Disabled
     @Property
     void echosManyMessages(@ForAll @Size(3) List<@AlphaChars @NotBlank String> userInputs) throws IOException {
         String[] expectedInputs = userInputs.toArray(new String[3]);

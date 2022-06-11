@@ -24,7 +24,7 @@ public class ClientConnection implements Connectable {
     }
 
     public void write(String toClient) throws IOException {
-        this.printStream.println(toClient);
+        this.printStream.print(toClient);
     }
 
     public void close() throws IOException {
