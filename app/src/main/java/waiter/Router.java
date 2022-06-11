@@ -8,12 +8,12 @@ public class Router {
 
     public Router() {
         this.routes = Map.ofEntries(
-                Map.entry("GET /simple_get", setRoute("200 OK", "Content-Length:", "")),
-                Map.entry("GET /simple_get_with_body", setRoute("200 OK", "Content-Length:", "Hello world"))
+                Map.entry("GET /simple_get", setResponseFields("200 OK", "Content-Length:", "")),
+                Map.entry("GET /simple_get_with_body", setResponseFields("200 OK", "Content-Length:", "Hello world"))
         );
     }
 
-    private Map<String, String> setRoute(String status, String headers, String body) {
+    private Map<String, String> setResponseFields(String status, String headers, String body) {
 
         return Map.ofEntries(
                 Map.entry("status", status),
