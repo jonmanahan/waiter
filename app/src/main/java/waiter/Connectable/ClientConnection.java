@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 public class ClientConnection implements Connectable {
 
@@ -20,11 +21,16 @@ public class ClientConnection implements Connectable {
     }
 
     public String read() throws IOException {
-        return this.bufferedReader.readLine();
+        StringBuilder requestContents = new StringBuilder();
+        while(!requestContents.toString().contains("\r\n")) {
+            requestContents.append((char) this.bufferedReader.read());
+        }
+
+        return requestContents.toString().strip();
     }
 
     public void write(String toClient) throws IOException {
-        this.printStream.print(toClient);
+        this.printStream.write(toClient.getBytes(StandardCharsets.UTF_8));
     }
 
     public void close() throws IOException {

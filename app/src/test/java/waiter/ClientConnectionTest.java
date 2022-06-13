@@ -20,7 +20,7 @@ class ClientConnectionTest {
 
     @Property
     void readsMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
-        var byteInputStream = new ByteArrayInputStream(userInput.getBytes(StandardCharsets.UTF_8));
+        var byteInputStream = new ByteArrayInputStream((userInput + "\r\n").getBytes(StandardCharsets.UTF_8));
         String message = new ClientConnection(new ClientSocketMock(byteInputStream)).read();
 
         assertEquals(message, userInput);
