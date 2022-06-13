@@ -1,1 +1,46 @@
 version: 2.1
+orbs:
+  ruby: circleci/ruby@1.8.0
+
+jobs:
+  build:
+    docker:
+      - image: "cimg/openjdk:17.0.3"
+    steps:
+      - checkout
+      - run: gradle build
+  unitTests:
+    docker:
+      - image: "cimg/openjdk:17.0.3"
+    steps:
+      - checkout
+      - run: gradle test
+  acceptanceTests:
+    docker:
+      - image: "cimg/openjdk:17.0.3"
+    steps:
+      - checkout
+      - run:
+          command: gradle run
+          background: true
+      - run: git submodule update --init --recursive
+      - ruby/install:
+          version: '2.6.8'
+      - run:
+          command: |
+            cd http_server_spec
+            gem install bundler
+            bundle install --path vendor/bundle
+            sudo apt install lsof
+            rake test:f1
+
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - unitTests:
+          requires:
+            - build
+      - acceptanceTests:
+          requires:
+            - build
