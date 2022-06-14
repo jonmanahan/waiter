@@ -21,16 +21,18 @@ public class ClientConnection implements Connectable {
     }
 
     public String read() throws IOException {
-        StringBuilder requestContents = new StringBuilder();
-        while(!requestContents.toString().contains("\r\n")) {
-            requestContents.append((char) this.bufferedReader.read());
+        StringBuilder requestStartLineBuilder = new StringBuilder();
+        while(requestStartLineBuilder.indexOf("\r\n") == -1) {
+            requestStartLineBuilder.append((char) this.bufferedReader.read());
         }
 
-        return requestContents.toString().strip();
+        String requestStartLine = requestStartLineBuilder.toString();
+        return requestStartLine.strip();
     }
 
     public void write(String toClient) throws IOException {
-        this.printStream.write(toClient.getBytes(StandardCharsets.UTF_8));
+        byte[] bytesToWriteToClient = toClient.getBytes(StandardCharsets.UTF_8);
+        this.printStream.write(bytesToWriteToClient);
     }
 
     public void close() throws IOException {
