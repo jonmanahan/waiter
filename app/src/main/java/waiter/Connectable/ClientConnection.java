@@ -22,7 +22,7 @@ public class ClientConnection implements Connectable {
 
     public String read() throws IOException {
         StringBuilder requestStartLineBuilder = new StringBuilder();
-        while(requestStartLineBuilder.indexOf("\r\n") == -1) {
+        while(notEndOfLine(requestStartLineBuilder)) {
             requestStartLineBuilder.append((char) this.bufferedReader.read());
         }
 
@@ -37,6 +37,10 @@ public class ClientConnection implements Connectable {
 
     public void close() throws IOException {
         this.socket.close();
+    }
+
+    private boolean notEndOfLine(StringBuilder requestStartLineBuilder) {
+        return requestStartLineBuilder.indexOf("\r\n") == -1;
     }
 }
 
