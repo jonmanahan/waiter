@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 public class ClientConnection implements Connectable {
 
@@ -20,15 +21,26 @@ public class ClientConnection implements Connectable {
     }
 
     public String read() throws IOException {
-        return this.bufferedReader.readLine();
+        StringBuilder requestStartLineBuilder = new StringBuilder();
+        while(notEndOfLine(requestStartLineBuilder)) {
+            requestStartLineBuilder.append((char) this.bufferedReader.read());
+        }
+
+        String requestStartLine = requestStartLineBuilder.toString();
+        return requestStartLine.strip();
     }
 
     public void write(String toClient) throws IOException {
-        this.printStream.print(toClient);
+        byte[] bytesToWriteToClient = toClient.getBytes(StandardCharsets.UTF_8);
+        this.printStream.write(bytesToWriteToClient);
     }
 
     public void close() throws IOException {
         this.socket.close();
+    }
+
+    private boolean notEndOfLine(StringBuilder requestStartLineBuilder) {
+        return requestStartLineBuilder.indexOf("\r\n") == -1;
     }
 }
 
