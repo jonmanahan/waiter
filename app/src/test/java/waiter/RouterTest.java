@@ -8,7 +8,7 @@ public class RouterTest {
 
     @Test
     void simpleGetRoute() {
-        Request request = new Request("GET","/simple_head", "HTTP/1.1");
+        Request request = new Request("GET","/simple_get", "HTTP/1.1");
 
         Route route = new Router().getRoute(request);
 
