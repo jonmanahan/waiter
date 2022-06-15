@@ -3,18 +3,12 @@ orbs:
   ruby: circleci/ruby@1.8.0
 
 jobs:
-  build:
+  buildAndUnitTest:
     docker:
       - image: "cimg/openjdk:17.0.3"
     steps:
       - checkout
       - run: gradle build
-  unitTests:
-    docker:
-      - image: "cimg/openjdk:17.0.3"
-    steps:
-      - checkout
-      - run: gradle test
   acceptanceTests:
     docker:
       - image: "cimg/openjdk:17.0.3"
@@ -37,10 +31,7 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - build
-      - unitTests:
-          requires:
-            - build
+      - buildAndUnitTest
       - acceptanceTests:
           requires:
-            - build
+            - buildAndUnitTest
