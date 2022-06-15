@@ -32,7 +32,8 @@ jobs:
             gem install bundler
             bundle install --path vendor/bundle
             sudo apt install lsof
-            rake test:f1
+            bundle exec spinach --tags simple-head
+#            rake test:f1
 
 workflows:
   build_and_test:
