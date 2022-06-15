@@ -1,5 +1,6 @@
 package waiter;
 
+import java.util.AbstractMap;
 import java.util.Map;
 
 public class Router {
@@ -7,17 +8,24 @@ public class Router {
     private final Map<String, Map<String, Map<String, String>>> routes;
     private final String noMethod = "No Method";
     private final String noUrl = "No Url";
+    Map.Entry<String, Map<String, String>> simpleGet = new AbstractMap.SimpleEntry<>("/simple_get", setResponseFields("200 OK", "Content-Length:", ""));
+    Map.Entry<String, Map<String, String>> noUrlFound = new AbstractMap.SimpleEntry<>(noUrl, setResponseFields("500 Internal Server Error", "Content-Length:", ""));
 
     public Router() {
         this.routes = Map.ofEntries(
                 Map.entry("GET", Map.ofEntries(
-                        Map.entry("/simple_get", setResponseFields("200 OK", "Content-Length:", "")),
+                        simpleGet,
                         Map.entry("/simple_get_with_body", setResponseFields("200 OK", "Content-Length:", "Hello world")),
                         //This will become a different response when Method Not Allowed is implemented
-                        Map.entry(noUrl, setResponseFields("500 Internal Server Error", "Content-Length:", ""))
+                        noUrlFound
+                )),
+                Map.entry("HEAD", Map.ofEntries(
+                        simpleGet,
+                        //This will become a different response when Method Not Allowed is implemented
+                        noUrlFound
                 )),
                 Map.entry(noMethod, Map.ofEntries(
-                        Map.entry(noUrl, setResponseFields("500 Internal Server Error", "Content-Length:", ""))
+                        noUrlFound
                 ))
         );
     }

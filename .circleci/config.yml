@@ -27,6 +27,7 @@ jobs:
             bundle install --path vendor/bundle
             sudo apt install lsof
             bundle exec spinach --tags simple-get
+            bundle exec spinach --tags simple-head
 
 workflows:
   build_and_test:
