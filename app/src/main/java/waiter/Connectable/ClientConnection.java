@@ -26,8 +26,7 @@ public class ClientConnection implements Connectable {
             stringBuilder.append((char) this.bufferedReader.read());
         }
 
-        String readInString = stringBuilder.toString();
-        return readInString.strip();
+        return stringBuilder.toString().strip();
     }
 
     public void write(String toClient) throws IOException {
