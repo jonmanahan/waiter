@@ -15,7 +15,7 @@ class App {
 
         int port = 5000;
         Listener listener = new Listener();
-        Messenger messenger = new Messenger(new HttProtocol(new RequestParser(), new Router(), new ResponseBuilder()));
+        Messenger messenger = new Messenger(new HttProtocol(new RequestParser(), new Router(), new ResponseFormatter()));
         ThreadGenerator threadGenerator = new ThreadGenerator();
         EchoServer echoServer = new EchoServer(new Communicator(threadGenerator, listener, messenger));
         echoServer.start(port);

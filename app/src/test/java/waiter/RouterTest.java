@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RouterTest {
 
     @Test
-    void getSimpleGetRoute() {
+    void getSimpleGetReturnsRouteWithoutBody() {
         Request request = new Request("GET","/simple_get", "HTTP/1.1");
 
         Route route = new Router().getRoute(request);
@@ -19,7 +19,7 @@ public class RouterTest {
     }
 
     @Test
-    void getSimpleGetWithBodyRoute() {
+    void getSimpleGetWithBodyReturnsRouteWithBody() {
         Request request = new Request("GET","/simple_get_with_body", "HTTP/1.1");
 
         Route route = new Router().getRoute(request);
@@ -31,7 +31,7 @@ public class RouterTest {
     }
 
     @Test
-    void headSimpleGetRoute() {
+    void headSimpleGetReturnsRouteWithoutBody() {
         Request request = new Request("HEAD","/simple_get", "HTTP/1.1");
 
         Route route = new Router().getRoute(request);
