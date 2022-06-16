@@ -47,4 +47,34 @@ public class HttProtocolTest {
         assertTrue(response.contains("HTTP/1.1 200 OK"));
         assertTrue(response.endsWith("\r\n\r\n"));
     }
+
+    @Test
+    void NoMethodNoUrlReturnsInternalServerErrorWithoutBody() {
+        String fromClient = "foo /bar HTTP/1.1";
+        HttProtocol httProtocol = new HttProtocol(
+                new RequestParser(),
+                new Router(),
+                new ResponseFormatter()
+        );
+
+        String response = httProtocol.serve(fromClient);
+
+        assertTrue(response.contains("HTTP/1.1 500 Internal Server Error"));
+        assertTrue(response.endsWith("\r\n\r\n"));
+    }
+
+    @Test
+    void NoUrlReturnsNotFoundWithoutBody() {
+        String fromClient = "HEAD /bar HTTP/1.1";
+        HttProtocol httProtocol = new HttProtocol(
+                new RequestParser(),
+                new Router(),
+                new ResponseFormatter()
+        );
+
+        String response = httProtocol.serve(fromClient);
+
+        assertTrue(response.contains("HTTP/1.1 404 Not Found"));
+        assertTrue(response.endsWith("\r\n\r\n"));
+    }
 }
