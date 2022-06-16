@@ -8,8 +8,14 @@ public class Router {
     private final Map<String, Map<String, Map<String, String>>> routes;
     private final String noMethod = "No Method";
     private final String noUrl = "No Url";
-    Map.Entry<String, Map<String, String>> simpleGet = new AbstractMap.SimpleEntry<>("/simple_get", setResponseFields("200 OK", "Content-Length:", ""));
-    Map.Entry<String, Map<String, String>> noUrlFound = new AbstractMap.SimpleEntry<>(noUrl, setResponseFields("500 Internal Server Error", "Content-Length:", ""));
+    Map.Entry<String, Map<String, String>> simpleGet = new AbstractMap.SimpleEntry<>(
+            "/simple_get",
+            setResponseFields("200 OK", "Content-Length:", "")
+    );
+    Map.Entry<String, Map<String, String>> noUrlFoundWithKnownMethod = new AbstractMap.SimpleEntry<>(
+            noUrl,
+            setResponseFields("404 Not Found", "Content-Length:", "")
+    );
 
     public Router() {
         this.routes = Map.ofEntries(
@@ -17,15 +23,15 @@ public class Router {
                         simpleGet,
                         Map.entry("/simple_get_with_body", setResponseFields("200 OK", "Content-Length:", "Hello world")),
                         //This will become a different response when Method Not Allowed is implemented
-                        noUrlFound
+                        noUrlFoundWithKnownMethod
                 )),
                 Map.entry("HEAD", Map.ofEntries(
                         simpleGet,
                         //This will become a different response when Method Not Allowed is implemented
-                        noUrlFound
+                        noUrlFoundWithKnownMethod
                 )),
                 Map.entry(noMethod, Map.ofEntries(
-                        noUrlFound
+                        Map.entry(noUrl, setResponseFields("500 Internal Server Error", "Content-Length:", ""))
                 ))
         );
     }
