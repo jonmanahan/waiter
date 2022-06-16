@@ -21,13 +21,12 @@ public class ClientConnection implements Connectable {
     }
 
     public String read() throws IOException {
-        StringBuilder requestStartLineBuilder = new StringBuilder();
-        while(notEndOfLine(requestStartLineBuilder)) {
-            requestStartLineBuilder.append((char) this.bufferedReader.read());
+        StringBuilder stringBuilder = new StringBuilder();
+        while(notEndOfLine(stringBuilder)) {
+            stringBuilder.append((char) this.bufferedReader.read());
         }
 
-        String requestStartLine = requestStartLineBuilder.toString();
-        return requestStartLine.strip();
+        return stringBuilder.toString().strip();
     }
 
     public void write(String toClient) throws IOException {
