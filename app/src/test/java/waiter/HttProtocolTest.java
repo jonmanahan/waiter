@@ -59,7 +59,7 @@ public class HttProtocolTest {
 
         String response = httProtocol.serve(fromClient);
 
-        assertTrue(response.contains("HTTP/1.1 500 Internal Server Error"));
+        assertTrue(response.contains("HTTP/1.1 404 Not Found"));
         assertTrue(response.endsWith("\r\n\r\n"));
     }
 

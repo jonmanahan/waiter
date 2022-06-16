@@ -49,7 +49,7 @@ public class RouterTest {
         Route route = new Router().getRoute(request);
 
         assertEquals("HTTP/1.1", route.getProtocol());
-        assertEquals("500 Internal Server Error", route.getStatus());
+        assertEquals("404 Not Found", route.getStatus());
         assertEquals("Content-Length: 0", route.getHeaders());
         assertEquals("", route.getBody());
     }

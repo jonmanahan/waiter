@@ -31,7 +31,7 @@ public class Router {
                         noUrlFoundWithKnownMethod
                 )),
                 Map.entry(noMethod, Map.ofEntries(
-                        Map.entry(noUrl, setResponseFields("500 Internal Server Error", "Content-Length:", ""))
+                        noUrlFoundWithKnownMethod
                 ))
         );
     }
