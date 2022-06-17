@@ -24,10 +24,12 @@ public class Routes {
 
         this.addRoute(routeDirector.constructGetSimpleGet(routeBuilder));
         this.addRoute(routeDirector.constructHeadSimpleGet(routeBuilder));
-        this.addRoute(routeDirector.constructNoMethodSimpleGet(routeBuilder));
         this.addRoute(routeDirector.constructGetSimpleGetWithBody(routeBuilder));
-        this.addRoute(routeDirector.constructNoMethodSimpleGetWithBody(routeBuilder));
         this.addRoute(routeDirector.constructNoUrl(routeBuilder));
+
+        for (String url : this.routes.keySet()) {
+            this.addRoute(routeDirector.constructUrlExistsButNoMethodFound(routeBuilder, url));
+        }
 
         return this;
     }

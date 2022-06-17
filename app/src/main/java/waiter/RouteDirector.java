@@ -21,28 +21,8 @@ public class RouteDirector {
                 .body("")
                 .build();
     }
-
-    public Route constructNoMethodSimpleGet(RouteBuilder routeBuilder) {
-        return routeBuilder.newUp()
-                .url("/simple_get")
-                .method("")
-                .status("404 Not Found")
-                .headers("Content-Length:")
-                .body("")
-                .build();
-    }
-
+    
     public Route constructGetSimpleGetWithBody(RouteBuilder routeBuilder) {
-        return routeBuilder.newUp()
-                .url("/simple_get_with_body")
-                .method("GET")
-                .status("200 OK")
-                .headers("Content-Length:")
-                .body("Hello world")
-                .build();
-    }
-
-    public Route constructNoMethodSimpleGetWithBody(RouteBuilder routeBuilder) {
         return routeBuilder.newUp()
                 .url("/simple_get_with_body")
                 .method("GET")
@@ -55,6 +35,16 @@ public class RouteDirector {
     public Route constructNoUrl(RouteBuilder routeBuilder) {
         return routeBuilder.newUp()
                 .url("")
+                .method("")
+                .status("404 Not Found")
+                .headers("Content-Length:")
+                .body("")
+                .build();
+    }
+
+    public Route constructUrlExistsButNoMethodFound(RouteBuilder routeBuilder, String url) {
+        return routeBuilder.newUp()
+                .url(url)
                 .method("")
                 .status("404 Not Found")
                 .headers("Content-Length:")
