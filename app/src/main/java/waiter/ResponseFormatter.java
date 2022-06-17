@@ -2,8 +2,8 @@ package waiter;
 
 public record ResponseFormatter() {
 
-    public String formatResponse(Route route) {
-        return route.getProtocol() + " " + route.getStatus() + "\r\n"
-                + route.getHeaders() + "\r\n\r\n" + route.getBody();
+    public String formatResponse(Response Response) {
+        return Response.getProtocol() + " " + Response.getStatus() + "\r\n"
+                + Response.getHeaders() + "\r\n\r\n" + Response.getBody();
     }
 }

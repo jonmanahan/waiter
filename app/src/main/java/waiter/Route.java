@@ -1,20 +1,27 @@
 package waiter;
 
-public record Route(String protocol, String status, String headers, String body) {
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
 
-    public String getProtocol() {
-        return protocol;
+public class Route {
+
+    private final AbstractMap.SimpleEntry<String, Map<String, Map<String, String>>> route;
+
+    public Route(RouteBuilder routeBuilder) {
+        this.route =  new AbstractMap.SimpleEntry<>(
+                routeBuilder.url,
+                new HashMap<>(){{
+                        put(routeBuilder.method, routeBuilder.responseFields);
+                }}
+        );
     }
 
-    public String getStatus() {
-        return status;
+    public String getKey() {
+        return route.getKey();
     }
 
-    public String getHeaders() {
-        return headers;
-    }
-
-    public String getBody() {
-        return body;
+    public Map<String, Map<String, String>> getValue() {
+        return route.getValue();
     }
 }

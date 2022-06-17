@@ -7,8 +7,8 @@ public record HttProtocol(RequestParser requestParser, Router router, ResponseFo
     public String serve(String fromClient) {
 
         Request request = requestParser.parse(fromClient);
-        Route route = router.getRoute(request);
+        Response Response = router.getRequestedRoute(request);
 
-        return responseFormatter.formatResponse(route);
+        return responseFormatter.formatResponse(Response);
     }
 }

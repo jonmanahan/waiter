@@ -14,7 +14,7 @@ public class ResponseFormatterTest {
 
     @Property
     void responseProperlyFormatted(@ForAll @Size(4) List<@AlphaChars @NotBlank String> requestResults) {
-        Route route = new Route(requestResults.get(0), requestResults.get(1), requestResults.get(2), requestResults.get(3));
+        Response Response = new Response(requestResults.get(0), requestResults.get(1), requestResults.get(2), requestResults.get(3));
         String expectedResponse = String.format(
                 """
                 %s %s
@@ -22,7 +22,7 @@ public class ResponseFormatterTest {
                 
                 %s""", requestResults.get(0), requestResults.get(1), requestResults.get(2), requestResults.get(3)).replace("\n", "\r\n");
 
-        String response = new ResponseFormatter().formatResponse(route);
+        String response = new ResponseFormatter().formatResponse(Response);
 
         assertEquals(expectedResponse, response);
     }
