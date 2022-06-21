@@ -10,20 +10,26 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ResponseFormatterTest {
+public class ResponseBuilderTest {
 
     @Property
     void responseProperlyFormatted(@ForAll @Size(4) List<@AlphaChars @NotBlank String> requestResults) {
-        Response Response = new Response(requestResults.get(0), requestResults.get(1), requestResults.get(2), requestResults.get(3));
+        Response response = new ResponseBuilder()
+                .newUp()
+                .protocol(requestResults.get(0))
+                .status(requestResults.get(1))
+                .headers(requestResults.get(2))
+                .body(requestResults.get(3))
+                .build();
+
+        String formattedResponse = response.formatResponse();
+
         String expectedResponse = String.format(
                 """
                 %s %s
                 %s
                 
                 %s""", requestResults.get(0), requestResults.get(1), requestResults.get(2), requestResults.get(3)).replace("\n", "\r\n");
-
-        String response = new ResponseFormatter().formatResponse(Response);
-
-        assertEquals(expectedResponse, response);
+        assertEquals(expectedResponse, formattedResponse);
     }
 }

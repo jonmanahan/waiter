@@ -1,18 +1,21 @@
 package waiter;
 
-import java.util.Map;
-
 public class Router {
 
     private final Routes routes;
 
-    public Router() {
-        this.routes = new Routes().constructRoutes();
+    public Router(Routes routes) {
+        this.routes = routes;
     }
 
-    public Response getRequestedRoute(Request request) {
-        Map<String, String> requestResult = this.routes.getRequestedResults(request.getUrl(), request.getMethod());
+    public Response getRequestedResponse(Request request) {
+        if(!this.routes.exists(request)) {
+            return new ResponseBuilder()
+                    .newUp()
+                    .status("404 Not Found")
+                    .build();
+        }
 
-        return new Response(request.getProtocol(), requestResult.get("status"), requestResult.get("headers"), requestResult.get("body"));
+        return this.routes.handle(request);
     }
 }

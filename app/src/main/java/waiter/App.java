@@ -9,20 +9,54 @@ import waiter.Reportable.Communicator;
 import waiter.Threadable.ThreadGenerator;
 import waiter.Transportable.Messenger;
 
+import java.util.concurrent.Callable;
+
 class App {
 
     public static void main(String[] args) {
 
         int port = 5000;
         Listener listener = new Listener();
+        Routes routes = constructRoutes();
         HttProtocol protocol = new HttProtocol(
                 new RequestParser(),
-                new Router(),
-                new ResponseFormatter()
+                new Router(routes)
         );
         Messenger messenger = new Messenger(protocol);
         ThreadGenerator threadGenerator = new ThreadGenerator();
         EchoServer echoServer = new EchoServer(new Communicator(threadGenerator, listener, messenger));
         echoServer.start(port);
     }
+
+    private static Routes constructRoutes() {
+        Routes routes = new Routes();
+        RouteBuilder routeBuilder = new RouteBuilder();
+
+        routes.addRoute(
+                routeBuilder.newUp()
+                        .url("/simple_get")
+                        .methods(new String[]{"GET", "HEAD"})
+                        .handler(okHandler)
+                        .build()
+        );
+
+        routes.addRoute(
+                routeBuilder.newUp()
+                        .url("/simple_get_with_body")
+                        .methods(new String[]{"GET"})
+                        .handler(okWithBodyHandler)
+                        .build()
+        );
+
+        return routes;
+    }
+
+    public static final Callable<Response> okHandler = () -> new ResponseBuilder()
+            .newUp()
+            .build();
+
+    private static final Callable<Response> okWithBodyHandler = () -> new ResponseBuilder()
+            .newUp()
+            .body("Hello world")
+            .build();
 }
