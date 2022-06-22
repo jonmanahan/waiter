@@ -7,6 +7,7 @@ public record Router(Routes routes) {
             return new ResponseBuilder()
                     .newUp()
                     .status(Response.Status.NotFound.asString)
+                    .body("404, Could not find resource")
                     .build();
         }
 

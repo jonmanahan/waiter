@@ -41,14 +41,36 @@ public class RouterTest {
     }
 
     @Property
-    void returnsNotFoundResponseForNoExistingRoute(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
+    void returnsNotFoundWithReasonResponseForNoExistingRoute(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
         Request request = new Request(requestFields.get(0),requestFields.get(1), requestFields.get(2));
 
         Response Response = new Router(new Routes()).getRequestedResponse(request);
 
         assertEquals("HTTP/1.1", Response.getProtocol());
         assertEquals("404 Not Found", Response.getStatus());
-        assertEquals("Content-Length: 0", Response.getHeaders());
-        assertEquals("", Response.getBody());
+        assertEquals("Content-Length: " + Response.getBody().length(), Response.getHeaders());
+        assertEquals("404, Could not find resource", Response.getBody());
+    }
+
+    @Property
+    void returnsNotFoundWithReasonResponseForExistingRouteButNoMethod(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
+        Request request = new Request(requestFields.get(0),requestFields.get(1), requestFields.get(2));
+        Routes routes = new Routes();
+        routes.addRoute(
+                new RouteBuilder()
+                        .newUp()
+                        .url(requestFields.get(0))
+                        .methods(new String[]{""})
+                        .handler(() -> new ResponseBuilder()
+                                .newUp()
+                                .build())
+                        .build()
+        );
+        Response Response = new Router(routes).getRequestedResponse(request);
+
+        assertEquals("HTTP/1.1", Response.getProtocol());
+        assertEquals("404 Not Found", Response.getStatus());
+        assertEquals("Content-Length: " + Response.getBody().length(), Response.getHeaders());
+        assertEquals("404, Found resource but no corresponding method", Response.getBody());
     }
 }

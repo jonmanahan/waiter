@@ -69,7 +69,7 @@ public class HttProtocolTest {
     }
 
     @Property
-    void returnsNotFoundWithoutBodyWhenNoMethodButExistingUrl(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
+    void returnsNotFoundWithReasonWhenNoMethodButExistingUrl(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
         String request = String.join(" ", requestFields);
         Routes routes = new Routes();
         routes.addRoute(
@@ -92,11 +92,11 @@ public class HttProtocolTest {
         String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 404 Not Found"));
-        assertTrue(response.endsWith("\r\n\r\n"));
+        assertTrue(response.endsWith("404, Found resource but no corresponding method"));
     }
 
     @Property
-    void returnsNotFoundWithoutBodyWhenNoUrl(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
+    void returnsNotFoundWithReasonWhenNoUrl(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
         String request = String.join(" ", requestFields);
         Routes routes = new Routes();
         routes.addRoute(
@@ -119,6 +119,6 @@ public class HttProtocolTest {
         String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 404 Not Found"));
-        assertTrue(response.endsWith("\r\n\r\n"));
+        assertTrue(response.endsWith("404, Could not find resource"));
     }
 }

@@ -26,6 +26,7 @@ public class Routes {
             return new ResponseBuilder()
                     .newUp()
                     .status(Response.Status.NotFound.asString)
+                    .body("404, Found resource but no corresponding method")
                     .build();
         }
 

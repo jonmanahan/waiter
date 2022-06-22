@@ -11,8 +11,6 @@ public class Route {
     private final Callable<Response> handler;
 
     public Route(RouteBuilder routeBuilder) {
-        //Just have the builder put in strings and the handler, then populate each route in routes
-        //Maybe have a have the route for the key, being the url and the method together, then have the value be the route object
         this.url = routeBuilder.url;
         this.methods = routeBuilder.methods;
         this.handler = routeBuilder.handler;
