@@ -2,6 +2,18 @@ package waiter;
 
 public class Response {
 
+    public enum Status {
+        OK("200 OK"),
+        NotFound("404 Not Found")
+        ;
+
+        public final String asString;
+
+        Status(final String responseStatus) {
+            this.asString = responseStatus;
+        }
+    }
+
     private final String protocol;
     private final String status;
     private final String headers;

@@ -1,18 +1,12 @@
 package waiter;
 
-public class Router {
-
-    private final Routes routes;
-
-    public Router(Routes routes) {
-        this.routes = routes;
-    }
+public record Router(Routes routes) {
 
     public Response getRequestedResponse(Request request) {
-        if(!this.routes.exists(request)) {
+        if (!this.routes.exists(request)) {
             return new ResponseBuilder()
                     .newUp()
-                    .status("404 Not Found")
+                    .status(Response.Status.NotFound.asString)
                     .build();
         }
 

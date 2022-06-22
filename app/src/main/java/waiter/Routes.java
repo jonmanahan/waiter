@@ -25,7 +25,7 @@ public class Routes {
         if(!route.methodExistsForUrl(request.getMethod())) {
             return new ResponseBuilder()
                     .newUp()
-                    .status("404 Not Found")
+                    .status(Response.Status.NotFound.asString)
                     .build();
         }
 

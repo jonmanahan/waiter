@@ -35,7 +35,7 @@ class App {
         routes.addRoute(
                 routeBuilder.newUp()
                         .url("/simple_get")
-                        .methods(new String[]{"GET", "HEAD"})
+                        .methods(new String[]{Request.Method.GET.asString, Request.Method.HEAD.asString})
                         .handler(okHandler)
                         .build()
         );
@@ -43,7 +43,7 @@ class App {
         routes.addRoute(
                 routeBuilder.newUp()
                         .url("/simple_get_with_body")
-                        .methods(new String[]{"GET"})
+                        .methods(new String[]{Request.Method.GET.asString})
                         .handler(okWithBodyHandler)
                         .build()
         );
