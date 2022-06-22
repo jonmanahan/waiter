@@ -16,19 +16,15 @@ public class Routes {
         this.routes.put(route.getUrl(), route);
     }
 
+    public Route getRoute(String url) {
+        return this.routes.get(url);
+    }
+
     public boolean exists(Request request) {
         return this.routes.containsKey(request.getUrl());
     }
 
-    public Response handle(Request request) {
-        Route route = this.routes.get(request.getUrl());
-        if(!route.methodExistsForUrl(request.getMethod())) {
-            return new ResponseBuilder()
-                    .newUp()
-                    .status(Response.Status.NotFound.asString)
-                    .body("404, Found resource but no corresponding method")
-                    .build();
-        }
+    public Response handle(Route route) {
 
         Callable<Response> handler = route.getHandler();
         try {

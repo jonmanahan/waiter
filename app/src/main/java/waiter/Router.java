@@ -11,6 +11,16 @@ public record Router(Routes routes) {
                     .build();
         }
 
-        return this.routes.handle(request);
+        Route route = this.routes.getRoute(request.getUrl());
+
+        if(!route.methodExistsForUrl(request.getMethod())) {
+            return new ResponseBuilder()
+                    .newUp()
+                    .status(Response.Status.NotFound.asString)
+                    .body("404, Found resource but no corresponding method")
+                    .build();
+        }
+
+        return this.routes.handle(route);
     }
 }
