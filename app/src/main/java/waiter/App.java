@@ -39,6 +39,10 @@ class App {
                 new Route("/simple_get_with_body", new Request.Method[]{Request.Method.GET}, okWithBodyHandler)
         );
 
+        routes.addRoute(
+                new Route("/head_request", new Request.Method[]{Request.Method.HEAD}, okHandler)
+        );
+
         return routes;
     }
 
