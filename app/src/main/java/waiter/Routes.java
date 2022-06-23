@@ -20,8 +20,8 @@ public class Routes {
         return this.routes.get(url);
     }
 
-    public boolean exists(Request request) {
-        return this.routes.containsKey(request.getUrl());
+    public boolean exists(String url) {
+        return this.routes.containsKey(url);
     }
 
     public Response handle(Route route) {

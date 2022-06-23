@@ -8,24 +8,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RouterTest {
 
     String url, protocol, headers, body;
-    Request.Method method;
     Response.Status status;
 
 
     @BeforeEach
     void setUp() {
         url = "URL"; protocol = "PROTOCOL"; headers = "HEADERS"; body = "BODY";
-        method = Request.Method.GET;
         status = Response.Status.OK;
     }
 
     @Test
     void returnsCorrespondingResponseForExistingRoute() {
 
-        Request request = new Request(url, method.asString, protocol);
+        Request request = new Request(url, Request.Method.GET.asString, protocol);
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(url, new Request.Method[]{method},
+                new Route(url, new Request.Method[]{Request.Method.GET},
                         () -> new ResponseBuilder()
                                 .newUp()
                                 .protocol(protocol)
@@ -46,7 +44,7 @@ public class RouterTest {
 
     @Test
     void returnsNotFoundWithReasonResponseForNoExistingRoute() {
-        Request request = new Request(url, method.asString, protocol);
+        Request request = new Request(url, Request.Method.GET.asString, protocol);
 
         Response Response = new Router(new Routes()).getRequestedResponse(request);
 
@@ -57,8 +55,8 @@ public class RouterTest {
     }
 
     @Test
-    void returnsNotFoundWithReasonResponseForExistingUrlButNoMethod() {
-        Request request = new Request(url, method.asString, protocol);
+    void returnsNotFoundWithReasonResponseForExistingUrlButNoGetMethodInRoute() {
+        Request request = new Request(url, Request.Method.GET.asString, protocol);
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{},
@@ -73,5 +71,24 @@ public class RouterTest {
         assertEquals(waiter.Response.Status.NotFound, Response.getStatus());
         assertEquals("Content-Length: " + Response.getBody().length(), Response.getHeaders());
         assertEquals("404, Found resource but no corresponding method", Response.getBody());
+    }
+
+    @Test
+    void returnsNotFoundWithNoReasonResponseForExistingUrlButButNoHeadMethodInRoute() {
+        Request request = new Request(url, Request.Method.HEAD.asString, protocol);
+        Routes routes = new Routes();
+        routes.addRoute(
+                new Route(url, new Request.Method[]{},
+                        () -> new ResponseBuilder()
+                                .newUp()
+                                .build()
+                )
+        );
+        Response Response = new Router(routes).getRequestedResponse(request);
+
+        assertEquals("HTTP/1.1", Response.getProtocol());
+        assertEquals(waiter.Response.Status.NotFound, Response.getStatus());
+        assertEquals("Content-Length: " + Response.getBody().length(), Response.getHeaders());
+        assertEquals("", Response.getBody());
     }
 }
