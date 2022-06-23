@@ -10,10 +10,10 @@ public class Route {
     private final String[] methods;
     private final Callable<Response> handler;
 
-    public Route(RouteBuilder routeBuilder) {
-        this.url = routeBuilder.url;
-        this.methods = routeBuilder.methods;
-        this.handler = routeBuilder.handler;
+    public Route(String url, String[] methods, Callable<Response> handler) {
+        this.url = url;
+        this.methods = methods;
+        this.handler = handler;
     }
 
     public String getUrl() {

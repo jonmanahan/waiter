@@ -18,15 +18,10 @@ public class HttProtocolTest {
         String request = String.join(" ", requestFields);
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(
-                        new RouteBuilder()
+                new Route(requestFields.get(1), new String[]{requestFields.get(0)},
+                        () -> new ResponseBuilder()
                                 .newUp()
-                                .url(requestFields.get(1))
-                                .methods(new String[]{requestFields.get(0)})
-                                .handler(() -> new ResponseBuilder()
-                                        .newUp()
-                                        .build()
-                                )
+                                .build()
                 )
         );
         HttProtocol httProtocol = new HttProtocol(
@@ -45,17 +40,12 @@ public class HttProtocolTest {
         String request = String.join(" ", requestFields);
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(
-                        new RouteBuilder()
-                                .newUp()
-                                .url(requestFields.get(1))
-                                .methods(new String[]{requestFields.get(0)})
-                                .handler(() -> new ResponseBuilder()
+                new Route(requestFields.get(1), new String[]{requestFields.get(0)},
+                        () -> new ResponseBuilder()
                                         .newUp()
                                         .body(requestFields.get(2))
                                         .build()
                                 )
-                )
         );
         HttProtocol httProtocol = new HttProtocol(
                 new RequestParser(),
@@ -73,15 +63,10 @@ public class HttProtocolTest {
         String request = String.join(" ", requestFields);
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(
-                        new RouteBuilder()
-                                .newUp()
-                                .url(requestFields.get(1))
-                                .methods(new String[]{""})
-                                .handler(() -> new ResponseBuilder()
+                new Route(requestFields.get(1), new String[]{""},
+                        () -> new ResponseBuilder()
                                         .newUp()
                                         .build()
-                                )
                 )
         );
         HttProtocol httProtocol = new HttProtocol(
@@ -100,15 +85,10 @@ public class HttProtocolTest {
         String request = String.join(" ", requestFields);
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(
-                        new RouteBuilder()
-                                .newUp()
-                                .url("foo")
-                                .methods(new String[]{requestFields.get(0)})
-                                .handler(() -> new ResponseBuilder()
+                new Route("foo", new String[]{requestFields.get(0)},
+                        () -> new ResponseBuilder()
                                         .newUp()
                                         .build()
-                                )
                 )
         );
         HttProtocol httProtocol = new HttProtocol(

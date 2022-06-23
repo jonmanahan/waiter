@@ -18,18 +18,15 @@ public class RouterTest {
         Request request = new Request(requestFields.get(0), requestFields.get(1), requestFields.get(2));
         Routes routes = new Routes();
         routes.addRoute(
-                new RouteBuilder()
-                        .newUp()
-                        .url(requestFields.get(0))
-                        .methods(new String[]{requestFields.get(1)})
-                        .handler(() -> new ResponseBuilder()
+                new Route(requestFields.get(0), new String[]{requestFields.get(1)},
+                        () -> new ResponseBuilder()
                                 .newUp()
                                 .protocol(protocol)
                                 .status(status)
                                 .headers(headers)
                                 .body(body)
-                                .build())
-                        .build()
+                                .build()
+                )
         );
 
         Response response = new Router(routes).getRequestedResponse(request);
@@ -57,14 +54,11 @@ public class RouterTest {
         Request request = new Request(requestFields.get(0),requestFields.get(1), requestFields.get(2));
         Routes routes = new Routes();
         routes.addRoute(
-                new RouteBuilder()
-                        .newUp()
-                        .url(requestFields.get(0))
-                        .methods(new String[]{""})
-                        .handler(() -> new ResponseBuilder()
+                new Route(requestFields.get(0), new String[]{""},
+                        () -> new ResponseBuilder()
                                 .newUp()
-                                .build())
-                        .build()
+                                .build()
+                )
         );
         Response Response = new Router(routes).getRequestedResponse(request);
 

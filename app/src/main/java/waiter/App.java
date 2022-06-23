@@ -30,22 +30,13 @@ class App {
 
     private static Routes constructRoutes() {
         Routes routes = new Routes();
-        RouteBuilder routeBuilder = new RouteBuilder();
 
         routes.addRoute(
-                routeBuilder.newUp()
-                        .url("/simple_get")
-                        .methods(new String[]{Request.Method.GET.asString, Request.Method.HEAD.asString})
-                        .handler(okHandler)
-                        .build()
+                new Route("/simple_get", new String[]{Request.Method.GET.asString, Request.Method.HEAD.asString}, okHandler)
         );
 
         routes.addRoute(
-                routeBuilder.newUp()
-                        .url("/simple_get_with_body")
-                        .methods(new String[]{Request.Method.GET.asString})
-                        .handler(okWithBodyHandler)
-                        .build()
+                new Route("/simple_get_with_body", new String[]{Request.Method.GET.asString}, okWithBodyHandler)
         );
 
         return routes;
