@@ -8,6 +8,6 @@ public class RequestParser {
         String method = parsedRequestStartLine[0];
         String target = parsedRequestStartLine[1];
         String protocol = parsedRequestStartLine[2];
-        return new Request(method, target, protocol);
+        return new Request(target, method, protocol);
     }
 }

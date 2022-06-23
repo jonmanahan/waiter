@@ -1,5 +1,9 @@
 package waiter;
 
+import net.jqwik.api.ForAll;
+import net.jqwik.api.Property;
+import net.jqwik.api.constraints.AlphaChars;
+import net.jqwik.api.constraints.NotBlank;
 import org.junit.jupiter.api.Test;
 import waiter.Protocol.HttProtocol;
 
@@ -8,73 +12,70 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class HttProtocolTest {
 
     @Test
-    void getSimpleGetReturnsOkWithoutBody() {
-        String fromClient = "GET /simple_get HTTP/1.1";
-        HttProtocol httProtocol = new HttProtocol(new RequestParser(), new Router(), new ResponseFormatter());
+    void returnsOkWithNoBodyWhenGetMethodWithExistingUrl() {
+        String url = "/simple_get";
+        String request = String.format("GET %s HTTP/1.1", url);
+        Routes routes = new Routes();
+        routes.addRoute(
+                new Route(url, new Request.Method[]{Request.Method.GET},
+                        () -> new ResponseBuilder()
+                                .newUp()
+                                .build()
+                )
+        );
+        HttProtocol httProtocol = new HttProtocol(
+                new RequestParser(),
+                new Router(routes)
+        );
 
-        String response = httProtocol.serve(fromClient);
+        String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
         assertTrue(response.endsWith("\r\n\r\n"));
     }
 
     @Test
-    void getSimpleGetWithBodyReturnsOKWithBody() {
-        String fromClient = "GET /simple_get_with_body HTTP/1.1";
+    void returnsOkWithNoBodyWhenHeadMethodWithExistingUrl() {
+        String url = "/simple_get";
+        String request = String.format("HEAD %s HTTP/1.1", url);
+        Routes routes = new Routes();
+        routes.addRoute(
+                new Route(url, new Request.Method[]{Request.Method.HEAD},
+                        () -> new ResponseBuilder()
+                                        .newUp()
+                                        .build()
+                                )
+        );
         HttProtocol httProtocol = new HttProtocol(
                 new RequestParser(),
-                new Router(),
-                new ResponseFormatter()
+                new Router(routes)
         );
 
-        String response = httProtocol.serve(fromClient);
-
-        assertTrue(response.contains("HTTP/1.1 200 OK"));
-        assertTrue(response.endsWith("\r\n\r\nHello world"));
-    }
-
-    @Test
-    void headSimpleGetReturnsOKWithoutBody() {
-        String fromClient = "HEAD /simple_get HTTP/1.1";
-        HttProtocol httProtocol = new HttProtocol(
-                new RequestParser(),
-                new Router(),
-                new ResponseFormatter()
-        );
-
-        String response = httProtocol.serve(fromClient);
+        String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
         assertTrue(response.endsWith("\r\n\r\n"));
     }
 
-    @Test
-    void NoMethodNoUrlReturnsInternalServerErrorWithoutBody() {
-        String fromClient = "foo /bar HTTP/1.1";
+    @Property
+    void returnsOkWithNoBodyWhenExistingMethodWithExistingUrl(@ForAll @AlphaChars @NotBlank String url) {
+        String request = String.format("GET %s HTTP/1.1", url);
+        Routes routes = new Routes();
+        routes.addRoute(
+                new Route(url, new Request.Method[]{Request.Method.GET},
+                        () -> new ResponseBuilder()
+                                        .newUp()
+                                        .build()
+                )
+        );
         HttProtocol httProtocol = new HttProtocol(
                 new RequestParser(),
-                new Router(),
-                new ResponseFormatter()
+                new Router(routes)
         );
 
-        String response = httProtocol.serve(fromClient);
+        String response = httProtocol.serve(request);
 
-        assertTrue(response.contains("HTTP/1.1 404 Not Found"));
-        assertTrue(response.endsWith("\r\n\r\n"));
-    }
-
-    @Test
-    void NoUrlReturnsNotFoundWithoutBody() {
-        String fromClient = "HEAD /bar HTTP/1.1";
-        HttProtocol httProtocol = new HttProtocol(
-                new RequestParser(),
-                new Router(),
-                new ResponseFormatter()
-        );
-
-        String response = httProtocol.serve(fromClient);
-
-        assertTrue(response.contains("HTTP/1.1 404 Not Found"));
+        assertTrue(response.contains("HTTP/1.1 200 OK"));
         assertTrue(response.endsWith("\r\n\r\n"));
     }
 }

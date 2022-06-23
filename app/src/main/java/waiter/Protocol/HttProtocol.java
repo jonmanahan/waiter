@@ -2,13 +2,13 @@ package waiter.Protocol;
 
 import waiter.*;
 
-public record HttProtocol(RequestParser requestParser, Router router, ResponseFormatter responseFormatter) implements Protocol {
+public record HttProtocol(RequestParser requestParser, Router router) implements Protocol {
 
     public String serve(String fromClient) {
 
         Request request = requestParser.parse(fromClient);
-        Route route = router.getRoute(request);
+        Response response = router.getRequestedResponse(request);
 
-        return responseFormatter.formatResponse(route);
+        return response.formatResponse();
     }
 }

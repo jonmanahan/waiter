@@ -1,20 +1,11 @@
 package waiter;
 
-public record Route(String protocol, String status, String headers, String body) {
+import java.util.Arrays;
+import java.util.concurrent.Callable;
 
-    public String getProtocol() {
-        return protocol;
-    }
+public record Route(String url, Request.Method[] methods, Callable<Response> handler) {
 
-    public String getStatus() {
-        return status;
-    }
-
-    public String getHeaders() {
-        return headers;
-    }
-
-    public String getBody() {
-        return body;
+    public boolean methodExistsForUrl(String method) {
+        return Arrays.toString(this.methods).contains(method);
     }
 }

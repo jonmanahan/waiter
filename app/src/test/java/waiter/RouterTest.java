@@ -1,68 +1,94 @@
 package waiter;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RouterTest {
 
-    @Test
-    void getSimpleGetReturnsOKRouteWithoutBody() {
-        Request request = new Request("GET","/simple_get", "HTTP/1.1");
+    String url, protocol, headers, body;
+    Response.Status status;
 
-        Route route = new Router().getRoute(request);
 
-        assertEquals("HTTP/1.1", route.getProtocol());
-        assertEquals("200 OK", route.getStatus());
-        assertEquals("Content-Length: 0", route.getHeaders());
-        assertEquals("", route.getBody());
+    @BeforeEach
+    void setUp() {
+        url = "URL"; protocol = "PROTOCOL"; headers = "HEADERS"; body = "BODY";
+        status = Response.Status.OK;
     }
 
     @Test
-    void getSimpleGetWithBodyReturnsOKRouteWithBody() {
-        Request request = new Request("GET","/simple_get_with_body", "HTTP/1.1");
+    void returnsCorrespondingResponseForExistingRoute() {
 
-        Route route = new Router().getRoute(request);
+        Request request = new Request(url, Request.Method.GET.asString, protocol);
+        Routes routes = new Routes();
+        routes.addRoute(
+                new Route(url, new Request.Method[]{Request.Method.GET},
+                        () -> new ResponseBuilder()
+                                .newUp()
+                                .protocol(protocol)
+                                .status(status)
+                                .headers(headers)
+                                .body(body)
+                                .build()
+                )
+        );
 
-        assertEquals("HTTP/1.1", route.getProtocol());
-        assertEquals("200 OK", route.getStatus());
-        assertEquals("Content-Length: 11", route.getHeaders());
-        assertEquals("Hello world", route.getBody());
+        Response response = new Router(routes).getRequestedResponse(request);
+
+        assertEquals(protocol, response.getProtocol());
+        assertEquals(status, response.getStatus());
+        assertEquals(headers, response.getHeaders());
+        assertEquals(body, response.getBody());
     }
 
     @Test
-    void headSimpleGetReturnsOKRouteWithoutBody() {
-        Request request = new Request("HEAD","/simple_get", "HTTP/1.1");
+    void returnsNotFoundWithReasonResponseForNoExistingRoute() {
+        Request request = new Request(url, Request.Method.GET.asString, protocol);
 
-        Route route = new Router().getRoute(request);
+        Response Response = new Router(new Routes()).getRequestedResponse(request);
 
-        assertEquals("HTTP/1.1", route.getProtocol());
-        assertEquals("200 OK", route.getStatus());
-        assertEquals("Content-Length: 0", route.getHeaders());
-        assertEquals("", route.getBody());
+        assertEquals("HTTP/1.1", Response.getProtocol());
+        assertEquals(waiter.Response.Status.NotFound, Response.getStatus());
+        assertEquals("Content-Length: " + Response.getBody().length(), Response.getHeaders());
+        assertEquals("404, Could not find resource", Response.getBody());
     }
 
     @Test
-    void NoMethodOrUrlFoundReturnsInternalServerErrorRouteWithoutBody() {
-        Request request = new Request("foo","/bar", "HTTP/1.1");
+    void returnsNotFoundWithReasonResponseForExistingUrlButNoGetMethodInRoute() {
+        Request request = new Request(url, Request.Method.GET.asString, protocol);
+        Routes routes = new Routes();
+        routes.addRoute(
+                new Route(url, new Request.Method[]{},
+                        () -> new ResponseBuilder()
+                                .newUp()
+                                .build()
+                )
+        );
+        Response Response = new Router(routes).getRequestedResponse(request);
 
-        Route route = new Router().getRoute(request);
-
-        assertEquals("HTTP/1.1", route.getProtocol());
-        assertEquals("404 Not Found", route.getStatus());
-        assertEquals("Content-Length: 0", route.getHeaders());
-        assertEquals("", route.getBody());
+        assertEquals("HTTP/1.1", Response.getProtocol());
+        assertEquals(waiter.Response.Status.NotFound, Response.getStatus());
+        assertEquals("Content-Length: " + Response.getBody().length(), Response.getHeaders());
+        assertEquals("404, Found resource but no corresponding method", Response.getBody());
     }
 
     @Test
-    void NoUrlFoundReturnsNotFoundRouteWithoutBody() {
-        Request request = new Request("HEAD","/bar", "HTTP/1.1");
+    void returnsNotFoundWithNoReasonResponseForExistingUrlButButNoHeadMethodInRoute() {
+        Request request = new Request(url, Request.Method.HEAD.asString, protocol);
+        Routes routes = new Routes();
+        routes.addRoute(
+                new Route(url, new Request.Method[]{},
+                        () -> new ResponseBuilder()
+                                .newUp()
+                                .build()
+                )
+        );
+        Response Response = new Router(routes).getRequestedResponse(request);
 
-        Route route = new Router().getRoute(request);
-
-        assertEquals("HTTP/1.1", route.getProtocol());
-        assertEquals("404 Not Found", route.getStatus());
-        assertEquals("Content-Length: 0", route.getHeaders());
-        assertEquals("", route.getBody());
+        assertEquals("HTTP/1.1", Response.getProtocol());
+        assertEquals(waiter.Response.Status.NotFound, Response.getStatus());
+        assertEquals("Content-Length: " + Response.getBody().length(), Response.getHeaders());
+        assertEquals("", Response.getBody());
     }
 }
