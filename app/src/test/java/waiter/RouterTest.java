@@ -1,24 +1,31 @@
 package waiter;
 
-import net.jqwik.api.ForAll;
-import net.jqwik.api.Property;
-import net.jqwik.api.constraints.AlphaChars;
-import net.jqwik.api.constraints.NotBlank;
-import net.jqwik.api.constraints.Size;
-
-import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RouterTest {
 
-    @Property
-    void returnsCorrespondingResponseForExistingRoute(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
-        String protocol = "PROTOCOL", status = "STATUS", headers = "HEADERS", body = "BODY";
-        Request request = new Request(requestFields.get(0), requestFields.get(1), requestFields.get(2));
+    String url, protocol, headers, body;
+    Request.Method method;
+    Response.Status status;
+
+
+    @BeforeEach
+    void setUp() {
+        url = "URL"; protocol = "PROTOCOL"; headers = "HEADERS"; body = "BODY";
+        method = Request.Method.GET;
+        status = Response.Status.OK;
+    }
+
+    @Test
+    void returnsCorrespondingResponseForExistingRoute() {
+
+        Request request = new Request(url, method.asString, protocol);
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(requestFields.get(0), new String[]{requestFields.get(1)},
+                new Route(url, new Request.Method[]{method},
                         () -> new ResponseBuilder()
                                 .newUp()
                                 .protocol(protocol)
@@ -37,24 +44,24 @@ public class RouterTest {
         assertEquals(body, response.getBody());
     }
 
-    @Property
-    void returnsNotFoundWithReasonResponseForNoExistingRoute(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
-        Request request = new Request(requestFields.get(0),requestFields.get(1), requestFields.get(2));
+    @Test
+    void returnsNotFoundWithReasonResponseForNoExistingRoute() {
+        Request request = new Request(url, method.asString, protocol);
 
         Response Response = new Router(new Routes()).getRequestedResponse(request);
 
         assertEquals("HTTP/1.1", Response.getProtocol());
-        assertEquals("404 Not Found", Response.getStatus());
+        assertEquals(waiter.Response.Status.NotFound, Response.getStatus());
         assertEquals("Content-Length: " + Response.getBody().length(), Response.getHeaders());
         assertEquals("404, Could not find resource", Response.getBody());
     }
 
-    @Property
-    void returnsNotFoundWithReasonResponseForExistingRouteButNoMethod(@ForAll @Size(3) List<@AlphaChars @NotBlank String> requestFields) {
-        Request request = new Request(requestFields.get(0),requestFields.get(1), requestFields.get(2));
+    @Test
+    void returnsNotFoundWithReasonResponseForExistingUrlButNoMethod() {
+        Request request = new Request(url, method.asString, protocol);
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(requestFields.get(0), new String[]{""},
+                new Route(url, new Request.Method[]{},
                         () -> new ResponseBuilder()
                                 .newUp()
                                 .build()
@@ -63,7 +70,7 @@ public class RouterTest {
         Response Response = new Router(routes).getRequestedResponse(request);
 
         assertEquals("HTTP/1.1", Response.getProtocol());
-        assertEquals("404 Not Found", Response.getStatus());
+        assertEquals(waiter.Response.Status.NotFound, Response.getStatus());
         assertEquals("Content-Length: " + Response.getBody().length(), Response.getHeaders());
         assertEquals("404, Found resource but no corresponding method", Response.getBody());
     }

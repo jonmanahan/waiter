@@ -3,7 +3,7 @@ package waiter;
 public class ResponseBuilder {
 
     public String protocol = "HTTP/1.1";
-    public String status = Response.Status.OK.asString;
+    public Response.Status status = Response.Status.OK;
     public String headers = "Content-Length:";
     public String body = "";
 
@@ -16,7 +16,7 @@ public class ResponseBuilder {
         return this;
     }
 
-    public ResponseBuilder status(String status) {
+    public ResponseBuilder status(Response.Status status) {
         this.status = status;
         return this;
     }

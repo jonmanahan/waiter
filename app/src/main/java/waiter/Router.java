@@ -6,7 +6,7 @@ public record Router(Routes routes) {
         if (!this.routes.exists(request)) {
             return new ResponseBuilder()
                     .newUp()
-                    .status(Response.Status.NotFound.asString)
+                    .status(Response.Status.NotFound)
                     .body("404, Could not find resource")
                     .build();
         }
@@ -16,7 +16,7 @@ public record Router(Routes routes) {
         if(!route.methodExistsForUrl(request.getMethod())) {
             return new ResponseBuilder()
                     .newUp()
-                    .status(Response.Status.NotFound.asString)
+                    .status(Response.Status.NotFound)
                     .body("404, Found resource but no corresponding method")
                     .build();
         }

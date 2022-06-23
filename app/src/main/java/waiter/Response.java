@@ -15,7 +15,7 @@ public class Response {
     }
 
     private final String protocol;
-    private final String status;
+    private final Response.Status status;
     private final String headers;
     private final String body;
 
@@ -30,7 +30,7 @@ public class Response {
         return this.protocol;
     }
 
-    public String getStatus() {
+    public Response.Status getStatus() {
         return this.status;
     }
 
@@ -43,7 +43,7 @@ public class Response {
     }
 
     public String formatResponse() {
-        return this.protocol + " " + this.status + "\r\n"
+        return this.protocol + " " + this.status.asString + "\r\n"
                 + this.headers + "\r\n\r\n" + this.body;
     }
 }

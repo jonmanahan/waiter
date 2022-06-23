@@ -32,11 +32,11 @@ class App {
         Routes routes = new Routes();
 
         routes.addRoute(
-                new Route("/simple_get", new String[]{Request.Method.GET.asString, Request.Method.HEAD.asString}, okHandler)
+                new Route("/simple_get", new Request.Method[]{Request.Method.GET, Request.Method.HEAD}, okHandler)
         );
 
         routes.addRoute(
-                new Route("/simple_get_with_body", new String[]{Request.Method.GET.asString}, okWithBodyHandler)
+                new Route("/simple_get_with_body", new Request.Method[]{Request.Method.GET}, okWithBodyHandler)
         );
 
         return routes;
