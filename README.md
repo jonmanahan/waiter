@@ -1,7 +1,7 @@
 # waiter
 
 ## Description
-A server that establishes a connectable with the client, receives their message and echos it back to them
+An HTTP server that (when running) can receive a client HTTP Request message via a curl command, browser or POSTMAN, and sends back a corresponding and appropriate HTTP Response message
 
 ## Prerequisites
 - Install [Java version 18.0.1.1](https://java.com/en/download/)
@@ -11,12 +11,20 @@ A server that establishes a connectable with the client, receives their message 
 ## Commands to build the project
 - gradle build
 
-## Commands to start echo server
+## Commands to start HTTP server
+#### Must be done before any requests are sent
 - gradle run
 
-## Commands to establish the connectable to the running echo server (from a separate command line) and then echo a message
-1. curl -v telnet://localhost:4424
-2. *enter message to echo*
+## Example curl command to send an HTTP message to the server
+#### (This is a GET request, with an example url)
+- curl -v telnet://localhost:5000*/insert_requested_resource_here*
+#### For more curl methods/help, use the following curl command
+- curl -h
 
-## Command to run the tests
+## Command to run the unit tests
 - gradle test
+
+## Example commands to run a set of acceptance tests 
+#### (Specific rake example: 1st set of acceptance tests, for the other 3 test sets replace the f1 with f2-f4 respectively)
+1. cd http_server_spec
+2. rake test:f1
