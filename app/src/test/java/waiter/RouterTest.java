@@ -21,9 +21,9 @@ public class RouterTest {
 
     @Test
     void returnsCorrespondingResponseForExistingRoute() {
-        String headers = "HEADERS", body = "BODY";
+        String requestHeaders = "REQUEST", requestBody = "REQUEST", responseHeaders = "RESPONSE", responseBody = "RESPONSE";
         Status status = Status.OK;
-        Request request = new Request(url, Request.Method.GET.asString, protocol);
+        Request request = new Request(url, Request.Method.GET.asString, protocol, requestHeaders, requestBody);
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{Request.Method.GET},
@@ -31,8 +31,8 @@ public class RouterTest {
                                 .newUp()
                                 .protocol(protocol)
                                 .status(status)
-                                .headers(HeaderField.Allow, headers)
-                                .body(body)
+                                .headers(HeaderField.Allow, responseHeaders)
+                                .body(responseBody)
                                 .build()
                 )
         );
@@ -41,8 +41,8 @@ public class RouterTest {
 
         assertEquals(protocol, response.getProtocol());
         assertEquals(status, response.getStatus());
-        assertEquals(headers, response.getHeaders().get(HeaderField.Allow));
-        assertEquals(body, response.getBody());
+        assertEquals(responseHeaders, response.getHeaders().get(HeaderField.Allow));
+        assertEquals(responseBody, response.getBody());
     }
 
     @Test
