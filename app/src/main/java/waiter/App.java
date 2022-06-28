@@ -40,7 +40,7 @@ class App {
         );
 
         routes.addRoute(
-                new Route("/head_request", new Request.Method[]{Request.Method.HEAD}, okHandler)
+                new Route("/head_request", new Request.Method[]{Request.Method.HEAD, Request.Method.OPTIONS}, okHandler)
         );
 
         return routes;
@@ -53,5 +53,6 @@ class App {
     private static final Callable<Response> okWithBodyHandler = () -> new ResponseBuilder()
             .newUp()
             .body("Hello world")
+            .headers(Response.HeaderField.ContentType, "application/octet-stream")
             .build();
 }

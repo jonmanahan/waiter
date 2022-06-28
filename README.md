@@ -11,6 +11,7 @@ An HTTP server that (when running) can receive a client HTTP Request message via
 ## Commands to build the project
 - gradle build
 
+<<<<<<< HEAD
 ## Commands to start HTTP server
 #### Must be done before any requests are sent
 - gradle run

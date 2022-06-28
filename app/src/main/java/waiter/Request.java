@@ -5,7 +5,8 @@ public record Request(String url, String method, String protocol) {
     public enum Method {
         GET("GET"),
         HEAD("HEAD"),
-        POST("POST")
+        POST("POST"),
+        OPTIONS("OPTIONS")
         ;
 
         public final String asString;

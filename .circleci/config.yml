@@ -26,7 +26,7 @@ jobs:
             gem install bundler
             bundle install --path vendor/bundle
             sudo apt install lsof
-            bundle exec spinach --tags @simple-get,@simple-head
+            bundle exec spinach --tags @simple-get,@simple-head,@page-not-found,@method-not-allowed
 
 workflows:
   build_and_test:
