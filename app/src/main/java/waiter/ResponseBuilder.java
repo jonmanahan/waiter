@@ -1,10 +1,12 @@
 package waiter;
 
+import java.util.TreeMap;
+
 public class ResponseBuilder {
 
     public String protocol = "HTTP/1.1";
     public Response.Status status = Response.Status.OK;
-    public String headers = "Content-Length:";
+    public TreeMap<Response.HeaderField, String> headers = new TreeMap<>();
     public String body = "";
 
     public ResponseBuilder newUp() {
@@ -21,8 +23,8 @@ public class ResponseBuilder {
         return this;
     }
 
-    public ResponseBuilder headers(String headers) {
-        this.headers = headers;
+    public ResponseBuilder headers(Response.HeaderField headerField, String value) {
+        this.headers.put(headerField, value);
         return this;
     }
 
@@ -32,7 +34,7 @@ public class ResponseBuilder {
     }
 
     public Response build() {
-        this.headers = this.headers.replace("Content-Length:", "Content-Length: " + this.body.length());
+        this.headers.put(Response.HeaderField.ContentLength, String.valueOf(this.body.length()));
         return new Response(this);
     }
 }
