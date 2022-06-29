@@ -22,11 +22,12 @@ public class ClientConnection implements Connectable {
 
     public String read() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        while(notEndOfLine(stringBuilder)) {
+        int currentRequestBodyLength = 0;
+        while(notEndOfRequest(stringBuilder, currentRequestBodyLength)) {
             stringBuilder.append((char) this.bufferedReader.read());
         }
 
-        return stringBuilder.toString().strip();
+        return stringBuilder.toString();
     }
 
     public void write(String toClient) throws IOException {
@@ -38,8 +39,35 @@ public class ClientConnection implements Connectable {
         this.socket.close();
     }
 
-    private boolean notEndOfLine(StringBuilder requestStartLineBuilder) {
-        return requestStartLineBuilder.indexOf("\r\n") == -1;
+    private boolean notEndOfRequest(StringBuilder requestMessageBuilder, int currentRequestBodyLength) {
+        int requestBodyLength = 0;
+        int headersEndIndex = requestMessageBuilder.indexOf("\r\n\r\n");
+
+        if(headersWereRead(headersEndIndex)) {
+            requestBodyLength = getContentLength(requestMessageBuilder, headersEndIndex);
+            currentRequestBodyLength += 1;
+        }
+
+        return currentRequestBodyLength <= requestBodyLength;
+    }
+
+    private int getContentLength(StringBuilder requestMessageBuilder, int headersEndIndex) {
+        int contentLength = 0;
+        int contentLengthStartIndex = requestMessageBuilder.indexOf("Content-Length: ");
+
+        if(contentLengthExists(contentLengthStartIndex)) {
+            contentLength = Integer.parseInt(requestMessageBuilder.substring(contentLengthStartIndex + 1, headersEndIndex));
+        }
+
+        return contentLength;
+    }
+
+    private boolean contentLengthExists(int contentLengthStartIndex) {
+        return contentLengthStartIndex != -1;
+    }
+
+    private boolean headersWereRead(int headersEndIndex) {
+        return headersEndIndex != -1;
     }
 }
 

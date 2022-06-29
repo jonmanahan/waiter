@@ -1,6 +1,6 @@
 package waiter;
 
-public record Request(String url, String method, String protocol) {
+public record Request(String url, String method, String protocol, String headers, String body) {
 
     public enum Method {
         GET("GET"),
@@ -26,5 +26,13 @@ public record Request(String url, String method, String protocol) {
 
     public String getProtocol() {
         return protocol;
+    }
+
+    public String getHeaders() {
+        return headers;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

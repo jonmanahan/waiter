@@ -11,17 +11,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RouterTest {
 
-    String url, protocol;
+    String url, protocol, requestHeaders, requestBody;
 
     @BeforeEach
     void setUp() {
         url = "URL";
         protocol = "PROTOCOL";
+        requestHeaders = "REQUEST";
+        requestBody = "REQUEST";
     }
 
     @Test
     void returnsCorrespondingResponseForExistingRoute() {
-        String requestHeaders = "REQUEST", requestBody = "REQUEST", responseHeaders = "RESPONSE", responseBody = "RESPONSE";
+        String responseHeaders = "RESPONSE", responseBody = "RESPONSE";
         Status status = Status.OK;
         Request request = new Request(url, Request.Method.GET.asString, protocol, requestHeaders, requestBody);
         Routes routes = new Routes();
@@ -47,7 +49,7 @@ public class RouterTest {
 
     @Test
     void returnsNotFoundWithReasonResponseForNoExistingRoute() {
-        Request request = new Request(url, Request.Method.GET.asString, protocol);
+        Request request = new Request(url, Request.Method.GET.asString, protocol, requestHeaders, requestBody);
 
         Response Response = new Router(new Routes()).getRequestedResponse(request);
 
@@ -60,7 +62,7 @@ public class RouterTest {
 
     @Test
     void returnsNotFoundWithNoReasonResponseForExistingUrlButButNoHeadMethodInRoute() {
-        Request request = new Request(url, Request.Method.HEAD.asString, protocol);
+        Request request = new Request(url, Request.Method.HEAD.asString, protocol, requestHeaders, requestBody);
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{},
@@ -80,7 +82,7 @@ public class RouterTest {
 
     @Test
     void returnsMethodNotAllowedWithReasonResponseForExistingUrlButNoGetMethodInRoute() {
-        Request request = new Request(url, Request.Method.GET.asString, protocol);
+        Request request = new Request(url, Request.Method.GET.asString, protocol, requestHeaders, requestBody);
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{},

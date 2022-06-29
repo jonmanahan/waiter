@@ -26,7 +26,7 @@ public class RequesterParserTest {
                 %s %s %s
                 %s
                 
-                """, method, url, protocol, headers).replace("\n", "\r\n");
+                %s""", method, url, protocol, headers, body).replace("\n", "\r\n");
 
         Request request = requestParser.parse(expectedRequest);
 
