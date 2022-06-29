@@ -13,17 +13,18 @@ public class ClientConnection implements Connectable {
     private final Socket socket;
     private final BufferedReader bufferedReader;
     private final PrintStream printStream;
+    private int currentRequestBodyLength;
 
     public ClientConnection(Socket socket) throws IOException {
         this.socket = socket;
         this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.printStream = new PrintStream(socket.getOutputStream());
+        this.currentRequestBodyLength = 0;
     }
 
     public String read() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        int currentRequestBodyLength = 0;
-        while(notEndOfRequest(stringBuilder, currentRequestBodyLength)) {
+        while(notEndOfRequest(stringBuilder)) {
             stringBuilder.append((char) this.bufferedReader.read());
         }
 
@@ -39,35 +40,36 @@ public class ClientConnection implements Connectable {
         this.socket.close();
     }
 
-    private boolean notEndOfRequest(StringBuilder requestMessageBuilder, int currentRequestBodyLength) {
+    private boolean notEndOfRequest(StringBuilder requestMessageBuilder) {
         int requestBodyLength = 0;
-        int headersEndIndex = requestMessageBuilder.indexOf("\r\n\r\n");
 
-        if(headersWereRead(headersEndIndex)) {
-            requestBodyLength = getContentLength(requestMessageBuilder, headersEndIndex);
+        if(headersWereRead(requestMessageBuilder)) {
+            requestBodyLength = getContentLength(requestMessageBuilder);
             currentRequestBodyLength += 1;
         }
 
         return currentRequestBodyLength <= requestBodyLength;
     }
 
-    private int getContentLength(StringBuilder requestMessageBuilder, int headersEndIndex) {
+    private int getContentLength(StringBuilder requestMessageBuilder) {
         int contentLength = 0;
-        int contentLengthStartIndex = requestMessageBuilder.indexOf("Content-Length: ");
+        String[] splitRequestMessage = requestMessageBuilder.toString().split("Content-Length: ");
 
-        if(contentLengthExists(contentLengthStartIndex)) {
-            contentLength = Integer.parseInt(requestMessageBuilder.substring(contentLengthStartIndex + 1, headersEndIndex));
+        if(contentLengthExists(splitRequestMessage)) {
+            contentLength = Integer.parseInt(
+                    splitRequestMessage[1].substring(0, splitRequestMessage[1].indexOf("\r\n"))
+            );
         }
 
         return contentLength;
     }
 
-    private boolean contentLengthExists(int contentLengthStartIndex) {
-        return contentLengthStartIndex != -1;
+    private boolean contentLengthExists(String[] contentLengthHeader) {
+        return contentLengthHeader.length == 2;
     }
 
-    private boolean headersWereRead(int headersEndIndex) {
-        return headersEndIndex != -1;
+    private boolean headersWereRead(StringBuilder requestMessageBuilder) {
+        return requestMessageBuilder.indexOf("\r\n\r\n") != -1;
     }
 }
 

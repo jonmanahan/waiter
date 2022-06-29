@@ -14,11 +14,16 @@ public class HttProtocolTest {
     @Test
     void returnsOkWithNoBodyWhenGetMethodWithExistingUrl() {
         String url = "/simple_get";
-        String requestStartLine = String.format("GET %s HTTP/1.1", url);
+        String request = String.format(
+                """
+                GET %s HTTP/1.1
+                foo
+                
+                """, url).replace("\n", "\r\n");
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{Request.Method.GET},
-                        request -> new ResponseBuilder()
+                        requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .build()
                 )
@@ -28,7 +33,7 @@ public class HttProtocolTest {
                 new Router(routes)
         );
 
-        String response = httProtocol.serve(requestStartLine);
+        String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
         assertTrue(response.endsWith("\r\n\r\n"));
@@ -37,11 +42,16 @@ public class HttProtocolTest {
     @Test
     void returnsOkWithNoBodyWhenHeadMethodWithExistingUrl() {
         String url = "/simple_get";
-        String requestStartLine = String.format("HEAD %s HTTP/1.1", url);
+        String request = String.format(
+                """
+                HEAD %s HTTP/1.1
+                foo
+                
+                """, url).replace("\n", "\r\n");
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{Request.Method.HEAD},
-                        request -> new ResponseBuilder()
+                        requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .build()
                 )
@@ -51,7 +61,7 @@ public class HttProtocolTest {
                 new Router(routes)
         );
 
-        String response = httProtocol.serve(requestStartLine);
+        String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
         assertTrue(response.endsWith("\r\n\r\n"));
@@ -60,12 +70,19 @@ public class HttProtocolTest {
     @Test
     void returnsOkWithBodyWhenPostMethodWithExistingUrl() {
         String url = "/echo_body";
-        String requestStartLine = String.format("POST %s HTTP/1.1", url);
+        String body = "foo";
+        String request = String.format(
+                """
+                POST %s HTTP/1.1
+                Content-Length: %d
+                
+                %s""", url, body.length(), body).replace("\n", "\r\n");
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{Request.Method.POST},
-                        request -> new ResponseBuilder()
+                        requestMessage -> new ResponseBuilder()
                                 .newUp()
+                                .body(requestMessage.getBody())
                                 .build()
                 )
         );
@@ -74,19 +91,24 @@ public class HttProtocolTest {
                 new Router(routes)
         );
 
-        String response = httProtocol.serve(requestStartLine);
+        String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
-        assertTrue(response.endsWith("\r\n\r\n"));
+        assertTrue(response.endsWith(body));
     }
 
     @Property
     void returnsOkWithNoBodyWhenExistingMethodWithExistingUrl(@ForAll @AlphaChars @NotBlank String url) {
-        String requestStartLine = String.format("GET %s HTTP/1.1", url);
+        String request = String.format(
+                """
+                GET %s HTTP/1.1
+                foo
+                
+                """, url).replace("\n", "\r\n");
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{Request.Method.GET},
-                        request -> new ResponseBuilder()
+                        requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .build()
                 )
@@ -96,7 +118,7 @@ public class HttProtocolTest {
                 new Router(routes)
         );
 
-        String response = httProtocol.serve(requestStartLine);
+        String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
         assertTrue(response.endsWith("\r\n\r\n"));

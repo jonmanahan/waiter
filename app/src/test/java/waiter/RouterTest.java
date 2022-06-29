@@ -29,7 +29,7 @@ public class RouterTest {
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{Request.Method.GET},
-                        () -> new ResponseBuilder()
+                        requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .protocol(protocol)
                                 .status(status)
@@ -63,18 +63,11 @@ public class RouterTest {
     @Test
     void returnsNotFoundWithNoReasonResponseForExistingUrlButButNoHeadMethodInRoute() {
         Request request = new Request(url, Request.Method.HEAD.asString, protocol, requestHeaders, requestBody);
-        Routes routes = new Routes();
-        routes.addRoute(
-                new Route(url, new Request.Method[]{},
-                        () -> new ResponseBuilder()
-                                .newUp()
-                                .build()
-                )
-        );
-        Response Response = new Router(routes).getRequestedResponse(request);
+
+        Response Response = new Router(new Routes()).getRequestedResponse(request);
 
         assertEquals("HTTP/1.1", Response.getProtocol());
-        assertEquals(Status.MethodNotAllowed, Response.getStatus());
+        assertEquals(Status.NotFound, Response.getStatus());
         String contentLengthHeader = HeaderField.ContentLength.asString + Response.getHeaders().get(HeaderField.ContentLength);
         assertEquals("Content-Length: 0", contentLengthHeader);
         assertEquals("", Response.getBody());
@@ -86,7 +79,7 @@ public class RouterTest {
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{},
-                        () -> new ResponseBuilder()
+                        requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .build()
                 )

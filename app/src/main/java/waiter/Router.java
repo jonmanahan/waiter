@@ -17,7 +17,7 @@ public record Router(Routes routes) {
             return get405Response(route);
         }
 
-        return this.routes.handle(route);
+        return this.routes.handle(request, route);
     }
 
     private Response get405Response(Route route) {
