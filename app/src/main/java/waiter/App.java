@@ -57,12 +57,12 @@ class App {
     private static final Function<Request, Response> okWithOnlyResponseBodyHandler = request -> new ResponseBuilder()
             .newUp()
             .body("Hello world")
-            //.headers(HeaderField.ContentType, "application/x-www-form-urlencoded")
+            .headers(Response.HeaderField.ContentType, "text/html")
             .build();
 
     private static final Function<Request, Response> okWithRequestBodyHandler = request -> new ResponseBuilder()
             .newUp()
             .body(request.getBody())
-            //.headers(HeaderField.ContentType, "application/x-www-form-urlencoded")
+            .headers(Response.HeaderField.ContentType, "text/html")
             .build();
 }
