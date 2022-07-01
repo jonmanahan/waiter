@@ -8,7 +8,8 @@ public class Response {
     public enum Status {
         OK("200 OK"),
         NotFound("404 Not Found"),
-        MethodNotAllowed("405 Method Not Allowed")
+        MethodNotAllowed("405 Method Not Allowed"),
+        MovedPermanently("301 Moved Permanently")
         ;
 
         public final String asString;
@@ -21,7 +22,8 @@ public class Response {
     public enum HeaderField {
         Allow("Allow: "),
         ContentLength("Content-Length: "),
-        ContentType("Content-Type: ")
+        ContentType("Content-Type: "),
+        Location("Location: ")
         ;
 
         public final String asString;

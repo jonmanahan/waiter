@@ -46,6 +46,9 @@ class App {
         routes.addRoute(
                 new Route("/echo_body", new Request.Method[]{Request.Method.POST}, okWithRequestBodyHandler)
         );
+        routes.addRoute(
+                new Route("/redirect", new Request.Method[]{Request.Method.GET}, permanentlyMovedWithSimpleGetLocationHandler)
+        );
 
         return routes;
     }
@@ -64,5 +67,11 @@ class App {
             .newUp()
             .body(request.getBody())
             .headers(Response.HeaderField.ContentType, "text/html")
+            .build();
+
+    private static final Function<Request, Response> permanentlyMovedWithSimpleGetLocationHandler = request -> new ResponseBuilder()
+            .newUp()
+            .status(Response.Status.MovedPermanently)
+            .headers(Response.HeaderField.Location, "http://127.0.0.1:5000/simple_get")
             .build();
 }
