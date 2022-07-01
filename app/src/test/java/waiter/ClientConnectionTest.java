@@ -16,11 +16,13 @@ import java.nio.charset.StandardCharsets;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static waiter.RequestParser.END_OF_HEADERS;
+
 class ClientConnectionTest {
 
     @Property
     void readsMessage(@ForAll @AlphaChars @NotBlank String userInput) throws IOException {
-        String submittedUserInput = userInput + "\r\n\r\n";
+        String submittedUserInput = userInput + END_OF_HEADERS;
         var byteInputStream = new ByteArrayInputStream(submittedUserInput.getBytes(StandardCharsets.UTF_8));
         String message = new ClientConnection(new ClientSocketMock(byteInputStream)).read();
 

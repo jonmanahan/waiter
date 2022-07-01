@@ -9,20 +9,17 @@ import waiter.Protocol.HttProtocol;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static waiter.RequestParser.END_OF_HEADERS;
+import static waiter.RequestParser.END_OF_LINE;
+
 public class HttProtocolTest {
 
     @Test
     void returnsOkWithNoBodyWhenGetMethodWithExistingUrl() {
-        String url = "/simple_get";
-        String request = String.format(
-                """
-                GET %s HTTP/1.1
-                foo
-                
-                """, url).replace("\n", "\r\n");
+        String request = "GET /simple_get HTTP/1.1" + END_OF_LINE + "foo" + END_OF_HEADERS;
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(url, new Request.Method[]{Request.Method.GET},
+                new Route("/simple_get", new Request.Method[]{Request.Method.GET},
                         requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .build()
@@ -36,21 +33,15 @@ public class HttProtocolTest {
         String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
-        assertTrue(response.endsWith("\r\n\r\n"));
+        assertTrue(response.endsWith(END_OF_HEADERS));
     }
 
     @Test
     void returnsOkWithNoBodyWhenHeadMethodWithExistingUrl() {
-        String url = "/simple_get";
-        String request = String.format(
-                """
-                HEAD %s HTTP/1.1
-                foo
-                
-                """, url).replace("\n", "\r\n");
+        String request = "HEAD /simple_get HTTP/1.1" + END_OF_LINE + "foo" + END_OF_HEADERS;
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(url, new Request.Method[]{Request.Method.HEAD},
+                new Route("/simple_get", new Request.Method[]{Request.Method.HEAD},
                         requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .build()
@@ -64,22 +55,16 @@ public class HttProtocolTest {
         String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
-        assertTrue(response.endsWith("\r\n\r\n"));
+        assertTrue(response.endsWith(END_OF_HEADERS));
     }
 
     @Test
     void returnsOkWithBodyWhenPostMethodWithExistingUrl() {
-        String url = "/echo_body";
-        String body = "foo";
-        String request = String.format(
-                """
-                POST %s HTTP/1.1
-                Content-Length: %d
-                
-                %s""", url, body.length(), body).replace("\n", "\r\n");
+        String body = "body";
+        String request = "POST /echo_body HTTP/1.1"  + END_OF_LINE + "foo" + END_OF_HEADERS + body;
         Routes routes = new Routes();
         routes.addRoute(
-                new Route(url, new Request.Method[]{Request.Method.POST},
+                new Route("/echo_body", new Request.Method[]{Request.Method.POST},
                         requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .body(requestMessage.getBody())
@@ -99,12 +84,7 @@ public class HttProtocolTest {
 
     @Property
     void returnsOkWithNoBodyWhenExistingMethodWithExistingUrl(@ForAll @AlphaChars @NotBlank String url) {
-        String request = String.format(
-                """
-                GET %s HTTP/1.1
-                foo
-                
-                """, url).replace("\n", "\r\n");
+        String request = "GET " + url + " HTTP/1.1" + END_OF_LINE + "foo" + END_OF_HEADERS;
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{Request.Method.GET},
@@ -121,6 +101,6 @@ public class HttProtocolTest {
         String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
-        assertTrue(response.endsWith("\r\n\r\n"));
+        assertTrue(response.endsWith(END_OF_HEADERS));
     }
 }
