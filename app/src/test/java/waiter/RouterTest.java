@@ -92,28 +92,4 @@ public class RouterTest {
         assertEquals("Content-Length: 0", contentLengthHeader);
         assertEquals("", Response.getBody());
     }
-
-    @Test
-    void returnsMovedPermanentlyWithLocationHeaderForResourceThatHasBeenAssignedNewUrl() {
-        Request request = new Request(url, Request.Method.GET.asString, protocol, requestHeaders, requestBody);
-        Routes routes = new Routes();
-        routes.addRoute(
-                new Route(url, new Request.Method[]{Request.Method.GET},
-                        requestMessage -> new ResponseBuilder()
-                                .newUp()
-                                .status(Status.MovedPermanently)
-                                .headers(HeaderField.Location, "http://127.0.0.1:5000/simple_get")
-                                .build()
-                )
-        );
-        Response Response = new Router(routes).getRequestedResponse(request);
-
-        assertEquals("HTTP/1.1", Response.getProtocol());
-        assertEquals(Status.MovedPermanently, Response.getStatus());
-        String contentLengthHeader = HeaderField.ContentLength.asString + Response.getHeaders().get(HeaderField.ContentLength);
-        assertEquals("Content-Length: 0", contentLengthHeader);
-        String locationHeader = HeaderField.Location.asString + Response.getHeaders().get(HeaderField.Location);
-        assertEquals("Location: http://127.0.0.1:5000/simple_get", locationHeader);
-        assertEquals("", Response.getBody());
-    }
 }
