@@ -11,28 +11,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RouterTest {
 
-    String url, protocol;
+    String url, protocol, requestHeaders, requestBody;
 
     @BeforeEach
     void setUp() {
         url = "URL";
         protocol = "PROTOCOL";
+        requestHeaders = "REQUEST";
+        requestBody = "REQUEST";
     }
 
     @Test
     void returnsCorrespondingResponseForExistingRoute() {
-        String headers = "HEADERS", body = "BODY";
+        String responseHeaders = "RESPONSE", responseBody = "RESPONSE";
         Status status = Status.OK;
-        Request request = new Request(url, Request.Method.GET.asString, protocol);
+        Request request = new Request(url, Request.Method.GET.asString, protocol, requestHeaders, requestBody);
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{Request.Method.GET},
-                        () -> new ResponseBuilder()
+                        requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .protocol(protocol)
                                 .status(status)
-                                .headers(HeaderField.Allow, headers)
-                                .body(body)
+                                .headers(HeaderField.Allow, responseHeaders)
+                                .body(responseBody)
                                 .build()
                 )
         );
@@ -41,13 +43,13 @@ public class RouterTest {
 
         assertEquals(protocol, response.getProtocol());
         assertEquals(status, response.getStatus());
-        assertEquals(headers, response.getHeaders().get(HeaderField.Allow));
-        assertEquals(body, response.getBody());
+        assertEquals(responseHeaders, response.getHeaders().get(HeaderField.Allow));
+        assertEquals(responseBody, response.getBody());
     }
 
     @Test
     void returnsNotFoundWithReasonResponseForNoExistingRoute() {
-        Request request = new Request(url, Request.Method.GET.asString, protocol);
+        Request request = new Request(url, Request.Method.GET.asString, protocol, requestHeaders, requestBody);
 
         Response Response = new Router(new Routes()).getRequestedResponse(request);
 
@@ -60,19 +62,12 @@ public class RouterTest {
 
     @Test
     void returnsNotFoundWithNoReasonResponseForExistingUrlButButNoHeadMethodInRoute() {
-        Request request = new Request(url, Request.Method.HEAD.asString, protocol);
-        Routes routes = new Routes();
-        routes.addRoute(
-                new Route(url, new Request.Method[]{},
-                        () -> new ResponseBuilder()
-                                .newUp()
-                                .build()
-                )
-        );
-        Response Response = new Router(routes).getRequestedResponse(request);
+        Request request = new Request(url, Request.Method.HEAD.asString, protocol, requestHeaders, requestBody);
+
+        Response Response = new Router(new Routes()).getRequestedResponse(request);
 
         assertEquals("HTTP/1.1", Response.getProtocol());
-        assertEquals(Status.MethodNotAllowed, Response.getStatus());
+        assertEquals(Status.NotFound, Response.getStatus());
         String contentLengthHeader = HeaderField.ContentLength.asString + Response.getHeaders().get(HeaderField.ContentLength);
         assertEquals("Content-Length: 0", contentLengthHeader);
         assertEquals("", Response.getBody());
@@ -80,11 +75,11 @@ public class RouterTest {
 
     @Test
     void returnsMethodNotAllowedWithReasonResponseForExistingUrlButNoGetMethodInRoute() {
-        Request request = new Request(url, Request.Method.GET.asString, protocol);
+        Request request = new Request(url, Request.Method.GET.asString, protocol, requestHeaders, requestBody);
         Routes routes = new Routes();
         routes.addRoute(
                 new Route(url, new Request.Method[]{},
-                        () -> new ResponseBuilder()
+                        requestMessage -> new ResponseBuilder()
                                 .newUp()
                                 .build()
                 )

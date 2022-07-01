@@ -9,7 +9,7 @@ import waiter.Reportable.Communicator;
 import waiter.Threadable.ThreadGenerator;
 import waiter.Transportable.Messenger;
 
-import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 class App {
 
@@ -36,23 +36,33 @@ class App {
         );
 
         routes.addRoute(
-                new Route("/simple_get_with_body", new Request.Method[]{Request.Method.GET}, okWithBodyHandler)
+                new Route("/simple_get_with_body", new Request.Method[]{Request.Method.GET}, okWithOnlyResponseBodyHandler)
         );
 
         routes.addRoute(
                 new Route("/head_request", new Request.Method[]{Request.Method.HEAD, Request.Method.OPTIONS}, okHandler)
         );
 
+        routes.addRoute(
+                new Route("/echo_body", new Request.Method[]{Request.Method.POST}, okWithRequestBodyHandler)
+        );
+
         return routes;
     }
 
-    public static final Callable<Response> okHandler = () -> new ResponseBuilder()
+    public static final Function<Request, Response> okHandler = request -> new ResponseBuilder()
             .newUp()
             .build();
 
-    private static final Callable<Response> okWithBodyHandler = () -> new ResponseBuilder()
+    private static final Function<Request, Response> okWithOnlyResponseBodyHandler = request -> new ResponseBuilder()
             .newUp()
             .body("Hello world")
-            .headers(Response.HeaderField.ContentType, "application/octet-stream")
+            .headers(Response.HeaderField.ContentType, "text/html")
+            .build();
+
+    private static final Function<Request, Response> okWithRequestBodyHandler = request -> new ResponseBuilder()
+            .newUp()
+            .body(request.getBody())
+            .headers(Response.HeaderField.ContentType, "text/html")
             .build();
 }

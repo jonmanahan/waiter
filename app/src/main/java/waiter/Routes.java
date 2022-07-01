@@ -2,7 +2,7 @@ package waiter;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 public class Routes {
 
@@ -24,11 +24,11 @@ public class Routes {
         return this.routes.containsKey(url);
     }
 
-    public Response handle(Route route) {
+    public Response handle(Request request, Route route) {
 
-        Callable<Response> handler = route.handler();
+        Function<Request, Response> handler = route.handler();
         try {
-            return handler.call();
+            return handler.apply(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
