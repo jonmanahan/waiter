@@ -9,6 +9,8 @@ import waiter.Protocol.HttProtocol;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static waiter.RequestParser.END_OF_HEADERS;
+
 public class HttProtocolTest {
 
     @Test
@@ -36,7 +38,7 @@ public class HttProtocolTest {
         String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
-        assertTrue(response.endsWith("\r\n\r\n"));
+        assertTrue(response.endsWith(END_OF_HEADERS));
     }
 
     @Test
@@ -64,7 +66,7 @@ public class HttProtocolTest {
         String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
-        assertTrue(response.endsWith("\r\n\r\n"));
+        assertTrue(response.endsWith(END_OF_HEADERS));
     }
 
     @Test
@@ -121,6 +123,6 @@ public class HttProtocolTest {
         String response = httProtocol.serve(request);
 
         assertTrue(response.contains("HTTP/1.1 200 OK"));
-        assertTrue(response.endsWith("\r\n\r\n"));
+        assertTrue(response.endsWith(END_OF_HEADERS));
     }
 }

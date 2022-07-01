@@ -3,16 +3,14 @@ package waiter;
 public class RequestParser {
 
     private static int currentRequestBodyLength;
+    public static final String END_OF_LINE = System.lineSeparator();
+    public static final String END_OF_HEADERS = System.lineSeparator() + System.lineSeparator();
 
     public Request parse(String requestMessage) {
         System.out.println(requestMessage);
 
-        String endOfStartLineDelimiter = "\r\n";
-        String endOfHeadersDelimiter = "\r\n\r\n";
-        System.out.println(requestMessage.indexOf(endOfStartLineDelimiter));
-
         String requestStartLine = requestMessage.substring(
-                0, getIndexAtDelimiter(requestMessage, endOfStartLineDelimiter)
+                0, getIndexAtDelimiter(requestMessage, END_OF_LINE)
         );
 
         String[] parsedRequestStartLine = requestStartLine.split(" ");
@@ -21,12 +19,12 @@ public class RequestParser {
         String protocol = parsedRequestStartLine[2];
 
         String headers = requestMessage.substring(
-                getIndexAfterDelimiter(requestMessage, endOfStartLineDelimiter),
-                getIndexAtDelimiter(requestMessage, endOfHeadersDelimiter)
+                getIndexAfterDelimiter(requestMessage, END_OF_LINE),
+                getIndexAtDelimiter(requestMessage, END_OF_HEADERS)
         );
 
         String body = requestMessage.substring(
-                getIndexAfterDelimiter(requestMessage, endOfHeadersDelimiter)
+                getIndexAfterDelimiter(requestMessage, END_OF_HEADERS)
         );
 
         return new Request(target, method, protocol, headers, body);
@@ -43,7 +41,7 @@ public class RequestParser {
     public static boolean notEndOfRequest(StringBuilder requestMessageBuilder) {
         int requestBodyLength = 0;
 
-        if(headersWereRead(requestMessageBuilder)) {
+        if(existsInRequestMessage(requestMessageBuilder, END_OF_HEADERS)) {
             requestBodyLength = getContentLength(requestMessageBuilder);
             currentRequestBodyLength += 1;
         }
@@ -56,22 +54,19 @@ public class RequestParser {
 
     private static int getContentLength(StringBuilder requestMessageBuilder) {
         int contentLength = 0;
-        String[] splitRequestMessage = requestMessageBuilder.toString().split("Content-Length: ");
+        String contentLengthHeader = "Content-Length: ";
 
-        if(contentLengthExists(splitRequestMessage)) {
+        if(existsInRequestMessage(requestMessageBuilder, contentLengthHeader)) {
+            String[] splitRequestMessage = requestMessageBuilder.toString().split(contentLengthHeader);
             contentLength = Integer.parseInt(
-                    splitRequestMessage[1].substring(0, splitRequestMessage[1].indexOf("\r\n"))
+                    splitRequestMessage[1].substring(0, splitRequestMessage[1].indexOf(END_OF_LINE))
             );
         }
 
         return contentLength;
     }
 
-    private static boolean contentLengthExists(String[] contentLengthHeader) {
-        return contentLengthHeader.length == 2;
-    }
-
-    private static boolean headersWereRead(StringBuilder requestMessageBuilder) {
-        return requestMessageBuilder.indexOf("\r\n\r\n") != -1;
+    private static boolean existsInRequestMessage(StringBuilder requestMessageBuilder, String delimiter) {
+        return requestMessageBuilder.indexOf(delimiter) != -1;
     }
 }
