@@ -3,8 +3,8 @@ package waiter;
 public class RequestParser {
 
     private static int currentRequestBodyLength;
-    public static final String END_OF_LINE = System.lineSeparator();
-    public static final String END_OF_HEADERS = System.lineSeparator() + System.lineSeparator();
+    public static final String END_OF_LINE = "\r\n";
+    public static final String END_OF_HEADERS = "\r\n\r\n";
 
     public Request parse(String requestMessage) {
         System.out.println(requestMessage);
@@ -57,9 +57,9 @@ public class RequestParser {
         String contentLengthHeader = "Content-Length: ";
 
         if(existsInRequestMessage(requestMessageBuilder, contentLengthHeader)) {
-            String[] splitRequestMessage = requestMessageBuilder.toString().split(contentLengthHeader);
+            String fromContentLengthToEndOfMessage = requestMessageBuilder.toString().split(contentLengthHeader)[1];
             contentLength = Integer.parseInt(
-                    splitRequestMessage[1].substring(0, splitRequestMessage[1].indexOf(END_OF_LINE))
+                    fromContentLengthToEndOfMessage.substring(0, fromContentLengthToEndOfMessage.indexOf(END_OF_LINE))
             );
         }
 

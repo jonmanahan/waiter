@@ -7,6 +7,9 @@ import waiter.Response.Status;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import static waiter.RequestParser.END_OF_HEADERS;
+import static waiter.RequestParser.END_OF_LINE;
+
 public class ResponseBuilderTest {
 
     @Test
@@ -23,14 +26,10 @@ public class ResponseBuilderTest {
                 .build();
 
         String formattedResponse = response.formatResponse();
-        String formattedHeaders = field.asString + headers + "\n" + HeaderField.ContentLength.asString + body.length();
+        String formattedHeaders = field.asString + "HEADERS" + END_OF_LINE + HeaderField.ContentLength.asString + body.length();
 
-        String expectedResponse = String.format(
-                """
-                %s %s
-                %s
-                
-                %s""", protocol, status.asString, formattedHeaders, body).replace("\n", "\r\n");
+        String expectedResponse = protocol + " " + Status.OK.asString + END_OF_LINE + formattedHeaders + END_OF_HEADERS + body;
+
         assertEquals(expectedResponse, formattedResponse);
     }
 }
