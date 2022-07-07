@@ -51,6 +51,10 @@ class App {
                 new Route("/redirect", new Request.Method[]{Request.Method.GET}, permanentlyMovedWithSimpleGetLocationHandler)
         );
 
+        routes.addRoute(
+                new Route("/method_options", new Request.Method[]{Request.Method.GET, Request.Method.HEAD}, okHandler)
+        );
+
         return routes;
     }
 
