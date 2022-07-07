@@ -11,7 +11,7 @@ public class Route {
 
     public Route(String url, Request.Method[] methods, Function<Request, Response> handler) {
         this.url = url;
-        this.methods = addDefaultOptionMethodToMethods(methods);
+        this.methods = addOptionsMethodToMethods(methods);
         this.handler = handler;
     }
 
@@ -19,7 +19,7 @@ public class Route {
         return Arrays.toString(this.methods).contains(method);
     }
 
-    private Request.Method[] addDefaultOptionMethodToMethods(Request.Method[] methods) {
+    private Request.Method[] addOptionsMethodToMethods(Request.Method[] methods) {
         Request.Method[] methodsWithOptions = Arrays.copyOf(methods, methods.length + 1);
         methodsWithOptions[methods.length] = Request.Method.OPTIONS;
         return methodsWithOptions;
