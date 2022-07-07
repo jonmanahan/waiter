@@ -17,7 +17,20 @@ public record Router(Routes routes) {
             return get405Response(route);
         }
 
+        if(request.methodIsOptions()) {
+            return getOptionsResponse(route);
+        }
+
         return this.routes.handle(request, route);
+    }
+
+    private Response getOptionsResponse(Route route) {
+
+        return new ResponseBuilder()
+                .newUp()
+                .status(Response.Status.OK)
+                .headers(Response.HeaderField.Allow, formatMethods(route.methods))
+                .build();
     }
 
     private Response get405Response(Route route) {
@@ -25,7 +38,7 @@ public record Router(Routes routes) {
         return new ResponseBuilder()
                 .newUp()
                 .status(Response.Status.MethodNotAllowed)
-                .headers(Response.HeaderField.Allow, formatMethods(route.methods()))
+                .headers(Response.HeaderField.Allow, formatMethods(route.methods))
                 .build();
     }
 

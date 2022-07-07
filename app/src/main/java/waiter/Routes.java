@@ -13,7 +13,7 @@ public class Routes {
     }
 
     public void addRoute(Route route) {
-        this.routes.put(route.url(), route);
+        this.routes.put(route.url, route);
     }
 
     public Route getRoute(String url) {
@@ -26,7 +26,7 @@ public class Routes {
 
     public Response handle(Request request, Route route) {
 
-        Function<Request, Response> handler = route.handler();
+        Function<Request, Response> handler = route.handler;
         try {
             return handler.apply(request);
         } catch (Exception e) {

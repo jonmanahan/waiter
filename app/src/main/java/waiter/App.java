@@ -40,12 +40,13 @@ class App {
         );
 
         routes.addRoute(
-                new Route("/head_request", new Request.Method[]{Request.Method.HEAD, Request.Method.OPTIONS}, okHandler)
+                new Route("/head_request", new Request.Method[]{Request.Method.HEAD}, okHandler)
         );
 
         routes.addRoute(
                 new Route("/echo_body", new Request.Method[]{Request.Method.POST}, okWithRequestBodyHandler)
         );
+
         routes.addRoute(
                 new Route("/redirect", new Request.Method[]{Request.Method.GET}, permanentlyMovedWithSimpleGetLocationHandler)
         );
