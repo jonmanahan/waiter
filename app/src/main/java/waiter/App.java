@@ -57,6 +57,10 @@ class App {
                 new Route("/method_options", new Request.Method[]{Request.Method.GET, Request.Method.HEAD}, okHandler)
         );
 
+        routes.addRoute(
+                new Route("/method_options2", new Request.Method[]{Request.Method.GET, Request.Method.HEAD, Request.Method.POST, Request.Method.PUT}, okHandler)
+        );
+
         return routes;
     }
 
