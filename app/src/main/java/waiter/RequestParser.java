@@ -7,8 +7,6 @@ public class RequestParser {
     public static final String END_OF_HEADERS = "\r\n\r\n";
 
     public Request parse(String requestMessage) {
-        System.out.println(requestMessage);
-
         String requestStartLine = requestMessage.substring(
                 0, getIndexAtDelimiter(requestMessage, END_OF_LINE)
         );

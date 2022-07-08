@@ -1,5 +1,7 @@
 package waiter;
 
+import java.util.Objects;
+
 public record Request(String url, String method, String protocol, String headers, String body) {
 
     public enum Method {
@@ -34,5 +36,9 @@ public record Request(String url, String method, String protocol, String headers
 
     public String getBody() {
         return body;
+    }
+
+    public boolean methodIsOptions() {
+        return Objects.equals(method, Method.OPTIONS.asString);
     }
 }
