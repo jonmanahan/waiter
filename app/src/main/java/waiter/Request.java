@@ -8,7 +8,8 @@ public record Request(String url, String method, String protocol, String headers
         GET("GET"),
         HEAD("HEAD"),
         POST("POST"),
-        OPTIONS("OPTIONS")
+        OPTIONS("OPTIONS"),
+        PUT("PUT")
         ;
 
         public final String asString;
